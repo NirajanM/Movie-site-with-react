@@ -11,7 +11,7 @@ export default function Header() {
                         <img src={Logo} className='w-16 h-16 md:w-24 md:h-24' />
                     </Link>
 
-                    <ul className="absolute border-b-2 md:border-0 pb-4 left-0 top-24 w-full md:relative md:w-fit md:top-0 flex justify-evenly md:p-0 font-medium border-gray-100 bg-gray-50 md:space-x-8 mt-0 md:bg-white dark:bg-black dark:border-gray-700">
+                    <ul className="absolute border-b-2 md:border-0 pb-4 left-0 top-24 w-full md:relative md:w-fit md:top-0 flex justify-evenly md:p-0 font-medium border-gray-100 bg-gray-50 md:space-x-8 mt-0 md:bg-white dark:bg-transparent">
                         <li>
                             <Link to="/" className="block rounded bg-transparent text-pahelo p-0 md:dark:text-pahelo">Home</Link>
                         </li>
