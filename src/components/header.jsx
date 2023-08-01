@@ -21,9 +21,6 @@ export default function Header() {
                         <li>
                             <Link to="/anotherpage" className="block text-gray-900 rounded md:hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700">Movies</Link>
                         </li>
-                        <li>
-                            <Link to="/anotherpage" className="block text-gray-900 rounded md:hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700">About</Link>
-                        </li>
                     </ul>
 
 
