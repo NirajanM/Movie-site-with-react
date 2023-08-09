@@ -9,6 +9,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import SelectedMovie from './routes/SelectedMovie';
+import PageNotFound from './routes/PageNotFound';
 
 const router = createBrowserRouter([
   {
@@ -16,8 +18,12 @@ const router = createBrowserRouter([
     element: <Root />,
   },
   {
-    path: "/anotherpage",
-    element: <Anotherpage />,
+    path: "/:mediaType/:id",
+    element: <SelectedMovie />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
   },
 ]);
 
@@ -26,3 +32,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RouterProvider router={router} />
   </Provider>
 )
+
+// {
+  //   path: "/search/:query",
+  //   element: <SearchResult />,
+  // },
+  // {
+  //   path: "/explore/:mediaType",
+  //   element: <Explore />,
+  // },
