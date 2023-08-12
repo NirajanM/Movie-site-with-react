@@ -78,3 +78,8 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+
+#nav-bar a.active {
+  color: #FFDF2B;
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import Header from '../components/header'
 import { fetchData } from '../utils/api'
 import { useSelector, useDispatch } from 'react-redux'
@@ -42,7 +42,6 @@ function Root() {
 
     return (
         <>
-            <Header />
             <section className='max-w-screen-xl mx-auto text-white'>
                 <span className='text-pahelo font-black text-3xl'>Now Playing</span>
                 <div className='flex flex-col'>
@@ -50,6 +49,7 @@ function Root() {
                         return (<span>{popularMovie.original_title}</span>);
                     })}
                 </div>
+                <Outlet />
             </section>
         </>
     )
