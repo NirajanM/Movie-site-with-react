@@ -18,7 +18,7 @@ export default function Header() {
                     <img src={Logo} className='w-16 h-16 md:w-24 md:h-24' />
                 </NavLink>
 
-                <ul className="absolute border-b-2 md:border-0 pb-4 left-0 top-24 w-full md:relative md:w-fit md:top-0 flex justify-evenly md:p-0 font-medium border-gray-100 bg-gray-50 md:space-x-8 mt-0 md:bg-white dark:bg-transparent">
+                <ul className="absolute border-b-2 md:border-0 pb-4 left-0 top-24 w-full flex justify-evenly font-medium border-gray-100 bg-gray-50 mt-0 dark:bg-transparent md:relative md:w-fit md:top-0 md:p-0 md:space-x-8">
                     <li>
                         <NavLink to="/" className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700">Home</NavLink>
                     </li>

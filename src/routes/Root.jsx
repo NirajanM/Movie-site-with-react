@@ -4,7 +4,7 @@ import Header from '../components/header'
 import { fetchData } from '../utils/api'
 import { useSelector, useDispatch } from 'react-redux'
 import { getApiConfigurations, getGenres } from '../store/rootSlice'
-
+import useFetch from '../hooks/useFetch'
 
 function Root() {
 
@@ -39,6 +39,7 @@ function Root() {
         )
     }
 
+    const { data, loading } = useFetch("movie/upcoming?language=en-US&page=1");
 
     return (
         <>
@@ -46,7 +47,12 @@ function Root() {
                 <span className='text-pahelo font-black text-3xl'>Now Playing</span>
                 <div className='flex flex-col'>
                     {popularMovies && popularMovies.map(popularMovie => {
-                        return (<span>{popularMovie.original_title}</span>);
+                        return (
+                            <>
+                                {/* <img src={popularMovie.backdrop_path} alt={popularMovie.original_title} /> */}
+                                <span>{popularMovie.original_title}</span>
+                            </>
+                        );
                     })}
                 </div>
                 <Outlet />
