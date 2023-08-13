@@ -14,8 +14,6 @@ function Root() {
         fetchConfiguration();
     }, []);
 
-    const [popularMovies, setPopularMovies] = useState([]);
-
     const fetchConfiguration = () => {
         fetchData('/configuration').then(
             (res) => {
@@ -33,18 +31,21 @@ function Root() {
     }
 
     const { url } = useSelector((state) => state.home);
-    const { data, loading } = useFetch("movie/upcoming?language=en-US&page=1");
+    const { data, loading } = useFetch("movie/popular?language=en-US&page=1");
+    console.log(data);
 
     return (
         <>
             <section className='max-w-screen-xl mx-auto text-white'>
                 <span className='text-pahelo font-black text-3xl'>Now Playing</span>
                 <div className='flex flex-col'>
-                    {popularMovies && popularMovies.map(popularMovie => {
+                    {data && data.results.map(popularMovie => {
                         return (
                             <>
-                                {/* <img src={popularMovie.backdrop_path} alt={popularMovie.original_title} /> */}
-                                <span>{popularMovie.original_title}</span>
+                                <div className='w-52'>
+                                    <img src={url.backdrop + popularMovie.poster_path} alt={popularMovie.original_title} />
+                                </div>
+                                <span>{loading ? "loading ..." : popularMovie.original_title}</span>
                             </>
                         );
                     })}
