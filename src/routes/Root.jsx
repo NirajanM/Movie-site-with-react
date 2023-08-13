@@ -8,37 +8,31 @@ import useFetch from '../hooks/useFetch'
 
 function Root() {
 
-    // const dispatch = useDispatch();
-    // const url = useSelector((state) => state.home.url.total_pages);
-    // console.log(url)
-
-    // useEffect(() => {
-    //     apiTesting();
-    // }, []);
-
-    // const apiTesting = () => {
-    //     fetchData('movie/now_playing?language=en-US&page=1').then(
-    //         (res) => {
-    //             console.log(res);
-    //             dispatch(getApiConfigurations(res))
-    //         }
-    //     )
-    // }
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchPopular();
+        fetchConfiguration();
     }, []);
 
     const [popularMovies, setPopularMovies] = useState([]);
 
-    const fetchPopular = () => {
-        fetchData('movie/now_playing?language=en-US&page=1').then(
+    const fetchConfiguration = () => {
+        fetchData('/configuration').then(
             (res) => {
-                setPopularMovies(res.results);
+                //extracting necessary url from config response
+                const url = {
+                    backdrop: res.images.secure_base_url + "original",
+                    poster: res.images.secure_base_url + "original",
+                    profile: res.images.secure_base_url + "original",
+                }
+
+                //setting it for global use
+                dispatch(getApiConfigurations(url));
             }
         )
     }
 
+    const { url } = useSelector((state) => state.home);
     const { data, loading } = useFetch("movie/upcoming?language=en-US&page=1");
 
     return (
