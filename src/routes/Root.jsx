@@ -5,6 +5,7 @@ import { fetchData } from '../utils/api'
 import { useSelector, useDispatch } from 'react-redux'
 import { getApiConfigurations, getGenres } from '../store/rootSlice'
 import useFetch from '../hooks/useFetch'
+import Carousel from '../components/Carousel'
 
 function Root() {
 
@@ -38,18 +39,7 @@ function Root() {
         <>
             <section className='max-w-screen-xl mx-auto text-white'>
                 <span className='text-pahelo font-black text-3xl'>Now Playing</span>
-                <div className='flex overflow-x-hidden gap-6 m-4'>
-                    {data && data.results.map(popularMovie => {
-                        return (
-                            <div className='flex flex-col gap-2'>
-                                <div className='w-48'>
-                                    <img src={url.backdrop + popularMovie.poster_path} alt={popularMovie.original_title} />
-                                </div>
-                                <span>{loading ? "loading ..." : popularMovie.original_title}</span>
-                            </div>
-                        );
-                    })}
-                </div>
+                <Carousel data={data?.results} loading={loading} />
                 <Outlet />
             </section>
         </>

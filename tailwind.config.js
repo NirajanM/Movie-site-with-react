@@ -9,6 +9,9 @@ export default {
       colors: {
         pahelo: "#FFDF2B"
       },
+      aspectRatio: {
+        'poster': '1 / 1.5',
+      }
     },
   },
   plugins: [],
