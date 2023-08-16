@@ -3,7 +3,18 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import posterNotFound from "../assets/posterNotFound.png";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import dateFormat from './dateFormat';
+
+const skeletonItem = () => {
+    return (<div className='flex flex-col gap-2 w-32 md:w-36 lg:w-40'>
+        <Skeleton count={1} className=' h-52 md:h-56 lg:h-60 w-32 md:w-36 lg:w-40' />
+        <Skeleton count={1} className='h-4' />
+        <Skeleton count={1} className='h-4' />
+    </div>)
+}
+
 export default function Carousel({ data, loading, endpoint }) {
     const carouselBox = useRef();
     //importing url from configured redux store
@@ -46,7 +57,7 @@ export default function Carousel({ data, loading, endpoint }) {
                                 onClick={() =>
                                     navigate(`/${item.media_type || endpoint}/${item.id}`)
                                 }>
-                                <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster]'>
+                                <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster] h-60'>
                                     <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center' />
                                 </div>
                                 <span className='text-ellipsis overflow-x-hidden whitespace-nowrap'>{item.title || item.name}</span>
@@ -55,7 +66,15 @@ export default function Carousel({ data, loading, endpoint }) {
                         )
                     })}
                 </div>
-            ) : (<span>loading ...</span>)}
+            ) : (<div className='flex mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar'>
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+            </div>
+            )}
         </div>
     )
 }
