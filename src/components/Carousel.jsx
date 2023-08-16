@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import posterNotFound from "../assets/posterNotFound.png";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-
+import dateFormat from './dateFormat';
 export default function Carousel({ data, loading, endpoint }) {
     const carouselBox = useRef();
     //importing url from configured redux store
@@ -42,14 +42,15 @@ export default function Carousel({ data, loading, endpoint }) {
                         return (
                             <div
                                 key={item.id}
-                                className='flex flex-col gap-2'
+                                className='flex flex-col gap-2 w-32 md:w-36 lg:w-40'
                                 onClick={() =>
                                     navigate(`/${item.media_type || endpoint}/${item.id}`)
                                 }>
                                 <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster]'>
                                     <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center' />
                                 </div>
-                                <span>{item.original_title}</span>
+                                <span>{item.title || item.name}</span>
+                                <span className='text-xs text-slate-200'>{dateFormat(item.release_date)}</span>
                             </div>
                         )
                     })}
