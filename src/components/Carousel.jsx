@@ -49,7 +49,7 @@ export default function Carousel({ data, loading, endpoint }) {
                                 <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster]'>
                                     <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center' />
                                 </div>
-                                <span>{item.title || item.name}</span>
+                                <span className='text-ellipsis overflow-x-hidden whitespace-nowrap'>{item.title || item.name}</span>
                                 <span className='text-xs text-slate-200'>{dateFormat(item.release_date)}</span>
                             </div>
                         )
