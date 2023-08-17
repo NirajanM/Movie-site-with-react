@@ -54,7 +54,7 @@ export default function Carousel({ data, loading, endpoint }) {
                         onClick={() => navigation("right")}
                         className='hidden md:inline absolute right-0 -bottom-10 z-50 cursor-pointer text-slate-300/70 hover:text-white'
                     ><FaChevronRight /></span>
-                    <div className='flex mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar' ref={carouselBox}>
+                    <div className='flex pb-8 md:pb-0 md:mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar' ref={carouselBox}>
                         {data?.map((item) => {
                             //creating posterUrl if found or noposter url from assest incase of error
                             const posterUrl = item.poster_path ? url.backdrop + item.poster_path : posterNotFound;
@@ -65,7 +65,7 @@ export default function Carousel({ data, loading, endpoint }) {
                                     onClick={() =>
                                         navigate(`/${item.media_type || endpoint}/${item.id}`)
                                     }>
-                                    <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster] h-60'>
+                                    <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster] h-52 md:h-56  lg:h-60'>
                                         <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center' />
                                     </div>
                                     <span className='text-ellipsis overflow-x-hidden whitespace-nowrap'>{item.title || item.name}</span>

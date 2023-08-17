@@ -31,28 +31,28 @@ function Root() {
         )
     }
 
-    const popular = useFetch("movie/popular?language=en-US&page=1");
-    const playing = useFetch("movie/now_playing?language=en-US&page=1");
-    const toprated = useFetch("movie/top_rated?language=en-US&page=1");
+    const popular = useFetch("movie/popular");
+    const playing = useFetch("movie/now_playing");
+    const toprated = useFetch("movie/top_rated");
 
     return (
-        <>
-            <section className='max-w-screen-xl mx-auto text-white mb-16 md:mb-24'>
+        <div className='max-w-screen-xl mx-auto text-white sm:px-4 px-2'>
+            <section className='mb:8 md:mb-24 mt-16 md:mt-0'>
                 <span className='text-pahelo font-black text-3xl'>Now Playing</span>
                 <Carousel data={playing?.data?.results} loading={playing?.loading} />
                 <Outlet />
             </section>
-            <section className='max-w-screen-xl mx-auto text-white mb-16 md:mb-24'>
+            <section className='mb-8 md:mb-24'>
                 <span className='text-pahelo font-black text-3xl'>Popular</span>
                 <Carousel data={popular?.data?.results} loading={popular?.loading} />
                 <Outlet />
             </section>
-            <section className='max-w-screen-xl mx-auto text-white mb-16 md:mb-24'>
+            <section className='mb-8 md:mb-24'>
                 <span className='text-pahelo font-black text-3xl'>Top rated</span>
                 <Carousel data={toprated?.data?.results} loading={toprated?.loading} />
                 <Outlet />
             </section>
-        </>
+        </div>
     )
 }
 
