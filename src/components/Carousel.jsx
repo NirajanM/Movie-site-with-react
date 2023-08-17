@@ -42,7 +42,7 @@ export default function Carousel({ data, loading, endpoint }) {
         });
     };
     return (
-        <div className='relative mt-4 md:mb-10'>
+        <div className='relative mt-8 md:mb-10'>
 
             {!loading ? (
                 <>

@@ -31,15 +31,25 @@ function Root() {
         )
     }
 
-    const { url } = useSelector((state) => state.home);
-    const { data, loading } = useFetch("movie/popular?language=en-US&page=1");
-    console.log(data);
+    const popular = useFetch("movie/popular?language=en-US&page=1");
+    const playing = useFetch("movie/now_playing?language=en-US&page=1");
+    const toprated = useFetch("movie/top_rated?language=en-US&page=1");
 
     return (
         <>
-            <section className='max-w-screen-xl mx-auto text-white'>
+            <section className='max-w-screen-xl mx-auto text-white mb-16 md:mb-24'>
                 <span className='text-pahelo font-black text-3xl'>Now Playing</span>
-                <Carousel data={data?.results} loading={loading} />
+                <Carousel data={playing?.data?.results} loading={playing?.loading} />
+                <Outlet />
+            </section>
+            <section className='max-w-screen-xl mx-auto text-white mb-16 md:mb-24'>
+                <span className='text-pahelo font-black text-3xl'>Popular</span>
+                <Carousel data={popular?.data?.results} loading={popular?.loading} />
+                <Outlet />
+            </section>
+            <section className='max-w-screen-xl mx-auto text-white mb-16 md:mb-24'>
+                <span className='text-pahelo font-black text-3xl'>Top rated</span>
+                <Carousel data={toprated?.data?.results} loading={toprated?.loading} />
                 <Outlet />
             </section>
         </>
