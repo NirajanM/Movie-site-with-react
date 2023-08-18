@@ -34,12 +34,15 @@ function Root() {
 
     const [popularOpt, setPopularOpt] = useState("movie");
 
+
     const pOpt = [
         { name: "Movie", value: "movie" },
         { name: "Tv Shows", value: "tv" }
     ]
 
     const popular = useFetch(`${popularOpt}/popular`);
+
+    console.log(popular);
 
     const playing = useFetch("movie/now_playing");
 
@@ -75,7 +78,7 @@ function Root() {
 
             <section className='mb:8 md:mb-24'>
                 <span className='text-pahelo font-black text-3xl'>Now Playing</span>
-                <Carousel data={playing?.data?.results} loading={playing?.loading} />
+                <Carousel data={playing?.data?.results} loading={playing?.loading} endpoint={"movie"} />
             </section>
 
             <section className='mb-8 md:mb-24'>
@@ -83,7 +86,7 @@ function Root() {
                     <span className='text-pahelo font-black text-3xl'>Popular</span>
                     <OnOff opt={pOpt} stateChanger={setPopularOpt} />
                 </div>
-                <Carousel data={popular?.data?.results} loading={popular?.loading} />
+                <Carousel data={popular?.data?.results} loading={popular?.loading} endpoint={popularOpt} />
             </section>
 
             <section className='mb-8 md:mb-24'>
@@ -91,7 +94,7 @@ function Root() {
                     <span className='text-pahelo font-black text-3xl'>Top rated</span>
                     <OnOff opt={tOpt} stateChanger={setTopOpt} />
                 </div>
-                <Carousel data={toprated?.data?.results} loading={toprated?.loading} />
+                <Carousel data={toprated?.data?.results} loading={toprated?.loading} endpoint={topOpt} />
             </section>
 
             <Outlet />
