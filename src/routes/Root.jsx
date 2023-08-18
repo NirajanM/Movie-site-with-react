@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getApiConfigurations, getGenres } from '../store/rootSlice'
 import useFetch from '../hooks/useFetch'
 import Carousel from '../components/Carousel'
+import OnOff from '../components/OnOff'
 
 function Root() {
 
@@ -31,9 +32,18 @@ function Root() {
         )
     }
 
-    const popular = useFetch("movie/popular");
+    const [popularOpt, setPopularOpt] = useState("movie");
+
+    const pOpt = [
+        { name: "Movie", value: "movie" },
+        { name: "Tv Shows", value: "tv" }
+    ]
+
+    const popular = useFetch(`${popularOpt}/popular`);
     const playing = useFetch("movie/now_playing");
     const toprated = useFetch("movie/top_rated");
+
+
 
     return (
         <div className='max-w-screen-xl mx-auto text-white sm:px-4 px-2'>
@@ -43,7 +53,10 @@ function Root() {
                 <Outlet />
             </section>
             <section className='mb-8 md:mb-24'>
-                <span className='text-pahelo font-black text-3xl'>Popular</span>
+                <div>
+                    <span className='text-pahelo font-black text-3xl'>Popular</span>
+                    <OnOff opt={pOpt} stateChanger={setPopularOpt} />
+                </div>
                 <Carousel data={popular?.data?.results} loading={popular?.loading} />
                 <Outlet />
             </section>
