@@ -61,15 +61,15 @@ export default function Carousel({ data, loading, endpoint }) {
                             return (
                                 <div
                                     key={item.id}
-                                    className='flex flex-col gap-2 w-32 md:w-36 lg:w-40'
+                                    className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 group'
                                     onClick={() =>
                                         navigate(`/${item.media_type || endpoint}/${item.id}`)
                                     }>
                                     <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster] h-52 md:h-56  lg:h-60'>
-                                        <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center' />
+                                        <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center ' />
                                     </div>
-                                    <span className='text-ellipsis overflow-x-hidden whitespace-nowrap'>{item.title || item.name}</span>
-                                    <span className='text-xs text-slate-200'>{dateFormat(item.release_date)}</span>
+                                    <span className='text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo'>{item.title || item.name}</span>
+                                    <span className='text-xs text-slate-200 group-hover:text-pahelo'>{dateFormat(item.release_date)}</span>
                                 </div>
                             )
                         })}
