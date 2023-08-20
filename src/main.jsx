@@ -11,7 +11,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import SelectedMovie from './routes/SelectedMovie';
+import SelectedCinema from './routes/SelectedCinema';
 import PageNotFound from './routes/PageNotFound';
 import RootLayout from './layouts/rootLayout';
 import SearchResult from './routes/SearchResult';
@@ -20,7 +20,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
       <Route index element={<Root />} />
-      <Route path=':mediaType/:id' element={<SelectedMovie />} />
+      <Route path=':mediaType/:id' element={<SelectedCinema />} />
       <Route path='search/:query' element={<SearchResult />} />
       <Route path='anotherpage' element={<Anotherpage />} />
       <Route path='*' element={<PageNotFound />} />

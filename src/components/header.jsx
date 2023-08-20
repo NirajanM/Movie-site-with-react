@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Logo from "../assets/LetsWatchMovie.webp"
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function Header() {
     const [search, setSearch] = useState("");
@@ -26,7 +26,7 @@ export default function Header() {
                         <NavLink to="/tvshow" className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700">Tv Shows</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/movie" className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700">Movies</NavLink>
+                        <NavLink to="/movies" className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700">Movies</NavLink>
                     </li>
                 </ul>
 
