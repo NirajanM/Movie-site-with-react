@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export default function OnOff({ opt, stateChanger }) {
     const [active, setActive] = useState(true);

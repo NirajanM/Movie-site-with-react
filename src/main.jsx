@@ -1,4 +1,3 @@
-import React, { Children } from 'react'
 import ReactDOM from 'react-dom/client'
 import Root from "./routes/Root";
 import Anotherpage from './routes/Anotherpage';
