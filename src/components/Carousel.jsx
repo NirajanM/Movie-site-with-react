@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import posterNotFound from "../assets/posterNotFound.png";
@@ -33,8 +33,8 @@ export default function Carousel({ data, loading, endpoint }) {
 
         const scrollAmount =
             dir === "left"
-                ? container.scrollLeft - container.offsetWidth
-                : container.scrollLeft + container.offsetWidth
+                ? container.scrollLeft - container.offsetWidth / 1.234
+                : container.scrollLeft + container.offsetWidth / 1.234
 
         container.scrollTo({
             left: scrollAmount,
