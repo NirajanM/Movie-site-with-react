@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
-import Header from '../components/header'
+import { Outlet } from 'react-router-dom'
 import { fetchData } from '../utils/api'
-import { useSelector, useDispatch } from 'react-redux'
-import { getApiConfigurations, getGenres } from '../store/rootSlice'
+import { useDispatch } from 'react-redux'
+import { getApiConfigurations } from '../store/rootSlice'
 import useFetch from '../hooks/useFetch'
 import Carousel from '../components/Carousel'
 import OnOff from '../components/OnOff'
@@ -14,7 +13,7 @@ function Root() {
 
     useEffect(() => {
         fetchConfiguration();
-    }, []);
+    },);
 
     const fetchConfiguration = () => {
         fetchData('/configuration').then(
