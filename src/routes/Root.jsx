@@ -41,8 +41,6 @@ function Root() {
 
     const popular = useFetch(`${popularOpt}/popular`);
 
-    console.log(popular);
-
     const playing = useFetch("movie/now_playing");
 
     const [topOpt, setTopOpt] = useState("movie");
