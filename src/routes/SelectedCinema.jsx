@@ -2,11 +2,14 @@ import { useParams } from 'react-router-dom'
 import useFetch from '../hooks/useFetch';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useSelector } from 'react-redux';
-
+import ReactStars from "react-rating-stars-component";
+import { BiCameraMovie } from "react-icons/bi";
 
 export default function SelectedCinema() {
     const { mediaType, id } = useParams();
     const { data } = useFetch(`${mediaType}/${id}`);
+    const { data: videos } = useFetch(`${mediaType}/${id}/videos`);
+    console.log(videos?.results.find(v => v.type === 'Trailer'));
     let { url } = useSelector((state) => state.home);
     url = url.backdrop ? url.backdrop : "https://image.tmdb.org/t/p/original";
     const backdrop = url + data?.backdrop_path;
@@ -21,8 +24,26 @@ export default function SelectedCinema() {
                     <LazyLoadImage src={posterpath} alt={data?.title} className='md:rounded-md' />
                 </div>
                 <div className='md:basis-3/4 flex flex-col gap-2'>
+                    {data &&
+                        <div className='flex items-center gap-2'>
+                            <ReactStars
+                                count={5}
+                                size={24}
+                                value={data?.vote_average / 2}
+                                isHalf={true}
+                                edit={false}
+                                activeColor="#ffd700"
+                            />
+                            <span>{Math.round(data?.vote_average * 10) / 10}/10</span>
+                        </div>
+                    }
                     <span className='text-xl md:text-4xl lg:text-6xl font-bold md:font-black text-pahelo'>{data?.title.toUpperCase()}</span>
                     <span className='text-slate-300/70 italic font-normal lg:text-2xl'>{data?.tagline}</span>
+                    <div>
+                        <span></span>
+                        <span className='inline-flex items-center px-2 bg-red-700 gap-1'><BiCameraMovie /> TRAILER</span>
+                    </div>
+                    <p className=''>{data?.overview}</p>
                 </div>
             </section>
         </div>
