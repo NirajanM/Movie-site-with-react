@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Logo from "../assets/LetsWatchMovie.webp"
+import Logo from "../assets/LetsWatchMovie.png"
 import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function Header() {
@@ -12,10 +12,10 @@ export default function Header() {
     }
 
     return (
-        <nav id='nav-bar'>
-            <div className="max-w-screen-xl mx-auto flex gap-2 items-center justify-between py-4 px-1 sm:p-4 relative">
+        <nav id='nav-bar' className='bg-transparent'>
+            <div className=" sm:px-4 px-2 max-w-screen-xl mx-auto flex gap-2 items-center justify-between py-4 sm:p-4 relative">
                 <NavLink to="/" className="flex items-center">
-                    <img src={Logo} className='w-16 h-16 md:w-24 md:h-24' />
+                    <img src={Logo} className='w-16 h-16 md:h-20 md:w-20' />
                 </NavLink>
 
                 <ul className="absolute border-b-2 md:border-0 pb-4 left-0 top-24 w-full flex justify-evenly font-medium border-gray-100 bg-gray-50 mt-0 dark:bg-transparent md:relative md:w-fit md:top-0 md:p-0 md:space-x-8">
