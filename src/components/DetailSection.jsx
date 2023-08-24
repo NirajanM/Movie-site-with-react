@@ -11,14 +11,6 @@ export default function DetailSection({ mediaType, id, data }) {
 
     return (
         <>
-            {trailer ?
-                <div
-                    className="flex absolute h-screen w-screen top-0 left-0 bg-slate-950/50 justify-center items-center overflow-hidden overflow-y-hidden"
-                    onClick={() => { setTrailer(false) }}
-                >
-                    <ReactPlayer url={ytUrl + videos?.results?.find((v) => v.type === "Trailer").key} controls={true} playing={true} />
-                </div> : null
-            }
             <div className='md:basis-3/4 flex flex-col gap-2'>
                 {data &&
                     <div className='flex items-center gap-2'>
@@ -42,6 +34,14 @@ export default function DetailSection({ mediaType, id, data }) {
                         className='inline-flex items-center px-2 bg-red-700 gap-1 cursor-pointer'
                         onClick={() => { setTrailer(true) }}
                     ><BiCameraMovie /> TRAILER</span>
+                    {trailer ?
+                        <div
+                            className="flex fixed h-screen bg-slate-950/70 w-screen top-0 left-0 justify-center items-center z-50"
+                            onClick={() => { setTrailer(false) }}
+                        >
+                            <ReactPlayer url={ytUrl + videos?.results?.find((v) => v.type === "Trailer").key} controls={true} playing={true} />
+                        </div> : null
+                    }
                 </div>
                 <p className='lg:text-md'>{data?.overview}</p>
             </div>

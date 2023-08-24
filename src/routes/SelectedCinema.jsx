@@ -17,8 +17,8 @@ export default function SelectedCinema() {
     return (
         <div className='text-white'>
             <LazyLoadImage alt={data?.title} src={backdrop} className='absolute top-0 -z-10 object-cover w-screen h-screen object-center opacity-10' />
-            <div className='max-w-screen-xl mx-auto sm:px-4 px-2  '>
-                <section className='w-full mt-10 md:mt-3 p-4 md:p-0 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 min-h-50'>
+            <div className='max-w-screen-xl mx-auto sm:px-4 px-2 '>
+                <section className='w-full mt-10 md:mt-3 p-4 md:p-0 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 min-h-50 relative'>
                     <div className='md:basis-1/4 md:min-w-60'>
                         <LazyLoadImage src={posterpath} alt={data?.title} className='md:rounded-md' />
                     </div>
@@ -32,11 +32,3 @@ export default function SelectedCinema() {
         </div>
     )
 }
-
-// {!loading && backdrop ?
-//     <LazyLoadImage alt={data?.title} src={backdrop} className='object-cover w-screen h-screen object-center opacity-10' /> :
-//     <div className=' h-96 w-full flex justify-center items-center gap-2 lg:gap-4 text-lg font-black text-white flex-col'>
-//         <span className='text-3xl lg:text-6xl'>404</span>
-//         <span className='text-white font-normal lg:text-2xl'>Image not found!</span>
-//     </div>
-// }
