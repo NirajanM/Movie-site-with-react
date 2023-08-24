@@ -20,12 +20,12 @@ export default function SelectedCinema() {
             <LazyLoadImage alt={data?.title} src={backdrop} className='absolute top-0 -z-10 object-cover w-screen h-screen object-center opacity-10' />
             <div className='max-w-screen-xl mx-auto sm:px-4 px-2 '>
                 <section className='w-full mt-10 md:mt-3 p-4 md:p-0 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 relative'>
-                    <div className='md:basis-1/4 md:min-w-60'>
+                    <div className='md:basis-1/4 md:min-w-60 aspect-poster'>
                         {loading
                             ?
                             <Skeleton className='aspect-poster' />
                             :
-                            <LazyLoadImage src={posterpath} alt={data?.title} className='md:rounded-md' />
+                            <img src={posterpath} alt={data?.title} className='md:rounded-md' />
                         }
 
                     </div>
