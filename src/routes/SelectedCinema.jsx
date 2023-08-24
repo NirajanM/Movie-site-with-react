@@ -25,7 +25,7 @@ export default function SelectedCinema() {
                             ?
                             <Skeleton className='aspect-poster' />
                             :
-                            <img src={posterpath} alt={data?.title} className='md:rounded-md' />
+                            <LazyLoadImage src={posterpath} alt={data?.title} className='md:rounded-md' />
                         }
 
                     </div>

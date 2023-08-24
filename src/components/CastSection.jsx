@@ -60,7 +60,7 @@ export default function CastSection({ mediaType, id }) {
                                         className='text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo'
                                     >{item.name || item.original_name}</span>
                                     <span
-                                        className='text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo text-sm'
+                                        className=' group-hover:text-pahelo text-sm'
                                     >{item.character}</span>
                                 </div>
                             )

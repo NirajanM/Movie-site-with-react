@@ -59,7 +59,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                 <div>
                     <span></span>
                     <span
-                        className='inline-flex items-center px-2 bg-red-700 gap-1 cursor-pointer'
+                        className='inline-flex items-center px-2 bg-red-700 gap-1 cursor-pointer hover:bg-red-800 hover:scale-105'
                         onClick={() => { setTrailer(true) }}
                     ><BiCameraMovie /> TRAILER</span>
                 </div>
