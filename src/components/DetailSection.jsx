@@ -1,15 +1,32 @@
 import ReactStars from "react-rating-stars-component";
 import { BiCameraMovie } from "react-icons/bi";
-import useFetch from "../hooks/useFetch";
 import ReactPlayer from "react-player";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import { fetchData } from "../utils/api";
+
 
 export default function DetailSection({ mediaType, id, data, loading }) {
-    const { data: videos } = useFetch(`${mediaType}/${id}/videos`);
     const ytUrl = "https://www.youtube.com/watch?v=";
+    const [allUrls, setAllUrls] = useState(null);
+
+
     const [trailer, setTrailer] = useState(false);
-    const allUrls = videos?.results?.map((item) => (ytUrl + item.key));
+    useEffect(() => {
+        fetchData(`${mediaType}/${id}/videos`).then(
+            (res) => {
+                const mainTrailerUrl = ytUrl + res.results.find((v) => v.type === "Trailer").key;
+                setAllUrls(mainTrailerUrl);
+                const Urls = res.results.map(item => { return (ytUrl + item.key) });
+                const newUrls = [mainTrailerUrl, ...Urls];
+                const uniq = [...new Set(newUrls)];
+                console.log(uniq);
+                setAllUrls(uniq);
+            }
+        ).catch((err) => {
+            console.log(err);
+        })
+    }, []);
 
     return (
         <>
@@ -18,7 +35,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                     className="flex fixed h-screen bg-slate-950/70 w-screen top-0 left-0 justify-center items-center z-50"
                     onClick={() => { setTrailer(false) }}
                 >
-                    <ReactPlayer url={[ytUrl + videos?.results?.find((v) => v.type === "Trailer").key, ...allUrls]} controls={true} playing={true} />
+                    {trailer && <ReactPlayer url={allUrls} controls={true} playing={true} />}
                 </div> : null
             }
             <div className='md:basis-3/4 flex flex-col gap-2'>

@@ -15,7 +15,6 @@ const skeletonItem = () => {
 
 export default function CastSection({ mediaType, id }) {
     const { data, loading } = useFetch(`${mediaType}/${id}/credits`);
-    console.log(data);
     const carouselBox = useRef();
     const { url } = useSelector((state) => state.home);
 
