@@ -14,12 +14,14 @@ import SelectedCinema from './routes/SelectedCinema';
 import PageNotFound from './routes/PageNotFound';
 import RootLayout from './layouts/rootLayout';
 import SearchResult from './routes/SearchResult';
+import Play from './routes/Play';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
       <Route index element={<Root />} />
       <Route path=':mediaType/:id' element={<SelectedCinema />} />
+      <Route path=':mediaType/:id/play' element={<Play />} />
       <Route path='search/:query' element={<SearchResult />} />
       <Route path='anotherpage' element={<Anotherpage />} />
       <Route path='*' element={<PageNotFound />} />
