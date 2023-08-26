@@ -1,5 +1,6 @@
 import ReactStars from "react-rating-stars-component";
 import { BiCameraMovie } from "react-icons/bi";
+import { FaPlay } from "react-icons/fa";
 import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -33,7 +34,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                     className="flex fixed h-screen bg-slate-950/70 w-screen top-0 left-0 justify-center items-center z-50"
                     onClick={() => { setTrailer(false) }}
                 >
-                    <ReactPlayer url={allUrls} controls={true} playing={true} />
+                    {!trailerLoading && <ReactPlayer url={allUrls} controls={true} playing={true} />}
                 </div> : null
             }
             <div className='md:basis-3/4 flex flex-col gap-2'>
@@ -96,7 +97,9 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                         <p className='lg:text-md'>{data?.overview}</p>
 
                 }
+                <div className="mt-5 text-4xl text-slate-400 hover:text-white cursor-pointer"><FaPlay /></div>
             </div>
+
         </>
     )
 }

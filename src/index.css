@@ -3,20 +3,18 @@
 @tailwind utilities;
 
 @layer utilities {
-  @variants responsive {
 
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    /* Hide scrollbar for IE, Edge and Firefox */
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      /* IE and Edge */
-      scrollbar-width: none;
-      /* Firefox */
-    }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }
 
@@ -25,6 +23,10 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+:root {
+  scroll-behavior: smooth;
 }
 
 /* Remove default margin */
@@ -101,4 +103,31 @@ select {
 
 #nav-bar a.active {
   color: #FFDF2B;
+}
+
+/* scrollbar custom */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.dark::-webkit-scrollbar-track {
+  background: #2f2f2f;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(172, 172, 250);
+}
+
+/* Handle */
+.dark::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(2, 75, 139, 0.612);
+  border-radius: 20px;
 }
