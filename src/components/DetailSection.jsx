@@ -9,6 +9,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
     const { data: videos } = useFetch(`${mediaType}/${id}/videos`);
     const ytUrl = "https://www.youtube.com/watch?v=";
     const [trailer, setTrailer] = useState(false);
+    const allUrls = videos?.results?.map((item) => (ytUrl + item.key));
 
     return (
         <>
@@ -17,7 +18,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                     className="flex fixed h-screen bg-slate-950/70 w-screen top-0 left-0 justify-center items-center z-50"
                     onClick={() => { setTrailer(false) }}
                 >
-                    <ReactPlayer url={ytUrl + videos?.results?.find((v) => v.type === "Trailer").key} controls={true} playing={true} />
+                    <ReactPlayer url={[ytUrl + videos?.results?.find((v) => v.type === "Trailer").key, ...allUrls]} controls={true} playing={true} />
                 </div> : null
             }
             <div className='md:basis-3/4 flex flex-col gap-2'>
