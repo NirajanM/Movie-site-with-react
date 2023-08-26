@@ -32,7 +32,7 @@ export default function SelectedCinema() {
                     <DetailSection mediaType={mediaType} id={id} data={data} loading={loading} />
                 </section>
                 <section className='mt-10 mb-20'>
-                    <span className='text-lg sm:text-xl md:text-3xl font-semibold text-slate-200/80'>Cast</span>
+                    <span className='text-lg sm:text-xl md:text-3xl font-bold text-pahelo opacity-70 italic'>Cast</span>
                     <CastSection mediaType={mediaType} id={id} />
                 </section>
             </div>
