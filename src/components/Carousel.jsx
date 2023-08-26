@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import dateFormat from './dateFormat';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { AiFillStar } from "react-icons/ai";
 
 const skeletonItem = () => {
     return (<div className='flex flex-col gap-2 w-32 md:w-36 lg:w-40'>
@@ -17,7 +18,6 @@ const skeletonItem = () => {
 }
 
 export default function Carousel({ data, loading, endpoint }) {
-
     //will pass this reference to my carousel component
     const carouselBox = useRef();
 
@@ -69,7 +69,14 @@ export default function Carousel({ data, loading, endpoint }) {
                                         <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center ' />
                                     </div>
                                     <span className='text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo'>{item.title || item.name}</span>
-                                    <span className='text-xs text-slate-200 group-hover:text-pahelo'>{dateFormat(item.release_date)}</span>
+                                    <div className='flex justify-between items-center'>
+                                        <span className='text-xs text-slate-200 group-hover:text-pahelo'>
+                                            {dateFormat(item.release_date || item.first_air_date)}
+                                        </span>
+                                        <span className='flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo pr-4'>
+                                            {item.vote_average.toFixed(1)}<AiFillStar />
+                                        </span>
+                                    </div>
                                 </div>
                             )
                         })}

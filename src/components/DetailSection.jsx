@@ -10,18 +10,16 @@ export default function DetailSection({ mediaType, id, data, loading }) {
     const ytUrl = "https://www.youtube.com/watch?v=";
     const [allUrls, setAllUrls] = useState(null);
 
-
     const [trailer, setTrailer] = useState(false);
+    const [trailerLoading, setTrailerLoading] = useState(true);
     useEffect(() => {
         fetchData(`${mediaType}/${id}/videos`).then(
             (res) => {
-                const mainTrailerUrl = ytUrl + res.results.find((v) => v.type === "Trailer").key;
-                setAllUrls(mainTrailerUrl);
+                console.log(res.results);
                 const Urls = res.results.map(item => { return (ytUrl + item.key) });
-                const newUrls = [mainTrailerUrl, ...Urls];
-                const uniq = [...new Set(newUrls)];
-                console.log(uniq);
-                setAllUrls(uniq);
+                const newUrls = Urls.reverse();
+                setAllUrls(newUrls);
+                setTrailerLoading(false);
             }
         ).catch((err) => {
             console.log(err);
@@ -35,7 +33,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                     className="flex fixed h-screen bg-slate-950/70 w-screen top-0 left-0 justify-center items-center z-50"
                     onClick={() => { setTrailer(false) }}
                 >
-                    {trailer && <ReactPlayer url={allUrls} controls={true} playing={true} />}
+                    <ReactPlayer url={allUrls} controls={true} playing={true} />
                 </div> : null
             }
             <div className='md:basis-3/4 flex flex-col gap-2'>
@@ -76,10 +74,14 @@ export default function DetailSection({ mediaType, id, data, loading }) {
 
                 <div>
                     <span></span>
-                    <span
-                        className='inline-flex items-center px-2 bg-red-700 gap-1 cursor-pointer hover:bg-red-800 hover:scale-105'
-                        onClick={() => { setTrailer(true) }}
-                    ><BiCameraMovie /> TRAILER</span>
+                    {!trailerLoading ?
+                        <span
+                            className='inline-flex items-center px-2 bg-red-700 gap-1 cursor-pointer hover:bg-red-800 hover:scale-105'
+                            onClick={() => { setTrailer(true) }}
+                        ><BiCameraMovie /> TRAILER</span>
+                        :
+                        <Skeleton width={90} height={23} />
+                    }
                 </div>
 
                 {
