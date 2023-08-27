@@ -89,6 +89,7 @@ export default function Carousel({ data, loading, endpoint }) {
                 {skeletonItem()}
                 {skeletonItem()}
                 {skeletonItem()}
+                {skeletonItem()}
             </div>
             )}
         </div>

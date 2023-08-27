@@ -132,8 +132,14 @@ select {
   border-radius: 20px;
 }
 
-.btn-group .btn {
-  border: none !important;
-  background: transparent !important;
-  background-image: none !important;
+.list {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-left: 18px;
+  cursor: pointer;
+}
+
+.list:hover {
+  color: white;
 }

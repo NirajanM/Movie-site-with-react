@@ -63,40 +63,39 @@ function Root() {
 
 
     return (
-        <div className='max-w-screen-xl mx-auto text-white sm:px-4 px-2'>
+        <> <Outlet />
+            <div className='w-full md:w-5/6 md:pl-5 text-white sm:px-4 px-2'>
 
-            <section className='mb:8 md:mb-24 mt-16 md:mt-0'>
-                <div>
-                    <span className='text-pahelo font-black text-3xl'>Trending</span>
-                    <OnOff opt={trOpt} stateChanger={setTrendingOpt} />
-                </div>
-                <Carousel data={trending?.data?.results} loading={trending?.loading} />
-            </section>
+                <section className='mb:8 md:mb-24 mt-16 md:mt-0'>
+                    <div>
+                        <span className='text-pahelo font-black text-3xl'>Trending</span>
+                        <OnOff opt={trOpt} stateChanger={setTrendingOpt} />
+                    </div>
+                    <Carousel data={trending?.data?.results} loading={trending?.loading} />
+                </section>
 
-            <section className='mb:8 md:mb-24'>
-                <span className='text-pahelo font-black text-3xl'>Now Playing</span>
-                <Carousel data={playing?.data?.results} loading={playing?.loading} endpoint={"movie"} />
-            </section>
+                <section className='mb:8 md:mb-24'>
+                    <span className='text-pahelo font-black text-3xl'>Now Playing</span>
+                    <Carousel data={playing?.data?.results} loading={playing?.loading} endpoint={"movie"} />
+                </section>
 
-            <section className='mb-8 md:mb-24'>
-                <div>
-                    <span className='text-pahelo font-black text-3xl'>Popular</span>
-                    <OnOff opt={pOpt} stateChanger={setPopularOpt} />
-                </div>
-                <Carousel data={popular?.data?.results} loading={popular?.loading} endpoint={popularOpt} />
-            </section>
+                <section className='mb-8 md:mb-24'>
+                    <div>
+                        <span className='text-pahelo font-black text-3xl'>Popular</span>
+                        <OnOff opt={pOpt} stateChanger={setPopularOpt} />
+                    </div>
+                    <Carousel data={popular?.data?.results} loading={popular?.loading} endpoint={popularOpt} />
+                </section>
 
-            <section className='mb-8 md:mb-24'>
-                <div>
-                    <span className='text-pahelo font-black text-3xl'>Top rated</span>
-                    <OnOff opt={tOpt} stateChanger={setTopOpt} />
-                </div>
-                <Carousel data={toprated?.data?.results} loading={toprated?.loading} endpoint={topOpt} />
-            </section>
-
-            <Outlet />
-        </div>
-
+                <section className='mb-8 md:mb-24'>
+                    <div>
+                        <span className='text-pahelo font-black text-3xl'>Top rated</span>
+                        <OnOff opt={tOpt} stateChanger={setTopOpt} />
+                    </div>
+                    <Carousel data={toprated?.data?.results} loading={toprated?.loading} endpoint={topOpt} />
+                </section>
+            </div>
+        </>
     )
 }
 
