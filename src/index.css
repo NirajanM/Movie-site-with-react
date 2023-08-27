@@ -131,3 +131,9 @@ select {
   background: rgba(2, 75, 139, 0.612);
   border-radius: 20px;
 }
+
+.btn-group .btn {
+  border: none !important;
+  background: transparent !important;
+  background-image: none !important;
+}
