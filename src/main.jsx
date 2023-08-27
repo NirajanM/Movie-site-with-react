@@ -15,6 +15,8 @@ import PageNotFound from './routes/PageNotFound';
 import RootLayout from './layouts/rootLayout';
 import SearchResult from './routes/SearchResult';
 import Play from './routes/Play';
+import Tvshow from './routes/Tvshow';
+import Movies from './routes/Movies';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +26,8 @@ const router = createBrowserRouter(
       <Route path=':mediaType/:id/play' element={<Play />} />
       <Route path='search/:query' element={<SearchResult />} />
       <Route path='anotherpage' element={<Anotherpage />} />
+      <Route path='tvshow' element={<Tvshow />} />
+      <Route path='movies' element={<Movies />} />
       <Route path='*' element={<PageNotFound />} />
     </Route>
   ));

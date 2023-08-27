@@ -12,8 +12,8 @@ import { AiFillStar } from "react-icons/ai";
 const skeletonItem = () => {
     return (<div className='flex flex-col gap-2 w-32 md:w-36 lg:w-40'>
         <Skeleton count={1} className=' aspect-poster w-32 md:w-36 lg:w-40' />
-        <Skeleton count={1} className='h-4' />
-        <Skeleton count={1} className='h-4' />
+        <Skeleton count={1} className='h-3' />
+        <Skeleton count={1} className='h-3' />
     </div>)
 }
 

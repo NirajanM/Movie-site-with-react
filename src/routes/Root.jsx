@@ -6,6 +6,7 @@ import { getApiConfigurations } from '../store/rootSlice'
 import useFetch from '../hooks/useFetch'
 import Carousel from '../components/Carousel'
 import OnOff from '../components/OnOff'
+import Menu from '../components/Menu'
 
 function Root() {
 
@@ -63,7 +64,8 @@ function Root() {
 
 
     return (
-        <> <Outlet />
+        <div className='flex max-w-screen-xl mx-auto'>
+            <Menu />
             <div className='w-full md:w-5/6 md:pl-5 text-white sm:px-4 px-2'>
 
                 <section className='mb:8 md:mb-24 mt-16 md:mt-0'>
@@ -94,8 +96,10 @@ function Root() {
                     </div>
                     <Carousel data={toprated?.data?.results} loading={toprated?.loading} endpoint={topOpt} />
                 </section>
+                <Outlet />
             </div>
-        </>
+
+        </div>
     )
 }
 
