@@ -2,18 +2,18 @@ import { BiMoviePlay } from "react-icons/bi";
 import { RiMovie2Line } from "react-icons/ri";
 import { RxAvatar } from "react-icons/rx";
 import { BsQuestionOctagon } from "react-icons/bs";
-import { GoSingleSelect } from "react-icons/go";
+import GenreDropdown from "./GenreDropdown";
+
 
 export default function Menu() {
     return (
         <div className=" top-0 text-white border-r border-gray-600 md:inline pt-16 pr-5 h-screen w-fit fixed md:sticky bg-black md:bg-transparent z-50 -right-3/4">
-            <ul className="flex-col justify-start items-center space-y-14 text-lg text-gray-400 font-medium w-[50vw] md:w-fit">
-                <li>
+            <ul className="flex-col justify-start items-center space-y-14 text-lg text-gray-400 font-medium w-[50vw] md:w-[15vw]">
+                <li className="relative">
                     <div className="list">
                         <BiMoviePlay className="text-2xl" />
-                        <div className="flex flex-col">
-                            <span className="flex gap-[10px] items-center">Genre <GoSingleSelect className="text-xl" /></span>
-                            <span className="text-xs text-slate-100 pl-1 font-light">- default</span>
+                        <div className="flex flex-col ">
+                            <GenreDropdown />
                         </div>
                     </div>
 

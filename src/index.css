@@ -118,7 +118,7 @@ select {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(172, 172, 250);
+  background: #2f2f2f;
 }
 
 /* Handle */
@@ -128,7 +128,7 @@ select {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(2, 75, 139, 0.612);
+  background: #888;
   border-radius: 20px;
 }
 
