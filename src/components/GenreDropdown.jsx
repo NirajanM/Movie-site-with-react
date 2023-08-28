@@ -1,6 +1,8 @@
 import { GoSingleSelect } from "react-icons/go";
-//import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getGenres } from "../store/rootSlice";
 
 const options = [
     {
@@ -26,8 +28,9 @@ const options = [
 ]
 
 export default function GenreDropdown() {
-    //const dispatch = useDispatch();
-    const [genre, setGenre] = useState(null);
+    const dispatch = useDispatch();
+    const { genres } = useSelector((state) => state.home);
+    const [genre, setGenre] = useState(genres);
     const [optionOpen, setOptionOpen] = useState(false);
     return (
         <>
@@ -48,6 +51,7 @@ export default function GenreDropdown() {
                             key={opt.value}
                             onClick={() => {
                                 setGenre(opt.value);
+                                dispatch(getGenres(opt.value));
                                 setOptionOpen(false);
                             }}
                         > {opt.name}</div>);
