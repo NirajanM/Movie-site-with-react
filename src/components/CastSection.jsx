@@ -73,6 +73,8 @@ export default function CastSection({ mediaType, id }) {
                 {skeletonItem()}
                 {skeletonItem()}
                 {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
             </div>
             )}
         </div>
