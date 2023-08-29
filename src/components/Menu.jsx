@@ -8,7 +8,7 @@ import GenreDropdown from "./GenreDropdown";
 export default function Menu() {
     return (
         <div className=" top-0 text-white border-r border-gray-600 md:inline pt-16 pr-5 h-screen w-fit fixed md:sticky bg-black md:bg-transparent z-50 -right-3/4">
-            <ul className="flex-col justify-start items-center space-y-14 text-lg text-gray-400 font-medium w-[50vw] md:w-[15vw]">
+            <ul className="flex-col justify-start items-center space-y-14 text-lg text-gray-400 font-medium w-[50vw] md:w-[12rem]">
                 <li className="relative">
                     <div className="list">
                         <BiMoviePlay className="text-2xl" />

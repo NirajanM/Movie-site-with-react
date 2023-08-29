@@ -66,8 +66,8 @@ function Root() {
     return (
         <div className='flex flex-row-reverse md:flex-row max-w-screen-xl mx-auto '>
             <Menu />
-            <div className='w-full md:w-[88%] md:pl-5 text-white'>
-                <section className='mb:8 md:mb-24 mt-16 md:mt-0 sm:px-4 px-2'>
+            <div className='w-full md:pl-9 text-white sm:px-4 px-2 md:w-[75%] lg:w-[79%] xl:w-[88%]'>
+                <section className='mb:8 md:mb-24 mt-16 md:mt-0  '>
                     <div>
                         <span className='text-pahelo font-black text-3xl'>Trending</span>
                         <OnOff opt={trOpt} stateChanger={setTrendingOpt} />

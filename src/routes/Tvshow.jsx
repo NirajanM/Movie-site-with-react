@@ -8,8 +8,8 @@ export default function Tvshow() {
     return (
         <div className='flex max-w-screen-xl mx-auto'>
             <Menu />
-            <div className='w-full md:w-5/6 md:pl-5 text-white md:px-0 px-2 my-10 md:my-0'>
-                <Repeater data={trending?.data?.results} loading={trending?.loading} />
+            <div className='w-full md:w-5/6 md:px-9 text-white px-2'>
+                <Repeater data={trending?.data?.results} loading={trending?.loading} endpoint={"tv"} />
             </div>
         </div>
     )

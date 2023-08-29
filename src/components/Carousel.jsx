@@ -42,7 +42,7 @@ export default function Carousel({ data, loading, endpoint }) {
         });
     };
     return (
-        <div className='relative mt-8 md:mb-10'>
+        <div className='relative mt-8 md:mb-10 max-w-[1024px] '>
 
             {!loading ? (
                 <>
@@ -61,11 +61,11 @@ export default function Carousel({ data, loading, endpoint }) {
                             return (
                                 <div
                                     key={item.id}
-                                    className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 group'
+                                    className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 group'
                                     onClick={() =>
                                         navigate(`/${item.media_type || endpoint}/${item.id}`)
                                     }>
-                                    <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster] h-52 md:h-56  lg:h-60'>
+                                    <div className='relative w-32 md:w-36 lg:w-40 xl:w-44 aspect-poster'>
                                         <LazyLoadImage alt={item.title} src={posterUrl} className='object-cover w-full h-full object-center ' />
                                     </div>
                                     <span className='text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo'>{item.title || item.name}</span>

@@ -16,7 +16,7 @@ const skeletonItem = () => {
     </div>)
 }
 
-export default function Carousel({ data, loading, endpoint }) {
+export default function Repeater({ data, loading, endpoint }) {
     const navigate = useNavigate();
     //will pass this reference to my carousel component
     const carouselBox = useRef();
@@ -26,11 +26,11 @@ export default function Carousel({ data, loading, endpoint }) {
 
 
     return (
-        <div className='relative my-12'>
+        <div className='relative my-16 md:my-6'>
 
             {!loading ? (
                 <>
-                    <div className=' grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-5 lg:gap-7 xl:gap-10 ' ref={carouselBox}>
+                    <div className=' grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-7 xl:gap-10 ' ref={carouselBox}>
                         {data?.map((item) => {
                             //creating posterUrl if found or noposter url from assest incase of error
                             const posterUrl = item.poster_path ? url.backdrop + item.poster_path : posterNotFound;
@@ -58,7 +58,14 @@ export default function Carousel({ data, loading, endpoint }) {
                         })}
                     </div>
                 </>
-            ) : (<div className='flex mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar'>
+            ) : (<div className=' grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-7 xl:gap-10 '>
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
+                {skeletonItem()}
                 {skeletonItem()}
                 {skeletonItem()}
                 {skeletonItem()}
