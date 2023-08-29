@@ -6,8 +6,8 @@ import { getGenres } from "../store/rootSlice";
 
 const options = [
     {
-        name: "opt1",
-        value: "opt1"
+        name: "ALL",
+        value: "all"
     },
     {
         name: "opt2",
@@ -30,7 +30,7 @@ const options = [
 export default function GenreDropdown() {
     const dispatch = useDispatch();
     const { genres } = useSelector((state) => state.home);
-    const [genre, setGenre] = useState(genres);
+    const [genre, setGenre] = useState(genres || options[0]);
     const [optionOpen, setOptionOpen] = useState(false);
     return (
         <>
@@ -39,7 +39,7 @@ export default function GenreDropdown() {
                 onClick={() => { setOptionOpen(true) }}
             >Genre <GoSingleSelect className="text-xl" />
             </span>
-            <span className="text-xs text-slate-100 pl-1 font-light">- {genre ? genre : "default"}</span>
+            <span className="text-sm text-slate-100 pl-1 font-light">- {genre.name}</span>
             {optionOpen &&
                 <div
                     className="absolute top-14 left-0 flex flex-col items-center justify-center text-white w-full bg-black z-50 py-5 gap-5 h-[40vh] overflow-y-scroll border border-gray-600"
@@ -50,8 +50,8 @@ export default function GenreDropdown() {
                             className="hover:bg-slate-800 py-1 w-full text-center "
                             key={opt.value}
                             onClick={() => {
-                                setGenre(opt.value);
-                                dispatch(getGenres(opt.value));
+                                setGenre(opt);
+                                dispatch(getGenres(opt));
                                 setOptionOpen(false);
                             }}
                         > {opt.name}</div>);
