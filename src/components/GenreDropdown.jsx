@@ -42,7 +42,7 @@ export default function GenreDropdown() {
             <span className="text-xs text-slate-100 pl-1 font-light">- {genre ? genre : "default"}</span>
             {optionOpen &&
                 <div
-                    className="absolute top-14 left-0 flex flex-col items-center justify-center text-white w-full bg-gray-900 z-50 py-5 gap-5 h-[40vh] overflow-y-scroll"
+                    className="absolute top-14 left-0 flex flex-col items-center justify-center text-white w-full bg-black z-50 py-5 gap-5 h-[40vh] overflow-y-scroll border border-gray-600"
                     onMouseLeave={() => { setOptionOpen(false) }}
                 >
                     {options.map(opt => {

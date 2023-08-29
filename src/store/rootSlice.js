@@ -4,7 +4,7 @@ export const rootSlice = createSlice({
   name: 'Homepage',
   initialState: {
     url: {},
-    genres: {},
+    genres: "",
   },
   reducers: {
     getApiConfigurations: (state, action) => {
