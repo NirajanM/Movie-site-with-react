@@ -12,14 +12,14 @@ import { AiFillStar } from "react-icons/ai";
 const skeletonItem = () => {
     return (<div className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 group'>
         <div className='relative w-32 md:w-36 lg:w-40 xl:w-44 aspect-poster'>
-            <Skeleton count={1} className='object-cover w-full h-full object-center' />
+            <Skeleton count={1} className='object-cover w-full h-full object-center aspect-poster' />
         </div>
         <Skeleton count={1} className='h-3' />
         <Skeleton count={1} className='h-3' />
     </div>)
 }
 
-export default function Carousel({ data, loading, endpoint }) {
+export default function Recommended({ data, loading, endpoint }) {
     //will pass this reference to my carousel component
     const carouselBox = useRef();
 
@@ -44,7 +44,7 @@ export default function Carousel({ data, loading, endpoint }) {
         });
     };
     return (
-        <div className='relative mt-8 md:mb-10 max-w-[1024px] '>
+        <div className='relative mt-8 md:mb-10'>
 
             {!loading ? (
                 <>
@@ -58,7 +58,6 @@ export default function Carousel({ data, loading, endpoint }) {
                     ><FaChevronRight /></span>
                     <div className='flex pb-8 md:pb-0 md:mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar' ref={carouselBox}>
                         {data?.map((item) => {
-                            //creating posterUrl if found or noposter url from assest incase of error
                             const posterUrl = item.poster_path ? url.backdrop + item.poster_path : posterNotFound;
                             return (
                                 <div
@@ -84,7 +83,7 @@ export default function Carousel({ data, loading, endpoint }) {
                         })}
                     </div>
                 </>
-            ) : (<div className='flex mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar'>
+            ) : (<div className='flex pb-8 md:pb-0 md:mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar'>
                 {skeletonItem()}
                 {skeletonItem()}
                 {skeletonItem()}

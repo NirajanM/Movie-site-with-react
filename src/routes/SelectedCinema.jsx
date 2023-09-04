@@ -5,10 +5,13 @@ import { useSelector } from 'react-redux';
 import CastSection from '../components/CastSection';
 import DetailSection from '../components/DetailSection';
 import Skeleton from 'react-loading-skeleton';
+import Recommended from '../components/Recommended';
 
 export default function SelectedCinema() {
     const { mediaType, id } = useParams();
     const { data, loading } = useFetch(`${mediaType}/${id}`);
+    const { data: similarData, loading: similarLoading } = useFetch(`${mediaType}/${id}/similar`);
+    const { data: recommendationsData, loading: recommendationsLoading } = useFetch(`${mediaType}/${id}/recommendations`);
     let { url } = useSelector((state) => state.home);
     url = url.backdrop ? url.backdrop : "https://image.tmdb.org/t/p/original";
     const backdrop = url + data?.backdrop_path;
@@ -31,9 +34,17 @@ export default function SelectedCinema() {
                     </div>
                     <DetailSection mediaType={mediaType} id={id} data={data} loading={loading} />
                 </section>
-                <section className='mt-10 mb-20'>
+                <section className='mt-10 md:mb-20'>
                     <span className='text-lg sm:text-xl md:text-3xl font-bold text-pahelo opacity-70 italic'>Cast</span>
                     <CastSection mediaType={mediaType} id={id} />
+                </section>
+                <section className='mt-10 md:mb-20'>
+                    <span className='text-lg sm:text-xl md:text-3xl font-bold text-pahelo opacity-70 italic'>Similar {mediaType === "tv" ? "tv shows" : "movies"}</span>
+                    <Recommended data={similarData?.results} loading={similarLoading} endpoint={mediaType} />
+                </section>
+                <section className='mt-10 md:mb-20'>
+                    <span className='text-lg sm:text-xl md:text-3xl font-bold text-pahelo opacity-70 italic'>Recommended</span>
+                    <Recommended data={recommendationsData?.results} loading={recommendationsLoading} endpoint={mediaType} />
                 </section>
             </div>
         </div>

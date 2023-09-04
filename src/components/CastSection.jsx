@@ -6,8 +6,10 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import avatar from "../assets/avatar.svg"
 const skeletonItem = () => {
-    return (<div className='flex flex-col gap-2 w-32 md:w-36 lg:w-40'>
-        <Skeleton count={1} className=' h-52 md:h-56 lg:h-60 w-32 md:w-36 lg:w-40' />
+    return (<div className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 group'>
+        <div className="relative w-32 md:w-36 lg:w-40 aspect-poster h-52 md:h-56  lg:h-60">
+            <Skeleton count={1} className='object-cover w-full h-full object-center rounded-sm md:rounded-md' />
+        </div>
         <Skeleton count={1} className='h-4' />
         <Skeleton count={1} className='h-4' />
     </div>)
@@ -52,7 +54,7 @@ export default function CastSection({ mediaType, id }) {
                                     key={item.id}
                                     className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 group'
                                 >
-                                    <div className='relative w-32 md:w-36 lg:w-40 aspect-[poster] h-52 md:h-56  lg:h-60'>
+                                    <div className='relative w-32 md:w-36 lg:w-40 aspect-poster h-52 md:h-56  lg:h-60'>
                                         <LazyLoadImage alt={item.name} src={profileUrl} className='object-cover w-full h-full object-center rounded-sm md:rounded-md' />
                                     </div>
                                     <span
