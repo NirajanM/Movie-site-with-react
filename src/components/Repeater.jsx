@@ -9,8 +9,10 @@ import dateFormat from './dateFormat';
 import { AiFillStar } from "react-icons/ai";
 
 const skeletonItem = () => {
-    return (<div className='flex flex-col gap-2 w-32 md:w-36 lg:w-40'>
-        <Skeleton count={1} className=' aspect-poster w-32 md:w-36 lg:w-40' />
+    return (<div className='flex flex-col gap-2 group'>
+        <div className='relative aspect-poster min-w-[128px] md:min-w-[144px] lg:min-w-[160px]'>
+            <Skeleton count={1} className='object-cover w-full h-full object-center ' />
+        </div>
         <Skeleton count={1} className='h-3' />
         <Skeleton count={1} className='h-3' />
     </div>)
