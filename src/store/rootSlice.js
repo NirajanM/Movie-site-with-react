@@ -4,18 +4,22 @@ export const rootSlice = createSlice({
   name: 'Homepage',
   initialState: {
     url: {},
-    genres: "",
+    tvGenre: "",
+    movieGenre: "",
   },
   reducers: {
     getApiConfigurations: (state, action) => {
       state.url = action.payload;
     },
-    getGenres: (state, action) => {
-      state.genres = action.payload;
+    getTvGenre: (state, action) => {
+      state.tvGenre = action.payload;
+    },
+    getMovieGenre: (state, action) => {
+      state.movieGenre = action.payload;
     },
   },
 })
 
 
-export const { getApiConfigurations, getGenres } = rootSlice.actions
+export const { getApiConfigurations, getTvGenre, getMovieGenre } = rootSlice.actions
 export default rootSlice.reducer
