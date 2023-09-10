@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import dateFormat from './dateFormat';
 import { AiFillStar } from "react-icons/ai";
+import useFetch from '../hooks/useFetch';
 
 const skeletonItem = () => {
     return (<div className='flex flex-col gap-2 group'>
@@ -18,13 +19,14 @@ const skeletonItem = () => {
     </div>)
 }
 
-export default function Repeater({ data, loading, endpoint }) {
+export default function Repeater({ genre, endpoint }) {
     const navigate = useNavigate();
     //will pass this reference to my carousel component
     const carouselBox = useRef();
 
     //importing url from configured redux store
     const { url } = useSelector((state) => state.home);
+    const { data, loading } = useFetch(`discover/${endpoint}?with_genres=${genre}`);
 
 
     return (
@@ -33,7 +35,7 @@ export default function Repeater({ data, loading, endpoint }) {
             {!loading ? (
                 <>
                     <div className=' grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-7 xl:gap-10 ' ref={carouselBox}>
-                        {data?.map((item) => {
+                        {data?.results?.map((item) => {
                             //creating posterUrl if found or noposter url from assest incase of error
                             const posterUrl = item.poster_path ? url.backdrop + item.poster_path : posterNotFound;
                             return (
