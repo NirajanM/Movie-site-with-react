@@ -1,36 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
-import { fetchData } from '../utils/api'
-import { useDispatch } from 'react-redux'
-import { getApiConfigurations } from '../store/rootSlice'
+import { useState } from 'react'
 import useFetch from '../hooks/useFetch'
+import { Outlet } from 'react-router-dom'
 import Carousel from '../components/Carousel'
 import OnOff from '../components/OnOff'
 import Menu from '../components/Menu'
 
 function Root() {
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        fetchConfiguration();
-    },);
-
-    const fetchConfiguration = () => {
-        fetchData('/configuration').then(
-            (res) => {
-                //extracting necessary url from config response
-                const url = {
-                    backdrop: res.images.secure_base_url + "original",
-                    poster: res.images.secure_base_url + "original",
-                    profile: res.images.secure_base_url + "original",
-                }
-
-                //setting it for global use
-                dispatch(getApiConfigurations(url));
-            }
-        )
-    }
 
     const [popularOpt, setPopularOpt] = useState("movie");
 

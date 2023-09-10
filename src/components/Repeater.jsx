@@ -6,8 +6,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import dateFormat from './dateFormat';
-import { AiFillStar } from "react-icons/ai";
 import { fetchData } from '../utils/api';
+import { AiFillStar } from 'react-icons/ai';
 
 const skeletonItem = () => {
     return (<div className='flex flex-col gap-2 group'>
@@ -76,7 +76,7 @@ export default function Repeater({ genre, endpoint }) {
         const observer = new IntersectionObserver(handleIntersection, {
             root: null,
             rootMargin: '0px',
-            threshold: 0.1, // Adjust this threshold as needed
+            threshold: 1, // Adjust this threshold as needed
         });
 
         // Observe the last item in the list
@@ -102,7 +102,7 @@ export default function Repeater({ genre, endpoint }) {
                             return (
                                 <div
                                     key={item.id}
-                                    className='flex flex-col gap-2 group'
+                                    className='flex flex-col gap-2 group w-full cursor-pointer'
                                     onClick={() =>
                                         navigate(`/${item.media_type || endpoint}/${item.id}`)
                                     }>
@@ -114,7 +114,7 @@ export default function Repeater({ genre, endpoint }) {
                                         <span className='text-xs text-slate-200 group-hover:text-pahelo'>
                                             {dateFormat(item.release_date || item.first_air_date)}
                                         </span>
-                                        <span className='flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo pr-4'>
+                                        <span className='flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo'>
                                             {item.vote_average.toFixed(1)}<AiFillStar />
                                         </span>
                                     </div>

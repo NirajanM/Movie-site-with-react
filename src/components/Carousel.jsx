@@ -63,7 +63,7 @@ export default function Carousel({ data, loading, endpoint }) {
                             return (
                                 <div
                                     key={item.id}
-                                    className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 group'
+                                    className='flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 group cursor-pointer'
                                     onClick={() =>
                                         navigate(`/${item.media_type || endpoint}/${item.id}`)
                                     }>

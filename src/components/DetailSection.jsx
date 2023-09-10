@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { fetchData } from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import { AiFillFileAdd } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { getWatchList } from "../store/rootSlice";
 
 
 export default function DetailSection({ mediaType, id, data, loading }) {
@@ -28,6 +31,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
         })
     }, []);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -99,13 +103,25 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                         <p className='lg:text-md'>{data?.overview}</p>
 
                 }
-                <div
-                    className="mt-5 text-xl md:text-3xl xl:text-4xl text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-1 font-black border-l-8 border-slate-600/70 px-3 w-fit"
-                    onClick={() =>
-                        navigate(`play`)
-                    }
-                >
-                    <FaPlay />PLAY
+                <div className="flex gap-4 flex-col md:flex-row">
+                    <div
+                        className="mt-5 text-xl md:text-3xl xl:text-4xl text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-1 font-black border-l-8 border-slate-600/70 px-3 w-fit"
+                        onClick={() =>
+                            navigate(`play`)
+                        }
+                    >
+                        <FaPlay />PLAY
+                    </div>
+                    <div
+                        className="mt-5 text-lg md:border-l-8 border-slate-600/70 md:px-3 text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-2 w-fit"
+                        onClick={() => {
+                            dispatch(getWatchList(data));
+                            alert(data?.title + " added to watch list");
+                        }
+                        }
+                    >
+                        <AiFillFileAdd size={25} />Add to watchlist
+                    </div>
                 </div>
             </div>
 

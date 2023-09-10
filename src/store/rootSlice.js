@@ -6,6 +6,7 @@ export const rootSlice = createSlice({
     url: {},
     tvGenre: "",
     movieGenre: "",
+    watchlist: []
   },
   reducers: {
     getApiConfigurations: (state, action) => {
@@ -17,9 +18,12 @@ export const rootSlice = createSlice({
     getMovieGenre: (state, action) => {
       state.movieGenre = action.payload;
     },
+    getWatchList: (state, action) => {
+      state.watchlist.push(action.payload);
+    },
   },
 })
 
 
-export const { getApiConfigurations, getTvGenre, getMovieGenre } = rootSlice.actions
+export const { getApiConfigurations, getTvGenre, getMovieGenre, getWatchList } = rootSlice.actions
 export default rootSlice.reducer
