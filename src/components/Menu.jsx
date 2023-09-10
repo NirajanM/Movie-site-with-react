@@ -13,16 +13,15 @@ export default function Menu() {
                     <div className="list">
                         <BiMoviePlay className="text-2xl" />
                         <div className="flex flex-col ">
-                            <GenreDropdown mediaType={"movie"} />
+                            <GenreDropdown mediaType={"tv"} />
                         </div>
                     </div>
-
                 </li>
                 <li className="relative">
                     <div className="list">
                         <BiMoviePlay className="text-2xl" />
                         <div className="flex flex-col ">
-                            <GenreDropdown mediaType={"tv"} />
+                            <GenreDropdown mediaType={"movie"} />
                         </div>
                     </div>
 
