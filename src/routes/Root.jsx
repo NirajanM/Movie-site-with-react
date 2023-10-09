@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import useFetch from '../hooks/useFetch'
 import { Outlet } from 'react-router-dom'
 import Carousel from '../components/Carousel'
 import OnOff from '../components/OnOff'
 import Menu from '../components/Menu'
+import { fetchData } from '../utils/api'
+import { useQuery } from '@tanstack/react-query'
 
 function Root() {
 
@@ -15,9 +16,16 @@ function Root() {
         { name: "Tv Shows", value: "tv" }
     ]
 
-    const popular = useFetch(`${popularOpt}/popular`);
+    const popular = useQuery({
+        queryKey: [popularOpt, "popular"],
+        queryFn: () => fetchData(`${popularOpt}/popular`)
+    })
 
-    const playing = useFetch("movie/now_playing");
+
+    const playing = useQuery({
+        queryKey: ["playing"],
+        queryFn: () => fetchData("movie/now_playing")
+    })
 
     const [topOpt, setTopOpt] = useState("movie");
 
@@ -25,7 +33,12 @@ function Root() {
         { name: "Movie", value: "movie" },
         { name: "Tv Shows", value: "tv" }
     ]
-    const toprated = useFetch(`${topOpt}/top_rated`);
+
+    const toprated = useQuery({
+        queryKey: [topOpt, "toprated"],
+        queryFn: () => fetchData(`${topOpt}/top_rated`)
+    })
+
 
     const [trendingOpt, setTrendingOpt] = useState("day");
 
@@ -33,10 +46,11 @@ function Root() {
         { name: "Today", value: "day" },
         { name: "This Week", value: "week" }
     ]
-    const trending = useFetch(`trending/all/${trendingOpt}`);
 
-
-
+    const trending = useQuery({
+        queryKey: [trendingOpt, "trending"],
+        queryFn: () => fetchData(`trending/all/${trendingOpt}`)
+    })
 
     return (
         <div className='flex flex-row-reverse md:flex-row max-w-screen-xl mx-auto '>
@@ -47,12 +61,12 @@ function Root() {
                         <span className='text-pahelo font-black text-3xl'>Trending</span>
                         <OnOff opt={trOpt} stateChanger={setTrendingOpt} />
                     </div>
-                    <Carousel data={trending?.data?.results} loading={trending?.loading} />
+                    <Carousel data={trending?.data?.results} loading={trending?.isLoading} />
                 </section>
 
                 <section className='mb:8 md:mb-24'>
                     <span className='text-pahelo font-black text-3xl'>Now Playing</span>
-                    <Carousel data={playing?.data?.results} loading={playing?.loading} endpoint={"movie"} />
+                    <Carousel data={playing?.data?.results} loading={playing?.isLoading} endpoint={"movie"} />
                 </section>
 
                 <section className='mb-8 md:mb-24'>
@@ -60,7 +74,7 @@ function Root() {
                         <span className='text-pahelo font-black text-3xl'>Popular</span>
                         <OnOff opt={pOpt} stateChanger={setPopularOpt} />
                     </div>
-                    <Carousel data={popular?.data?.results} loading={popular?.loading} endpoint={popularOpt} />
+                    <Carousel data={popular?.data?.results} loading={popular?.isLoading} endpoint={popularOpt} />
                 </section>
 
                 <section className='mb-8 md:mb-24'>
@@ -68,7 +82,7 @@ function Root() {
                         <span className='text-pahelo font-black text-3xl'>Top rated</span>
                         <OnOff opt={tOpt} stateChanger={setTopOpt} />
                     </div>
-                    <Carousel data={toprated?.data?.results} loading={toprated?.loading} endpoint={topOpt} />
+                    <Carousel data={toprated?.data?.results} loading={toprated?.isLoading} endpoint={topOpt} />
                 </section>
                 <Outlet />
             </div>
