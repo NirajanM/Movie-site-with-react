@@ -10,8 +10,12 @@ import { AiFillFileAdd } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { getWatchList } from "../store/rootSlice";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function DetailSection({ mediaType, id, data, loading }) {
+    const notify = (content) => toast(content);
     const ytUrl = "https://www.youtube.com/watch?v=";
     const [allUrls, setAllUrls] = useState(null);
 
@@ -116,11 +120,23 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                         className="mt-5 text-lg md:border-l-8 border-slate-600/70 md:px-3 text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-2 w-fit"
                         onClick={() => {
                             dispatch(getWatchList(data));
-                            alert(data?.title + " added to watch list");
+                            notify("Added to watch list");
                         }
                         }
                     >
                         <AiFillFileAdd size={25} />Add to watchlist
+                        <ToastContainer
+                            position="top-center"
+                            autoClose={3000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="dark"
+                        />
                     </div>
                 </div>
             </div>
