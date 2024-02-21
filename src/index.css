@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer utilities {
-
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -44,8 +43,8 @@ dd {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role='list'],
-ol[role='list'] {
+ul[role="list"],
+ol[role="list"] {
   list-style: none;
 }
 
@@ -100,9 +99,8 @@ select {
   }
 }
 
-
 #nav-bar a.active {
-  color: #FFDF2B;
+  color: #ffdf2b;
 }
 
 /* scrollbar custom */
@@ -142,4 +140,8 @@ select {
 
 .list:hover {
   color: white;
+}
+
+.faq-row-wrapper {
+  width: 100% !important;
 }
