@@ -27,7 +27,7 @@ export default function Menu() {
         </li>
         <li className="list">
           <RiMovie2Line className="text-2xl" />
-          Watchlist
+          <NavLink to={"/watchlist"}>Watchlist</NavLink>
         </li>
         <li className="list">
           <RxAvatar className="text-2xl" />

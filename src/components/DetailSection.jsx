@@ -134,10 +134,12 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                   poster_path,
                   release_date,
                   first_air_date,
+                  vote_average,
                 } = data;
 
                 const movieTitle = title || name;
                 const dateReleased = release_date || first_air_date;
+                const media_type = title ? "movie" : "tv";
 
                 const newObj = {
                   id,
@@ -146,7 +148,8 @@ export default function DetailSection({ mediaType, id, data, loading }) {
                   title: movieTitle,
                   poster_path,
                   release_date: dateReleased,
-                  mediaType,
+                  media_type: mediaType || media_type,
+                  vote_average,
                 };
 
                 addMovieToWatchlist(newObj);

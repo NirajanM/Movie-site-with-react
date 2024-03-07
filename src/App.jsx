@@ -19,6 +19,7 @@ import { fetchData } from "./utils/api";
 import { getApiConfigurations } from "./store/rootSlice";
 import About from "./routes/About";
 import FaqPage from "./routes/Faq";
+import Watchlist from "./routes/Watchlist";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ export default function App() {
         <Route path=":mediaType/:id/play" element={<Play />} />
         <Route path="search/:query" element={<SearchResult />} />
         <Route path="anotherpage" element={<Anotherpage />} />
+        <Route path="watchlist" element={<Watchlist />} />
         <Route path="tvshow" element={<Tvshow />} />
         <Route path="movies" element={<Movies />} />
         <Route path="about" element={<About />} />

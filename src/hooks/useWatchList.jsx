@@ -16,6 +16,6 @@ export function addMovieToWatchlist(movie) {
   localStorage.setItem("watchlist", JSON.stringify(watchlist));
 }
 
-export function getWatchlist() {
+export function getWatchListCinemas() {
   return JSON.parse(localStorage.getItem("watchlist")) || [];
 }
