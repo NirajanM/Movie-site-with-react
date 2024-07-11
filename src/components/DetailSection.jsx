@@ -116,7 +116,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
         <div className="flex gap-4 flex-col md:flex-row">
           <div
             className="mt-5 text-xl md:text-3xl xl:text-4xl text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-1 font-black border-l-8 border-slate-600/70 px-3 w-fit"
-            onClick={() => navigate(`play`)}
+            onClick={() => navigate(`play/1/1`)}
           >
             <FaPlay />
             PLAY

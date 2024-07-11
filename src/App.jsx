@@ -47,7 +47,7 @@ export default function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Root />} />
         <Route path=":mediaType/:id" element={<SelectedCinema />} />
-        <Route path=":mediaType/:id/play" element={<Play />} />
+        <Route path=":mediaType/:id/play/:season/:episode" element={<Play />} />
         <Route path="search/:query" element={<SearchResult />} />
         <Route path="anotherpage" element={<Anotherpage />} />
         <Route path="watchlist" element={<Watchlist />} />
