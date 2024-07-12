@@ -2,6 +2,8 @@
 
 I started this project from scratch using viteJs with react, tailwind, redux and reactquery to provide user with a friendly UI that is functional, smooth and responsive in all screen sizes. I used tmdb api to fetch movies and series data using tanstack query that handles the fetching process very efficiently. let's dive more deeper into it:
 
+live link: [LetsWatchMovie](https://letswatchmovie.pages.dev)
+
 ## Features
 
 - Minimal/Smooth/Functional UI.
