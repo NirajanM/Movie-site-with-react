@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import SelectedCinema from "./routes/SelectedCinema";
 import PageNotFound from "./routes/PageNotFound";
-import RootLayout from "./layouts/rootLayout";
 import SearchResult from "./routes/SearchResult";
 import Play from "./routes/Play";
 import Tvshow from "./routes/Tvshow";
@@ -20,6 +19,7 @@ import { getApiConfigurations } from "./store/rootSlice";
 import About from "./routes/About";
 import FaqPage from "./routes/Faq";
 import Watchlist from "./routes/Watchlist";
+import RootLayout from "./layouts/RootLayout";
 
 export default function App() {
   const dispatch = useDispatch();
