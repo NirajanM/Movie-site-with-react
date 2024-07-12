@@ -13,7 +13,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { addMovieToWatchlist } from "../hooks/useWatchList";
 
 export default function DetailSection({ mediaType, id, data, loading }) {
-  console.log(data);
   const notify = (content) => toast(content);
   const ytUrl = "https://www.youtube.com/watch?v=";
   const [allUrls, setAllUrls] = useState(null);
@@ -168,14 +167,10 @@ export default function DetailSection({ mediaType, id, data, loading }) {
             Add to watchlist
             <ToastContainer
               position="top-center"
-              autoClose={3000}
+              autoClose={500}
               hideProgressBar={false}
               newestOnTop={false}
-              closeOnClick
               rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
               theme="dark"
             />
           </div>

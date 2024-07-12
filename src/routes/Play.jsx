@@ -93,9 +93,10 @@ export default function Play() {
                     alt={item?.name || "poster image"}
                     src={posterUrl}
                     className="h-32 w-44 object-cover object-center "
+                    loading="lazy"
                   />
 
-                  <div className="flex flex-col gap-2 items-start jus">
+                  <div className="flex flex-col gap-2 items-start">
                     <h3 className="font-mono text-lg">
                       Episode: {item.episode_number}
                     </h3>
