@@ -28,7 +28,7 @@ export default function SelectedCinema() {
         className="absolute top-0 -z-10 object-cover w-screen h-screen object-center opacity-10"
       />
       <div className="max-w-screen-xl mx-auto sm:px-4 px-2 ">
-        <section className="w-full mt-10 md:mt-3 p-4 md:p-0 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 relative md:h-[70svh] md:justify-start">
+        <section className="w-full mt-10 md:mt-3 p-4 md:p-0 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 relative">
           <div className="md:basis-1/4 md:min-w-60 aspect-poster">
             {loading ? (
               <Skeleton className="aspect-poster" />
@@ -48,13 +48,13 @@ export default function SelectedCinema() {
           />
         </section>
         <section className="mt-10 md:mb-20">
-          <span className="text-lg sm:text-xl md:text-3xl font-bold text-pahelo opacity-70 italic">
+          <span className="text-2xl sm:text-3xl font-bold text-pahelo opacity-90">
             Cast
           </span>
           <CastSection mediaType={mediaType} id={id} />
         </section>
         <section className="mt-10 md:mb-20">
-          <span className="text-lg sm:text-xl md:text-3xl font-bold text-pahelo opacity-70 italic">
+          <span className="text-2xl sm:text-3xl font-bold text-pahelo opacity-90">
             Similar {mediaType === "tv" ? "tv shows" : "movies"}
           </span>
           <Recommended
@@ -64,7 +64,7 @@ export default function SelectedCinema() {
           />
         </section>
         <section className="mt-10 md:mb-20">
-          <span className="text-lg sm:text-xl md:text-3xl font-bold text-pahelo opacity-70 italic">
+          <span className="text-2xl sm:text-3xl font-bold text-pahelo opacity-90">
             Recommended
           </span>
           <Recommended

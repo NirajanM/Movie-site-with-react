@@ -6,7 +6,7 @@ import { getTvGenre, getMovieGenre } from "../store/rootSlice";
 import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 
-export default function GenreDropdown({ mediaType }) {
+export default function GenreDropdown({ mediaType, setExpanded }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { tvGenre, movieGenre } = useSelector((state) => state.home);
@@ -48,6 +48,7 @@ export default function GenreDropdown({ mediaType }) {
                   dispatch(getTvGenre(opt));
                   setOptionOpen(false);
                   navigate(`/tvshow`);
+                  setExpanded(false);
                 }}
               >
                 {" "}
@@ -91,6 +92,7 @@ export default function GenreDropdown({ mediaType }) {
                   dispatch(getMovieGenre(opt));
                   setOptionOpen(false);
                   navigate("/movies");
+                  setExpanded(false);
                 }}
               >
                 {" "}

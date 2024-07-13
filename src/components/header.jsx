@@ -85,8 +85,8 @@ export default function Header() {
                 <span className="sr-only">Search icon</span>
               </div>
             </div>
-            <MobileMenu expanded={expanded} />
-            <div className="fixed flex justify-center items-center bottom-4 right-4 z-50">
+            <MobileMenu expanded={expanded} setExpanded={setExpanded} />
+            <div className="fixed flex justify-center items-center bottom-4 right-4 z-50 md:hidden">
               {expanded ? (
                 <div
                   onClick={handleMenuToggle}
@@ -97,7 +97,7 @@ export default function Header() {
               ) : (
                 <div
                   onClick={handleMenuToggle}
-                  className="bg-slate-50 rounded-full p-2"
+                  className="bg-slate-50 rounded-full p-2 border-4 border-pahelo"
                 >
                   <CiMenuBurger
                     className="md:hidden text-black z-50"

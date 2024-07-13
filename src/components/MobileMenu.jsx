@@ -5,7 +5,7 @@ import { BsQuestionOctagon } from "react-icons/bs";
 import GenreDropdown from "./GenreDropdown";
 import { NavLink } from "react-router-dom";
 
-export default function MobileMenu({ expanded }) {
+export default function MobileMenu({ expanded, setExpanded }) {
   return (
     <div
       className={`fixed top-0 text-white border-r border-gray-600 md:hidden pt-16 pr-5 h-screen w-fit bg-black overflow-y-hidden z-40 ${
@@ -17,7 +17,7 @@ export default function MobileMenu({ expanded }) {
           <div className="list">
             <BiMoviePlay className="text-2xl" />
             <div className="flex flex-col ">
-              <GenreDropdown mediaType={"tv"} />
+              <GenreDropdown mediaType={"tv"} setExpanded={setExpanded} />
             </div>
           </div>
         </li>
@@ -25,21 +25,42 @@ export default function MobileMenu({ expanded }) {
           <div className="list">
             <BiMoviePlay className="text-2xl" />
             <div className="flex flex-col ">
-              <GenreDropdown mediaType={"movie"} />
+              <GenreDropdown mediaType={"movie"} setExpanded={setExpanded} />
             </div>
           </div>
         </li>
         <li className="list">
           <RiMovie2Line className="text-2xl" />
-          <NavLink to={"/watchlist"}>Watchlist</NavLink>
+          <NavLink
+            to={"/watchlist"}
+            onClick={() => {
+              setExpanded(false);
+            }}
+          >
+            Watchlist
+          </NavLink>
         </li>
         <li className="list">
           <RxAvatar className="text-2xl" />
-          <NavLink to={"/about"}>About</NavLink>
+          <NavLink
+            to={"/about"}
+            onClick={() => {
+              setExpanded(false);
+            }}
+          >
+            About
+          </NavLink>
         </li>
         <li className="list">
           <BsQuestionOctagon className="text-2xl" />
-          <NavLink to={"/faq"}>FAQs</NavLink>
+          <NavLink
+            to={"/faq"}
+            onClick={() => {
+              setExpanded(false);
+            }}
+          >
+            FAQs
+          </NavLink>
         </li>
       </ul>
     </div>

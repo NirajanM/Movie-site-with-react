@@ -74,11 +74,11 @@ export default function DetailSection({ mediaType, id, data, loading }) {
           </>
         ) : (
           <>
-            <span className="text-xl md:text-4xl lg:text-6xl font-bold md:font-black text-pahelo">
+            <span className="text-2xl md:text-4xl lg:text-6xl font-bold md:font-black text-pahelo">
               {data?.title?.toUpperCase()}
             </span>
 
-            <span className="text-xl md:text-4xl lg:text-6xl font-bold md:font-black text-pahelo">
+            <span className="text-2xl md:text-4xl lg:text-6xl font-bold md:font-black text-pahelo">
               {data?.original_name?.toUpperCase()}
             </span>
             <span className="text-slate-300/70 italic font-normal lg:text-xl">
