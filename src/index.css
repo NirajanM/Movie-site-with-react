@@ -145,3 +145,11 @@ select {
 .faq-row-wrapper {
   width: 100% !important;
 }
+
+.react-responsive-modal-root,
+.react-responsive-modal-modal,
+.react-responsive-modal-overlay {
+  display: none !important;
+  opacity: 0;
+  z-index: -100;
+}

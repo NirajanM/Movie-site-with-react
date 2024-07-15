@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchData } from "../utils/api";
 import posterNotFound from "../assets/posterNotFound.png";
@@ -29,15 +29,23 @@ export default function Play() {
     queryFn: () => fetchData(`tv/${id}/season/${seasonNumber}`),
   });
 
+  useEffect(() => {
+    // Set sandbox attribute once window loads
+    const iframe = document.getElementById("framez");
+    iframe.sandbox =
+      "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation";
+  }, []);
+
   return (
     <div className="flex flex-col text-xl text-white w-screen  mt-16 max-w-screen-xl mx-auto sm:px-4 px-2 mb-20">
       <iframe
-        name="iframe1"
-        id="iframe1"
+        name="framez"
+        id="framez"
         src={url}
         width="100%"
         height="100%"
         className="aspect-video"
+        sandbox="allow-forms allow-same-origin  allow-pointer-lock allow-scripts"
         allowFullScreen
       />
       {mediaType == "tv" && (
