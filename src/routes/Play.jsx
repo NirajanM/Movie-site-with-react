@@ -15,8 +15,8 @@ export default function Play() {
 
   const [url, setUrl] = useState(
     mediaType === "movie"
-      ? `https://embed.smashystream.com/playere.php?tmdb=${id}`
-      : `https://embed.smashystream.com/playere.php?tmdb=${id}&season=${seasonNumber}&episode=${episodeNumber}`
+      ? `https://vidsrc.me/embed/movie?tmdb=${id}`
+      : `https://vidsrc.me/embed/tv?tmdb=${id}&season=${seasonNumber}&episode=${episodeNumber}`
   );
 
   const seriesDetails = useQuery({
@@ -32,9 +32,17 @@ export default function Play() {
   useEffect(() => {
     // Set sandbox attribute once window loads
     const iframe = document.getElementById("framez");
-    iframe.sandbox =
-      "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation";
+    iframe.addEventListener("load", handleLoad);
+    // Clean up the event listener when the component unmounts
+    return () => {
+      iframe.removeEventListener("load", handleLoad);
+    };
   }, []);
+
+  const handleLoad = () => {
+    const iframe = document.getElementById("framez");
+    iframe.sandbox = "allow-same-origin";
+  };
 
   return (
     <div className="flex flex-col text-xl text-white w-screen  mt-16 max-w-screen-xl mx-auto sm:px-4 px-2 mb-20">
@@ -45,7 +53,6 @@ export default function Play() {
         width="100%"
         height="100%"
         className="aspect-video"
-        sandbox="allow-forms allow-same-origin  allow-pointer-lock allow-scripts"
         allowFullScreen
       />
       {mediaType == "tv" && (
@@ -90,7 +97,7 @@ export default function Play() {
                     navigate(`/tv/${id}/play/${seasonNumber}/${index + 1}`);
                     setEpisodeNumber(index + 1);
                     setUrl(
-                      `https://embed.smashystream.com/playere.php?tmdb=${id}&season=${seasonNumber}&episode=${
+                      `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${seasonNumber}&episode=${
                         index + 1
                       }`
                     );

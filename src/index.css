@@ -146,10 +146,21 @@ select {
   width: 100% !important;
 }
 
-.react-responsive-modal-root,
+/* .react-responsive-modal-root,
 .react-responsive-modal-modal,
 .react-responsive-modal-overlay {
   display: none !important;
   opacity: 0;
   z-index: -100;
+} */
+
+.mctitle a {
+  font-size: 1em !important;
+}
+
+#AdWidgetContainer,
+#ad720,
+.ad_container,
+#onexbet {
+  display: none !important;
 }
