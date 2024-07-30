@@ -26,7 +26,7 @@ const data = {
     {
       title: "Where are the media files hosted?",
       content:
-        "We don't host any of the media files on our server, we just stream the media from servers that hosts the media which are scrapped based on your selection.",
+        "We don't host any of the media files on our server, we just stream the media from servers that hosts the media which are fetched based on your selection.",
     },
     {
       title: "Who created this site?",

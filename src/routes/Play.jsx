@@ -41,7 +41,7 @@ export default function Play() {
 
   const handleLoad = () => {
     const iframe = document.getElementById("framez");
-    iframe.sandbox = "allow-same-origin";
+    iframe.sandbox = "allow-same-origin allow-pointer-lock";
   };
 
   return (
@@ -94,6 +94,8 @@ export default function Play() {
                   key={item.id}
                   className="flex flex-col sm:flex-row gap-3 md:gap-5 border-b py-4 cursor-pointer hover:bg-slate-50/10"
                   onClick={() => {
+                    const iframe = document.getElementById("framez");
+                    iframe.removeAttribute("sandbox");
                     navigate(`/tv/${id}/play/${seasonNumber}/${index + 1}`);
                     setEpisodeNumber(index + 1);
                     setUrl(
