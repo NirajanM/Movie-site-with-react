@@ -29,7 +29,7 @@ export default function Header() {
             <img src={Logo} className="w-16 h-16 md:h-20 md:w-20" />
           </NavLink>
 
-          <ul className="absolute border-b md:border-0 pb-7 left-0 top-24 w-full flex justify-around font-medium border-yellow-200/10 bg-gray-50 mt-4 md:mt-0 dark:bg-transparent md:relative md:w-fit md:top-0 md:p-0 md:space-x-8 text-xl md:text-lg">
+          <ul className="absolute border-b md:border-0 pb-7 left-0 top-24 w-full flex justify-around font-medium border-yellow-200/10 bg-gray-50 mt-2 md:mt-0 dark:bg-transparent md:relative md:w-fit md:top-0 md:p-0 md:space-x-8 text-base md:text-lg">
             <li>
               <NavLink
                 to="/"
@@ -60,7 +60,7 @@ export default function Header() {
             <div className="relative">
               <input
                 type="text"
-                className="block w-full p-2 pl-10 text-base md:text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-pahelo focus:border-pahelo dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pahelo dark:focus:border-pahelo"
+                className="block w-full p-2 pl-10 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-pahelo focus:border-pahelo dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pahelo dark:focus:border-pahelo"
                 placeholder="Search..."
                 onChange={(e) => {
                   setSearch(e.target.value);

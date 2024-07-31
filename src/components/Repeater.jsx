@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import posterNotFound from "../assets/posterNotFound.png";
@@ -8,12 +8,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 import dateFormat from "./dateFormat";
 import { fetchData } from "../utils/api";
 import { AiFillStar } from "react-icons/ai";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 const skeletonItem = () => {
   return (
     <div className="flex flex-col gap-2 group">
-      <div className="relative aspect-poster min-w-[128px] md:min-w-[144px] lg:min-w-[160px]">
+      <div className="relative aspect-poster">
         <Skeleton
           count={1}
           className="object-cover w-full h-full object-center "
@@ -31,28 +31,6 @@ export default function Repeater({ genre, endpoint }) {
   const carouselBox = useRef();
   //importing url from configured redux store
   const { url } = useSelector((state) => state.home);
-  const [page, setPage] = useState(1);
-  const [items, setItems] = useState([]);
-
-  let fetchingUrl =
-    `discover/${endpoint}?page=${page}` +
-    (genre ? `&with_genres=${genre}` : "");
-
-  const { data, error, isLoading } = useQuery(
-    ["items", page, genre, endpoint],
-    () => fetchData(fetchingUrl),
-    {
-      keepPreviousData: true,
-      onSuccess: (data) => {
-        setItems((prevItems) => [...prevItems, ...data.results]);
-      },
-    }
-  );
-
-  const loadMoreItems = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
-
   // const [loading, setLoading] = useState(null);
   // useEffect(() => {
   //   setLoading(true);
@@ -110,6 +88,26 @@ export default function Repeater({ genre, endpoint }) {
   //   };
   // }, [items]);
 
+  const fetchPage = async ({ pageParam = 1 }) => {
+    let cinemaFetchingUrl =
+      `discover/${endpoint}?page=${pageParam}` +
+      (genre && `&with_genres=${genre}`);
+    const res = await fetchData(cinemaFetchingUrl);
+    return res;
+  };
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
+    queryKey: ["items", genre, endpoint],
+    queryFn: fetchPage,
+    getNextPageParam: (lastPage) => lastPage.page + 1,
+  });
   return (
     <div className="relative mt-16 md:mt-6 min-h-screen">
       {error ? (
@@ -117,57 +115,64 @@ export default function Repeater({ genre, endpoint }) {
       ) : !isLoading ? (
         <>
           <div
-            className=" grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-7 min-h-screen"
+            className="grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-x-5 gap-y-10 min-h-screen"
             ref={carouselBox}
           >
-            {items.map((item) => {
-              //creating posterUrl if found or noposter url from assest incase of error
-              const posterUrl = item.poster_path
-                ? url.backdrop + item.poster_path
-                : posterNotFound;
-              return (
-                <div
-                  key={item.id}
-                  className="flex flex-col gap-2 group w-full cursor-pointer"
-                  onClick={() => {
-                    navigate(`/${item.media_type || endpoint}/${item.id}`);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  <div className="relative aspect-poster min-w-[128px] md:min-w-[144px] lg:min-w-[160px]">
-                    <LazyLoadImage
-                      alt={item.title}
-                      src={posterUrl}
-                      className="object-cover w-full h-full object-center "
-                    />
-                  </div>
-                  <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
-                    {item.title || item.name}
-                  </span>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-slate-200 group-hover:text-pahelo">
-                      {dateFormat(item.release_date || item.first_air_date)}
-                    </span>
-                    <span className="flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo">
-                      {item.vote_average.toFixed(1)}
-                      <AiFillStar />
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+            {data.pages.map((group, i) => (
+              <React.Fragment key={i}>
+                {group.results.map((item) => {
+                  //creating posterUrl if found or noposter url from assest incase of error
+                  const posterUrl = item.poster_path
+                    ? url.backdrop + item.poster_path
+                    : posterNotFound;
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex flex-col gap-2 group w-full cursor-pointer"
+                      onClick={() => {
+                        navigate(`/${item.media_type || endpoint}/${item.id}`);
+                        window.scrollTo(0, 0);
+                      }}
+                    >
+                      <div className="relative aspect-poster">
+                        <LazyLoadImage
+                          alt={item.title}
+                          src={posterUrl}
+                          className="object-cover w-full h-full object-center "
+                        />
+                      </div>
+                      <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
+                        {item.title || item.name}
+                      </span>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-slate-200 group-hover:text-pahelo">
+                          {dateFormat(item.release_date || item.first_air_date)}
+                        </span>
+                        <span className="flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo">
+                          {item.vote_average.toFixed(1)}
+                          <AiFillStar />
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </React.Fragment>
+            ))}
           </div>
           <div className="flex justify-center items-center pt-5 pb-10 w-full">
-            <button
-              onClick={loadMoreItems}
-              className="mt-4 px-4 py-2 border border-pahelo hover:bg-gray-500/40 text-pahelo rounded"
-            >
-              {isLoading ? "loading..." : "Load More"}
-            </button>
+            {hasNextPage && (
+              <button
+                onClick={() => fetchNextPage()}
+                disabled={isFetchingNextPage}
+                className="text-white my-6 text-center font-mono border rounded-md inline py-1 px-2 hover:bg-slate-800/70 hover:border-pahelo"
+              >
+                {isFetchingNextPage ? "Loading.." : "Load more"}
+              </button>
+            )}
           </div>
         </>
       ) : (
-        <div className=" grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-7 xl:gap-10 ">
+        <div className="grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-x-5 gap-y-10 min-h-screen">
           {skeletonItem()}
           {skeletonItem()}
           {skeletonItem()}

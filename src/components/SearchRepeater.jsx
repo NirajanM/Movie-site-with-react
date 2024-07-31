@@ -13,7 +13,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 const skeletonItem = () => {
   return (
     <div className="flex flex-col gap-2 group">
-      <div className="relative aspect-poster min-w-[128px] md:min-w-[144px] lg:min-w-[160px]">
+      <div className="relative aspect-poster">
         <Skeleton
           count={1}
           className="object-cover w-full h-full object-center "
@@ -62,7 +62,7 @@ export default function SearchRepeater({ keyword }) {
           {data?.pages?.length > 0 ? (
             <>
               <div
-                className=" grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-7 xl:gap-10 "
+                className="grid mx-auto my-4 grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-x-5 gap-y-10 min-h-screen"
                 ref={carouselBox}
               >
                 {data.pages.map((group, i) => (
@@ -76,11 +76,12 @@ export default function SearchRepeater({ keyword }) {
                         <div
                           key={item.id}
                           className="flex flex-col gap-2 group w-full cursor-pointer"
-                          onClick={() =>
-                            navigate(`/${item.media_type}/${item.id}`)
-                          }
+                          onClick={() => {
+                            navigate(`/${item.media_type}/${item.id}`);
+                            window.scrollTo(0, 0);
+                          }}
                         >
-                          <div className="relative aspect-poster min-w-[128px] md:min-w-[144px] lg:min-w-[160px]">
+                          <div className="relative aspect-poster">
                             <LazyLoadImage
                               alt={item.title}
                               src={posterUrl}
@@ -112,7 +113,7 @@ export default function SearchRepeater({ keyword }) {
                   <button
                     onClick={() => fetchNextPage()}
                     disabled={isFetchingNextPage}
-                    className="text-white my-6 text-center font-mono border rounded-md inline py-1 px-2 hover:bg-slate-800/70 hover:border-purple-400"
+                    className="text-white my-6 text-center font-mono border rounded-md inline py-1 px-2 hover:bg-slate-800/70 hover:border-pahelo"
                   >
                     {isFetchingNextPage ? "Loading.." : "Load more"}
                   </button>
@@ -126,7 +127,7 @@ export default function SearchRepeater({ keyword }) {
           )}
         </>
       ) : (
-        <div className=" grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-7 xl:gap-10 ">
+        <div className="grid mx-auto my-4 grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-x-5 gap-y-10 min-h-screen">
           {skeletonItem()}
           {skeletonItem()}
           {skeletonItem()}

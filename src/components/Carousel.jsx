@@ -76,7 +76,7 @@ export default function Carousel({ data, loading, endpoint }) {
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 group cursor-pointer"
+                  className="flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 group cursor-pointer font-light"
                   onClick={() => {
                     navigate(`/${item.media_type || endpoint}/${item.id}`);
                     window.scrollTo(0, 0);
@@ -89,14 +89,14 @@ export default function Carousel({ data, loading, endpoint }) {
                       className="object-cover w-full h-full object-center "
                     />
                   </div>
-                  <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
+                  <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo text-xs md:text-base lg:font-normal">
                     {item.title || item.name}
                   </span>
                   <div className="flex justify-between items-center">
-                    <span className="text-xs text-slate-200 group-hover:text-pahelo">
+                    <span className="text-[0.633rem] md:text-xs text-slate-200 group-hover:text-pahelo">
                       {dateFormat(item.release_date || item.first_air_date)}
                     </span>
-                    <span className="flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo pr-4">
+                    <span className="flex gap-1 items-center text-[0.633rem] md:text-xs text-slate-200 group-hover:text-pahelo pr-4">
                       {item.vote_average.toFixed(1)}
                       <AiFillStar />
                     </span>

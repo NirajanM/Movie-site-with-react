@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 export default function Menu() {
   return (
     <div
-      className={` top-0 text-white border-r border-gray-600 hidden md:inline pt-16 pr-5 h-screen w-fit bg-black md:bg-transparent z-50`}
+      className={` border-r border-gray-800/20 text-white hidden md:inline pt-16 pr-5 h-screen w-fit md:bg-transparent z-50`}
     >
       <ul className="flex-col justify-start items-center space-y-14 text-lg text-gray-400 font-medium w-[50vw] md:w-[12rem]">
         <li className="relative">
