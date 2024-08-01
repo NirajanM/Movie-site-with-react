@@ -41,11 +41,12 @@ export default function Play() {
 
   const handleLoad = () => {
     const iframe = document.getElementById("framez");
-    iframe.sandbox = "allow-same-origin allow-pointer-lock";
+    iframe.sandbox =
+      "allow-same-origin allow-pointer-lock allow-orientation-lock";
   };
 
   return (
-    <div className="flex flex-col text-xl text-white w-screen  mt-16 max-w-screen-xl mx-auto sm:px-4 px-2 mb-20">
+    <div className="flex flex-col text-xl text-white w-screen mt-24 md:mt-16 max-w-screen-xl mx-auto sm:px-4 px-2 mb-20">
       <iframe
         name="framez"
         id="framez"

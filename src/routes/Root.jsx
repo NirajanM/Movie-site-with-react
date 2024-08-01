@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import OnOff from "../components/OnOff";
 import Menu from "../components/Menu";
 import { fetchData } from "../utils/api";
 import { useQuery } from "@tanstack/react-query";
+import MovieAnimation from "../assets/movieAnimation.json";
+import Lottie from "lottie-react";
 
 function Root() {
   const [popularOpt, setPopularOpt] = useState("movie");
@@ -51,8 +53,34 @@ function Root() {
   return (
     <div className="flex flex-row-reverse md:flex-row max-w-screen-xl mx-auto ">
       <Menu />
-      <div className="w-full md:pl-9 text-white sm:px-4 px-2 md:w-[75%] lg:w-[79%] xl:w-[88%]">
+      <div className="w-full md:pl-9 text-white px-4 md:w-[75%] lg:w-[79%] xl:w-[88%]">
         <section className="mb-8 md:mb-24 mt-20 md:mt-0  ">
+          <div
+            id="landing-section"
+            className="grid grid-cols-1 sm:grid-cols-2 pb-20 sm:py-20 gap-5 sm:gap:0"
+          >
+            <div className="flex flex-col h-full items-start justify-end sm:order-last -z-10">
+              <Lottie
+                animationData={MovieAnimation}
+                loop={true}
+                className="h-60 sm:h-72 md:h-80 lg:h-96"
+              />
+            </div>
+            <div className="flex flex-col h-full items-start justify-center gap-8 sm:gap-5">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold lg:font-bold w-5/6 sm:w-full">
+                Explore, Discover, Enjoy.
+              </h1>
+              <h2 className="text-lg">
+                Our mission is to amplify the joy of cinema exploration,
+                offering a user-friendly interface that makes browsing
+                effortless and enjoyable. Watch your favorite movies and series
+                with ease.{" "}
+                <NavLink to="/about" className="text-pahelo">
+                  Know more.
+                </NavLink>
+              </h2>
+            </div>
+          </div>
           <div>
             <span className="text-pahelo font-black text-3xl">Trending</span>
             <OnOff opt={trOpt} stateChanger={setTrendingOpt} />

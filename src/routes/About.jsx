@@ -7,7 +7,7 @@ export default function About() {
       <div className="flex max-w-screen-xl mx-auto">
         <Menu />
         <div className="w-full md:pl-9 text-white mt-10 p-4 md:mt-0 flex justify-center items-start flex-col gap-4 md:gap-8 lg:gap-12">
-          <div>
+          <div className="sm:w-11/12 md:w-4/5 lg:w-2/3">
             <LazyLoadImage
               alt="lets watch movie flyer"
               src={flyerurl}
@@ -16,9 +16,8 @@ export default function About() {
           </div>
 
           <p className="md:text-lg lg:text-xl">
-            Our mission is to make the joy of movie-watching accessible to all,
-            providing a user-friendly interface that makes navigation effortless
-            and enjoyable.
+            We provide a user-friendly interface that makes browsing cinema
+            effortless and enjoyable.
             <br />
             <br />
             Whether you&apos;re searching for a specific title or simply
