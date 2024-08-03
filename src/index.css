@@ -107,7 +107,7 @@ select {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 /* Track */
@@ -121,12 +121,12 @@ select {
 
 /* Handle */
 .dark::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgb(115, 115, 115);
   border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgb(115, 115, 115);
   border-radius: 20px;
 }
 
@@ -164,4 +164,38 @@ select {
 .ad_container,
 #onexbet {
   display: none !important;
+}
+
+/* Custom scrollbar for the dialog content */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3b3b3b;
+}
+
+.dialog-content {
+  background-color: black !important;
+}
+
+/* Override styles for the close button */
+.dialog-content button {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  transition: none !important;
+  font-size: 40px !important;
+}
+
+/* Ensure no focus ring is applied */
+.dialog-content button:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

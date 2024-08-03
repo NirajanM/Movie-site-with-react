@@ -55,16 +55,16 @@ export default function GenreDropdown({ mediaType, setExpanded }) {
           </span>
         </div>
       </DialogTrigger>
-      <DialogContent className="w-full max-w-md bg-black text-white p-5 rounded-lg">
+      <DialogContent className="w-full max-w-md bg-black dialog-content text-white p-5 rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-pahelo">
             Select {mediaType === "tv" ? "Tv" : "Movie"} Genre
           </DialogTitle>
-          <DialogDescription className="border-b border-white pb-4 w-full text-sm md:text-md">
+          <DialogDescription className="border-b border-white/10 pb-4 w-full text-sm md:text-md">
             Choose a genre from the list below:
           </DialogDescription>
         </DialogHeader>
-        <div className="overflow-y-scroll max-h-[40vh]">
+        <div className="overflow-y-scroll max-h-[40vh] custom-scrollbar">
           {data?.genres.map((opt) => (
             <div
               key={opt.id}

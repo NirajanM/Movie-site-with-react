@@ -7,7 +7,7 @@ export default function Movies() {
   return (
     <div className="flex max-w-screen-xl mx-auto">
       <Menu />
-      <div className="w-full md:w-5/6 md:pl-9 text-white px-2">
+      <div className="w-full md:w-5/6 md:pl-9 text-white">
         <Repeater genre={movieGenre.id} endpoint={"movie"} />
       </div>
     </div>
