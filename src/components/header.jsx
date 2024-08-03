@@ -86,13 +86,13 @@ export default function Header() {
               </div>
             </div>
             <MobileMenu expanded={expanded} setExpanded={setExpanded} />
-            <div className="fixed flex justify-center items-center bottom-4 right-4 z-50 md:hidden">
+            <div className="fixed flex justify-center items-center bottom-4 right-4 z-50 lg:hidden">
               {expanded ? (
                 <div
                   onClick={handleMenuToggle}
                   className="bg-transparent rounded-full p-2"
                 >
-                  <RxCross1 className="md:hidden text-white z-50" size={30} />
+                  <RxCross1 className="lg:hidden text-white z-50" size={30} />
                 </div>
               ) : (
                 <div
@@ -100,7 +100,7 @@ export default function Header() {
                   className="rounded-full p-2 bg-slate-800 border border-yellow-500"
                 >
                   <CiMenuBurger
-                    className="md:hidden text-white z-50"
+                    className="lg:hidden text-white z-50"
                     size={30}
                   />
                 </div>

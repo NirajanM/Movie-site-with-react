@@ -9,7 +9,7 @@ import { RiHeart2Line } from "react-icons/ri";
 export default function Menu() {
   return (
     <div
-      className={` border-r border-gray-800/20 text-white hidden md:inline pt-16 pr-5 h-screen w-fit md:bg-transparent z-50`}
+      className={` border-r border-gray-800/20 text-white hidden lg:inline pt-16 pr-5 h-screen w-fit md:bg-transparent z-50`}
     >
       <ul className="flex-col justify-start items-center space-y-14 text-lg text-slate-300 font-medium w-[50vw] md:w-[12rem]">
         <li className="relative">

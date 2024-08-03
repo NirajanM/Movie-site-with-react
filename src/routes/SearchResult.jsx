@@ -7,7 +7,7 @@ export default function SearchResult() {
   return (
     <div className="flex max-w-screen-xl mx-auto">
       <Menu />
-      <div className="w-full md:w-5/6 md:pl-9 text-white mx-auto">
+      <div className="w-full lg:w-5/6 md:px-4 text-white mx-auto">
         <SearchRepeater keyword={query} />
       </div>
     </div>

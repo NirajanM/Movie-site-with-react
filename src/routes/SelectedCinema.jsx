@@ -27,7 +27,7 @@ export default function SelectedCinema() {
         src={backdrop}
         className="absolute top-0 left-0 -z-10 object-cover w-screen h-screen object-center opacity-10"
       />
-      <div className="max-w-screen-xl mx-auto">
+      <div className="max-w-screen-xl mx-auto lg:px-4">
         <section className="w-full mt-14 md:mt-3 py-6 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 relative">
           <div className="md:basis-1/4 md:min-w-60 aspect-poster">
             {loading ? (
