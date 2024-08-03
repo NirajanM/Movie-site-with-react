@@ -23,7 +23,7 @@ export default function Watchlist() {
   };
 
   return (
-    <div className="flex max-w-screen-xl mx-auto my-16 md:my-6">
+    <div className="flex max-w-screen-xl mx-auto my-16 md:my-0">
       <Menu />
       <div className="w-full md:w-5/6 md:px-9 text-white px-2">
         {watchlistItems.length > 0 ? (
