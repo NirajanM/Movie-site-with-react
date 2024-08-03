@@ -25,10 +25,10 @@ export default function SelectedCinema() {
       <LazyLoadImage
         alt={data?.title}
         src={backdrop}
-        className="absolute top-0 -z-10 object-cover w-screen h-screen object-center opacity-10"
+        className="absolute top-0 left-0 -z-10 object-cover w-screen h-screen object-center opacity-10"
       />
-      <div className="max-w-screen-xl mx-auto sm:px-4 px-2 ">
-        <section className="w-full mt-10 md:mt-3 p-4 md:p-0 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 relative">
+      <div className="max-w-screen-xl mx-auto lg:px-4">
+        <section className="w-full mt-14 md:mt-3 py-6 flex flex-col md:flex-row gap-2 md:gap-10 lg:gap-14 xl:gap-18 relative">
           <div className="md:basis-1/4 md:min-w-60 aspect-poster">
             {loading ? (
               <Skeleton className="aspect-poster" />
@@ -47,14 +47,12 @@ export default function SelectedCinema() {
             loading={loading}
           />
         </section>
-        <section className="mt-10 md:mb-20">
-          <span className="text-2xl sm:text-3xl font-bold text-pahelo opacity-90">
-            Cast
-          </span>
+        <section className="mt-8 md:mb-28">
+          <span className="text-3xl font-bold text-pahelo/90">Cast</span>
           <CastSection mediaType={mediaType} id={id} />
         </section>
-        <section className="mt-10 md:mb-20">
-          <span className="text-2xl sm:text-3xl font-bold text-pahelo opacity-90">
+        <section className=" md:mb-28">
+          <span className="text-3xl font-bold text-pahelo/90">
             Similar {mediaType === "tv" ? "tv shows" : "movies"}
           </span>
           <Recommended
@@ -63,10 +61,8 @@ export default function SelectedCinema() {
             endpoint={mediaType}
           />
         </section>
-        <section className="mt-10 md:mb-20">
-          <span className="text-2xl sm:text-3xl font-bold text-pahelo opacity-90">
-            Recommended
-          </span>
+        <section className="mt-8 md:mb-28">
+          <span className="text-3xl font-bold text-pahelo/90">Recommended</span>
           <Recommended
             data={recommendationsData?.results}
             loading={recommendationsLoading}

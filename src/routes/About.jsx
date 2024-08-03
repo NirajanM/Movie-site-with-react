@@ -6,7 +6,7 @@ export default function About() {
     <>
       <div className="flex max-w-screen-xl mx-auto">
         <Menu />
-        <div className="w-full md:pl-9 text-white mt-10 p-4 md:mt-0 flex justify-center items-start flex-col gap-4 md:gap-8 lg:gap-12">
+        <div className="w-full md:pl-9 text-white mt-10 py-4 md:mt-0 flex justify-center items-start flex-col gap-4 md:gap-8 lg:gap-12">
           <div className="sm:w-11/12 md:w-4/5 lg:w-2/3">
             <LazyLoadImage
               alt="lets watch movie flyer"
