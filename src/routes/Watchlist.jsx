@@ -25,7 +25,7 @@ export default function Watchlist() {
   return (
     <div className="flex max-w-screen-xl mx-auto my-16 md:my-0">
       <Menu />
-      <div className="w-full md:w-5/6 md:px-9 text-white px-2">
+      <div className="w-full md:w-5/6 py-4 text-white">
         {watchlistItems.length > 0 ? (
           <div className=" grid mx-auto my-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-7 xl:gap-10 ">
             {watchlistItems.map((item) => {

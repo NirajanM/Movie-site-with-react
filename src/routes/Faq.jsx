@@ -53,8 +53,10 @@ export default function FaqPage() {
     <>
       <div className="flex max-w-screen-xl mx-auto">
         <Menu />
-        <div className="w-full md:pl-9 text-white mt-10 p-4 md:mt-0 flex justify-start items-start flex-col gap-4 md:gap-8 lg:gap-12">
-          <h2 className="text-xl lg:text-4xl">Some general FAQs :</h2>
+        <div className="w-full text-white mt-10 py-4 md:mt-0 flex justify-start items-start flex-col gap-4 md:gap-8 lg:gap-12">
+          <h2 className="text-xl lg:text-4xl text-pahelo">
+            Some general FAQs :
+          </h2>
           <Faq data={data} styles={styles} />
         </div>
       </div>
