@@ -16,10 +16,6 @@ export default function About() {
           </div>
 
           <p className="md:text-lg lg:text-xl">
-            We provide a user-friendly interface that makes browsing cinema
-            effortless and enjoyable.
-            <br />
-            <br />
             Whether you&apos;re searching for a specific title or simply
             browsing for inspiration, Let&apos;sWatchMovie offers a seamless and
             intuitive experience that enhances your entertainment journey. Join
@@ -36,7 +32,12 @@ export default function About() {
             <br />
             <br />
             Grab your popcorn, settle into your favorite spot, Join us on a
-            cinematic adventure and let the magic of movies unfold.
+            cinematic adventure and let the magic of movies unfold.{" "}
+            <p className="inline font-light text-sm md:text-base lg:text-lg text-pahelo/90">
+              We are here to serve you, all of the available movies & TV-shows
+              with the most smooth & easy to navigate UI.
+            </p>
+            <br />
             <br />
             <br />
             <br />
