@@ -1,4 +1,3 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import flyerurl from "../assets/Lets watch movie.webp";
 import Menu from "../components/Menu";
 export default function About() {
@@ -7,19 +6,16 @@ export default function About() {
       <div className="flex max-w-screen-xl mx-auto">
         <Menu />
         <div className="w-full md:pl-9 text-white mt-10 py-4 md:mt-0 flex justify-center items-start flex-col gap-4 md:gap-8 lg:gap-12">
-          <div className="sm:w-11/12 md:w-4/5 lg:w-2/3">
-            <LazyLoadImage
+          <div className="sm:w-11/12 md:w-4/5 lg:w-2/3 aspect-auto">
+            <img
               alt="lets watch movie flyer"
               src={flyerurl}
-              className="object-cover w-full h-auto object-center "
+              width="100%"
+              height="100%"
             />
           </div>
 
           <p className="md:text-lg lg:text-xl">
-            We provide a user-friendly interface that makes browsing cinema
-            effortless and enjoyable.
-            <br />
-            <br />
             Whether you&apos;re searching for a specific title or simply
             browsing for inspiration, Let&apos;sWatchMovie offers a seamless and
             intuitive experience that enhances your entertainment journey. Join
@@ -36,7 +32,12 @@ export default function About() {
             <br />
             <br />
             Grab your popcorn, settle into your favorite spot, Join us on a
-            cinematic adventure and let the magic of movies unfold.
+            cinematic adventure and let the magic of movies unfold.{" "}
+            <p className="inline font-light text-sm md:text-base lg:text-lg text-pahelo/90">
+              We are here to serve you, all of the available movies & TV-shows
+              with the most smooth & easy to navigate UI.
+            </p>
+            <br />
             <br />
             <br />
             <br />
