@@ -51,7 +51,7 @@ export default function SearchRepeater({ keyword, type }) {
     isLoading,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ["search", keyword, type],
+    queryKey: ["search", keyword],
     queryFn: fetchPage,
     getNextPageParam: (lastPage) => lastPage.page + 1,
   });
