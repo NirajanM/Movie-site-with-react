@@ -87,7 +87,7 @@ export default function SearchRepeater({ keyword, type }) {
                           key={item.id}
                           className="flex flex-col gap-2 group w-full cursor-pointer"
                           onClick={() => {
-                            navigate(`/${item.media_type}/${item.id}`);
+                            navigate(`/${item.media_type || type}/${item.id}`);
                             window.scrollTo(0, 0);
                           }}
                         >
