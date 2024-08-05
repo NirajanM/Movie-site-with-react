@@ -51,7 +51,7 @@ export default function SearchRepeater({ keyword, type }) {
     isLoading,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ["search", keyword],
+    queryKey: ["search", keyword, type],
     queryFn: fetchPage,
     getNextPageParam: (lastPage) => lastPage.page + 1,
   });
@@ -87,7 +87,7 @@ export default function SearchRepeater({ keyword, type }) {
                           key={item.id}
                           className="flex flex-col gap-2 group w-full cursor-pointer"
                           onClick={() => {
-                            navigate(`/${item.media_type}/${item.id}`);
+                            navigate(`/${item.media_type || type}/${item.id}`);
                             window.scrollTo(0, 0);
                           }}
                         >
