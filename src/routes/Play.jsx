@@ -46,7 +46,7 @@ export default function Play() {
   };
 
   return (
-    <div className="flex flex-col text-xl text-white w-screen mt-24 md:mt-16 max-w-screen-xl mx-auto sm:px-4 px-2 mb-20">
+    <div className="flex flex-col text-xl text-white mt-24 md:mt-16 max-w-screen-xl mx-auto mb-20 lg:px-4">
       <iframe
         name="framez"
         id="framez"
@@ -58,7 +58,7 @@ export default function Play() {
       />
       {mediaType == "tv" && (
         <div className="flex flex-col justify-start mt-14">
-          <h3 className="text-xl lg:text-3xl font-bold">Seasons</h3>
+          <h3 className="text-2xl lg:text-3xl font-semibold">Seasons</h3>
           <div
             id="seasons-holder"
             className="flex flex-wrap gap-2 mt-5 max-w-screen-xl"
@@ -67,8 +67,8 @@ export default function Play() {
               return (
                 <span
                   key={item.id}
-                  className={`border rounded-sm px-4 py-1 text-base cursor-pointer hover:bg-gray-50/20 ${
-                    item.season_number === seasonNumber && "bg-gray-50/20"
+                  className={`border rounded-sm px-4 py-1 text-base lg:text-lg cursor-pointer hover:bg-gray-50/20 ${
+                    item.season_number == seasonNumber && "bg-gray-50/20"
                   }`}
                   onClick={() => {
                     setSeasonNumber(item.season_number);
@@ -80,11 +80,13 @@ export default function Play() {
               );
             })}
           </div>
-          <div id="episodes-holder" className="mt-5 flex flex-col gap-2">
-            <h2 className=" font-semibold font-mono mt-2 ">
-              {episodesDetail?.data?.name}
-            </h2>
-            <p className="text-base mb-5">{episodesDetail?.data?.overview}</p>
+          <div
+            id="episodes-holder"
+            className="mt-5 flex flex-col gap-2 md:gap-3 lg:gap-4"
+          >
+            <p className="text-sm md:text-base lg:text-lg mb-5">
+              {episodesDetail?.data?.overview}
+            </p>
 
             {episodesDetail?.data?.episodes?.map((item, index) => {
               const posterUrl = item.still_path
@@ -93,7 +95,7 @@ export default function Play() {
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col sm:flex-row gap-3 md:gap-5 border-b py-4 cursor-pointer hover:bg-slate-50/10"
+                  className="flex flex-col gap-1 md:gap-2 lg:gap-4 py-6 cursor-pointer hover:bg-white/5"
                   onClick={() => {
                     const iframe = document.getElementById("framez");
                     iframe.removeAttribute("sandbox");
@@ -107,22 +109,28 @@ export default function Play() {
                     window.scrollTo(0, 0);
                   }}
                 >
-                  <LazyLoadImage
-                    alt={item?.name || "poster image"}
-                    src={posterUrl}
-                    className="h-32 w-44 object-cover object-center "
-                    loading="lazy"
-                  />
+                  <div className="flex gap-3 md:gap-4">
+                    <div className="rounded-sm h-20 md:h-24 lg:h-28 w-36 md:w-44 lg:w-52">
+                      <LazyLoadImage
+                        alt={item?.name || "poster image"}
+                        src={posterUrl}
+                        className="h-full w-full object-cover object-center rounded-sm"
+                        loading="lazy"
+                      />
+                    </div>
 
-                  <div className="flex flex-col gap-2 items-start">
-                    <h3 className="font-mono text-lg">
-                      Episode: {item.episode_number}
-                    </h3>
-                    <h4 className="text-base font-medium font-mono">
-                      {item.name}
-                    </h4>
-                    <p className="text-sm hidden sm:block">{item.overview}</p>
+                    <div className="flex flex-col items-start justify-center w-full text-sm md:text-base lg:text-lg font-semibold">
+                      <h3>
+                        {item.episode_number}. {item.name}
+                      </h3>
+                      <h4 className="text-white/60 font-normal">
+                        Rated: {item?.vote_average || 0}
+                      </h4>
+                    </div>
                   </div>
+                  <p className="text-sm text-white/60 md:text-base lg:text-lg">
+                    {item.overview}
+                  </p>
                 </div>
               );
             })}
