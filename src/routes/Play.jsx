@@ -29,21 +29,32 @@ export default function Play() {
     queryFn: () => fetchData(`tv/${id}/season/${seasonNumber}`),
   });
 
-  useEffect(() => {
-    // Set sandbox attribute once window loads
-    const iframe = document.getElementById("framez");
-    iframe.addEventListener("load", handleLoad);
-    // Clean up the event listener when the component unmounts
-    return () => {
-      iframe.removeEventListener("load", handleLoad);
-    };
-  }, []);
-
-  const handleLoad = () => {
-    const iframe = document.getElementById("framez");
+  // Function to handle the load event
+  const handleLoad = (event) => {
+    const iframe = event.target;
     iframe.sandbox =
       "allow-same-origin allow-pointer-lock allow-orientation-lock";
+    document.getElementById("pl_but").onclick = function (e) {
+      e.stopPropagation();
+    };
   };
+
+  useEffect(() => {
+    // Select all iframes in the document
+    const iframes = document.querySelectorAll("iframe");
+
+    // Add load event listener to each iframe
+    iframes.forEach((iframe) => {
+      iframe.addEventListener("load", handleLoad);
+    });
+
+    // Clean up the event listeners when the component unmounts
+    return () => {
+      iframes.forEach((iframe) => {
+        iframe.removeEventListener("load", handleLoad);
+      });
+    };
+  }, []);
 
   return (
     <div className="flex flex-col text-xl text-white mt-24 md:mt-16 max-w-screen-xl mx-auto mb-20 lg:px-4">
@@ -61,7 +72,7 @@ export default function Play() {
           <h3 className="text-2xl lg:text-3xl font-semibold">Seasons</h3>
           <div
             id="seasons-holder"
-            className="flex flex-wrap gap-2 mt-5 max-w-screen-xl"
+            className="flex flex-wrap gap-2 mt-5 md:mt-7 lg:mt-8 max-w-screen-xl"
           >
             {seriesDetails?.data?.seasons?.map((item) => {
               return (
@@ -82,9 +93,9 @@ export default function Play() {
           </div>
           <div
             id="episodes-holder"
-            className="mt-5 flex flex-col gap-2 md:gap-3 lg:gap-4"
+            className="mt-5 md:mt-7 lg:mt-9 flex flex-col gap-2 md:gap-3 lg:gap-4"
           >
-            <p className="text-sm md:text-base lg:text-lg mb-5">
+            <p className="text-sm md:text-base lg:text-lg mb-5 md:mb-7 lg:mb-9">
               {episodesDetail?.data?.overview}
             </p>
 
