@@ -199,3 +199,11 @@ select {
   outline: none !important;
   box-shadow: none !important;
 }
+
+#loading_overlay,
+#the_frame,
+.ad,
+.ad-banner,
+.ad-container {
+  display: none !important;
+}

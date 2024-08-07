@@ -32,8 +32,8 @@ export default function Play() {
   // Function to handle the load event
   const handleLoad = (event) => {
     const iframe = event.target;
-    iframe.sandbox =
-      "allow-same-origin allow-pointer-lock allow-orientation-lock";
+    iframe.sandbox = "allow-same-origin ";
+    // Prevent the button click from propagating
     document.getElementById("pl_but").onclick = function (e) {
       e.stopPropagation();
     };
