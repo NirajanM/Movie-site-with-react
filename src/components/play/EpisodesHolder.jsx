@@ -3,7 +3,6 @@ import { fetchData } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
 import posterNotFound from "../../assets/posterNotFound.png";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PlayContext from "@/context/PlayContext";
 
@@ -13,13 +12,11 @@ export default function EpisodesHolder() {
     nowPlaying,
     episodeNumber,
     setNowPlaying,
-    setEpisodeNumber,
-    setUrl,
     id,
+    handleEpisodeClick,
   } = useContext(PlayContext);
 
   const { url: urlTemp } = useSelector((state) => state.home);
-  const navigate = useNavigate();
 
   const episodesDetail = useQuery({
     queryKey: ["episodes", id, seasonNumber],
@@ -37,25 +34,6 @@ export default function EpisodesHolder() {
       }));
     }
   }, [episodesDetail.data, episodeNumber, setNowPlaying, nowPlaying.T]);
-
-  const handleEpisodeClick = (index) => {
-    const iframe = document.getElementById("framez");
-    iframe.removeAttribute("sandbox");
-    navigate(`/tv/${id}/play/${seasonNumber}/${index + 1}`);
-    setEpisodeNumber(index + 1);
-    const episodeName = episodesDetail.data.episodes[index]?.name | null;
-    setNowPlaying({
-      S: seasonNumber,
-      E: index + 1,
-      T: episodeName,
-    });
-    setUrl(
-      `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${seasonNumber}&episode=${
-        index + 1
-      }`
-    );
-    window.scrollTo(0, 0);
-  };
 
   return (
     <div
@@ -75,7 +53,9 @@ export default function EpisodesHolder() {
             key={item.id}
             className="flex flex-col gap-1 md:gap-2 lg:gap-4 py-6 cursor-pointer hover:bg-white/5"
             onClick={() => {
-              handleEpisodeClick(index);
+              const episodeName =
+                episodesDetail.data.episodes[index]?.name | null;
+              handleEpisodeClick(index, episodeName, false);
             }}
           >
             <div className="flex gap-3 md:gap-4">
