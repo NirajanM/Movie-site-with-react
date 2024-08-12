@@ -10,6 +10,11 @@ export default function Play() {
   const { mediaType, id, season, episode } = useParams();
   const [seasonNumber, setSeasonNumber] = useState(season);
   const [episodeNumber, setEpisodeNumber] = useState(episode);
+  const [nowPlaying, setNowPlaying] = useState({
+    S: season,
+    E: episode,
+    T: null,
+  });
   const { url: urlTemp } = useSelector((state) => state.home);
   const navigate = useNavigate();
 
@@ -28,6 +33,37 @@ export default function Play() {
     queryKey: ["episodes", id, seasonNumber],
     queryFn: () => fetchData(`tv/${id}/season/${seasonNumber}`),
   });
+
+  // Use a flag to ensure the title is set only once
+  useEffect(() => {
+    if (episodesDetail.data && episodesDetail.data.episodes && !nowPlaying.T) {
+      const episodeName =
+        episodesDetail.data.episodes[parseInt(episodeNumber) - 1]?.name;
+      setNowPlaying((prev) => ({
+        ...prev,
+        T: episodeName,
+      }));
+    }
+  }, [episodesDetail.data, episodeNumber, nowPlaying.T]);
+
+  const handleEpisodeClick = (index) => {
+    const iframe = document.getElementById("framez");
+    iframe.removeAttribute("sandbox");
+    navigate(`/tv/${id}/play/${seasonNumber}/${index + 1}`);
+    setEpisodeNumber(index + 1);
+    const episodeName = episodesDetail.data.episodes[index]?.name | null;
+    setNowPlaying({
+      S: seasonNumber,
+      E: index + 1,
+      T: episodeName,
+    });
+    setUrl(
+      `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${seasonNumber}&episode=${
+        index + 1
+      }`
+    );
+    window.scrollTo(0, 0);
+  };
 
   // Function to handle the load event
   const handleLoad = (event) => {
@@ -69,6 +105,14 @@ export default function Play() {
       />
       {mediaType == "tv" && (
         <div className="flex flex-col justify-start mt-14">
+          <section className="flex flex-col">
+            <div id="episode-details" className="flex gap-2">
+              <span>Now Playing:</span>
+              <span>
+                S{nowPlaying.S}E{nowPlaying.E}.{nowPlaying.T}
+              </span>
+            </div>
+          </section>
           <h3 className="text-2xl lg:text-3xl font-semibold">Seasons</h3>
           <div
             id="seasons-holder"
@@ -108,16 +152,7 @@ export default function Play() {
                   key={item.id}
                   className="flex flex-col gap-1 md:gap-2 lg:gap-4 py-6 cursor-pointer hover:bg-white/5"
                   onClick={() => {
-                    const iframe = document.getElementById("framez");
-                    iframe.removeAttribute("sandbox");
-                    navigate(`/tv/${id}/play/${seasonNumber}/${index + 1}`);
-                    setEpisodeNumber(index + 1);
-                    setUrl(
-                      `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${seasonNumber}&episode=${
-                        index + 1
-                      }`
-                    );
-                    window.scrollTo(0, 0);
+                    handleEpisodeClick(index);
                   }}
                 >
                   <div className="flex gap-3 md:gap-4">
