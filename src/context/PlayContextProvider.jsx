@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PlayContext from "./playcontext";
+import PlayContext from "./PlayContext";
 
 const PlayContextProvider = ({
   children,
