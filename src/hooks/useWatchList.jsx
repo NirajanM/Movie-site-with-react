@@ -19,3 +19,7 @@ export function addMovieToWatchlist(movie) {
 export function getWatchListCinemas() {
   return JSON.parse(localStorage.getItem("watchlist")) || [];
 }
+
+export function getContinuePlaying() {
+  return JSON.parse(localStorage.getItem("continuePlaying")) || [];
+}
