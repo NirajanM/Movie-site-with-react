@@ -4,16 +4,6 @@ import PlayContextProvider from "@/context/PlayContextProvider";
 import NowPlaying from "@/components/play/NowPlaying";
 import SeasonAndEpisodes from "@/components/play/SeasonAndEpisodes";
 
-// Function to handle the load event
-const handleLoad = (event) => {
-  const iframe = event.target;
-  iframe.sandbox = "allow-same-origin ";
-  // Prevent the button click from propagating
-  document.getElementById("pl_but").onclick = function (e) {
-    e.stopPropagation();
-  };
-};
-
 export default function Play() {
   const { mediaType, id, season, episode } = useParams();
   const navigate = useNavigate();
@@ -23,6 +13,22 @@ export default function Play() {
       ? `https://vidsrc.me/embed/movie?tmdb=${id}`
       : `https://vidsrc.me/embed/tv?tmdb=${id}&season=${season}&episode=${episode}`
   );
+
+  // Function to handle the load event
+  const handleLoad = (event) => {
+    const iframe = event.target;
+    iframe.sandbox = "allow-same-origin ";
+    // Prevent the button click from propagating
+    document.getElementById("pl_but").onclick = function (e) {
+      e.stopPropagation();
+    };
+    document.getElementById("pl_but_background").onclick = function (e) {
+      e.stopPropagation();
+    };
+    document.getElementById("ng-popup").remove();
+    document.getElementsByClassName("form-button-click").remove();
+    document.getElementsByClassName("ng-popup-content").remove();
+  };
 
   useEffect(() => {
     // Select all iframes in the document
@@ -49,6 +55,7 @@ export default function Play() {
       url={url}
       setUrl={setUrl}
       navigate={navigate}
+      mediaType={mediaType}
     >
       <div className="flex flex-col text-xl text-white mt-24 md:mt-16 max-w-screen-xl mx-auto mb-20 lg:px-4 gap-14">
         <iframe

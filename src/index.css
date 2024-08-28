@@ -164,6 +164,7 @@ select {
 .ad_container,
 #onexbet {
   display: none !important;
+  z-index: -200 !important;
 }
 
 /* Custom scrollbar for the dialog content */
@@ -201,9 +202,35 @@ select {
 }
 
 #loading_overlay,
-#the_frame,
 .ad,
 .ad-banner,
-.ad-container {
+.ad-container,
+#ng-popup,
+.ng-popup-content,
+.form-button-click {
+  display: none !important;
+  z-index: -1000 !important;
+  pointer-events: none !important;
+}
+
+#the_frame,
+#player_iframe {
+  z-index: 1000 !important;
+}
+
+.fullpage-bg {
+  pointer-events: none !important;
+  z-index: -100 !important;
+}
+
+#iframesrc div:last-child,
+#iframesrc div:nth-last-child(2) {
+  z-index: -100 !important;
+  opacity: 0 !important;
+}
+
+#iframesrc div:last-child a,
+#framez div:last-child a {
+  src: "";
   display: none !important;
 }

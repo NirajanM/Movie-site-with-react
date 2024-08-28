@@ -1,4 +1,5 @@
 import PlayContext from "@/context/PlayContext";
+import { updateContinuePlaying } from "@/hooks/useWatchList";
 import { fetchData } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
@@ -25,6 +26,7 @@ export default function NowPlaying() {
           const episodeName =
             episodesDetail.data.episodes[nowPlaying.E]?.name | null;
           handleEpisodeClick(nowPlaying.E, episodeName, true);
+          updateContinuePlaying(id, nowPlaying.S, parseInt(nowPlaying.E) + 1);
         }}
       >
         <span>Play Next Episode</span>
