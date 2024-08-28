@@ -10,7 +10,11 @@ import { AiFillFileAdd } from "react-icons/ai";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { addMovieToWatchlist } from "../hooks/useWatchList";
+import {
+  addMovieToWatchlist,
+  getContinuePlaying,
+  setContinuePlaying,
+} from "../hooks/useWatchList";
 
 export default function DetailSection({ mediaType, id, data, loading }) {
   const notify = (content) => toast(content);
@@ -34,6 +38,59 @@ export default function DetailSection({ mediaType, id, data, loading }) {
       });
   }, []);
   const navigate = useNavigate();
+
+  const {
+    id: newid,
+    original_title,
+    popularity,
+    title,
+    name,
+    poster_path,
+    release_date,
+    first_air_date,
+    vote_average,
+  } = data;
+
+  const movieTitle = title || name;
+  const dateReleased = release_date || first_air_date;
+  const media_type = title ? "movie" : "tv";
+
+  const newObj = {
+    id: newid,
+    original_title,
+    popularity,
+    title: movieTitle,
+    poster_path,
+    release_date: dateReleased,
+    media_type: mediaType || media_type,
+    vote_average,
+  };
+
+  const handlePlay = () => {
+    const list = getContinuePlaying();
+    const alreadyExist = list.find((item) => item.id == id);
+    console.log(alreadyExist);
+    if (alreadyExist) {
+      console.log(alreadyExist);
+      setContinuePlaying(newObj, alreadyExist.s, alreadyExist.e);
+      const navigateLink = "play/" + alreadyExist.s + "/" + alreadyExist.e;
+      navigate(navigateLink.toString());
+    } else {
+      setContinuePlaying(newObj, 1, 1);
+      navigate(`play/1/1`);
+    }
+  };
+
+  const handleAddToWatchlist = () => {
+    try {
+      addMovieToWatchlist(newObj);
+      notify("Added to watch list");
+    } catch (error) {
+      console.error("Error adding movie to watchlist:", error.message);
+      notify("Failed to add to watch list");
+      // Handle the error, e.g., show an error message to the user
+    }
+  };
 
   return (
     <>
@@ -115,53 +172,14 @@ export default function DetailSection({ mediaType, id, data, loading }) {
         <div className="flex gap-4 flex-col md:flex-row">
           <div
             className="mt-5 text-xl md:text-3xl xl:text-4xl text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-1 font-black border-l-8 border-slate-600/70 px-3 w-fit"
-            onClick={() => navigate(`play/1/1`)}
+            onClick={handlePlay}
           >
             <FaPlay />
             PLAY
           </div>
           <div
             className="mt-5 text-lg md:border-l-8 border-slate-600/70 md:px-3 text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-2 w-fit"
-            onClick={() => {
-              try {
-                const {
-                  id,
-                  original_title,
-                  popularity,
-                  title,
-                  name,
-                  poster_path,
-                  release_date,
-                  first_air_date,
-                  vote_average,
-                } = data;
-
-                const movieTitle = title || name;
-                const dateReleased = release_date || first_air_date;
-                const media_type = title ? "movie" : "tv";
-
-                const newObj = {
-                  id,
-                  original_title,
-                  popularity,
-                  title: movieTitle,
-                  poster_path,
-                  release_date: dateReleased,
-                  media_type: mediaType || media_type,
-                  vote_average,
-                };
-
-                addMovieToWatchlist(newObj);
-                notify("Added to watch list");
-              } catch (error) {
-                console.error(
-                  "Error adding movie to watchlist:",
-                  error.message
-                );
-                notify("Failed to add to watch list");
-                // Handle the error, e.g., show an error message to the user
-              }
-            }}
+            onClick={handleAddToWatchlist}
           >
             <AiFillFileAdd size={25} />
             Add to watchlist

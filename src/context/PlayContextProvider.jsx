@@ -9,6 +9,7 @@ const PlayContextProvider = ({
   setUrl,
   id,
   navigate,
+  mediaType,
 }) => {
   const [seasonNumber, setSeasonNumber] = useState(season);
   const [episodeNumber, setEpisodeNumber] = useState(episode);
@@ -47,6 +48,7 @@ const PlayContextProvider = ({
         setUrl,
         id,
         handleEpisodeClick,
+        mediaType,
       }}
     >
       {children}

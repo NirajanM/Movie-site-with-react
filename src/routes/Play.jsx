@@ -55,6 +55,7 @@ export default function Play() {
       url={url}
       setUrl={setUrl}
       navigate={navigate}
+      mediaType={mediaType}
     >
       <div className="flex flex-col text-xl text-white mt-24 md:mt-16 max-w-screen-xl mx-auto mb-20 lg:px-4 gap-14">
         <iframe

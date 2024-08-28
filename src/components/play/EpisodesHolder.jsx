@@ -5,6 +5,7 @@ import { useContext, useEffect } from "react";
 import posterNotFound from "../../assets/posterNotFound.png";
 import { useSelector } from "react-redux";
 import PlayContext from "@/context/PlayContext";
+import { updateContinuePlaying } from "@/hooks/useWatchList";
 
 export default function EpisodesHolder() {
   const {
@@ -56,6 +57,7 @@ export default function EpisodesHolder() {
               const episodeName =
                 episodesDetail.data.episodes[index]?.name | null;
               handleEpisodeClick(index, episodeName, false);
+              updateContinuePlaying(id, seasonNumber, parseInt(index) + 1);
             }}
           >
             <div className="flex gap-3 md:gap-4">
