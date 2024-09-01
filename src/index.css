@@ -139,6 +139,13 @@ select {
   cursor: pointer;
 }
 
+.list svg {
+  fill: rgba(255, 255, 255, 0.5);
+}
+.list:hover svg {
+  fill: #ffdf2b83;
+}
+
 .list:hover {
   color: #ffdf2b;
 }
@@ -233,4 +240,17 @@ select {
 #framez div:last-child a {
   src: "";
   display: none !important;
+}
+
+.cw-scrollbar::-webkit-scrollbar {
+  height: 12px; /* Adjust the height of the scrollbar */
+}
+
+.cw-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #555; /* Color of the scrollbar thumb */
+  border-radius: 0px; /* Rounded corners */
+}
+
+.cw-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #777; /* Color when hovered */
 }

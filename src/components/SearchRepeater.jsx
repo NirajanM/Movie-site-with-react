@@ -91,23 +91,23 @@ export default function SearchRepeater({ keyword, type }) {
                             window.scrollTo(0, 0);
                           }}
                         >
-                          <div className="relative aspect-poster">
+                          <div className="relative aspect-poster rounded-md">
                             <LazyLoadImage
                               alt={item.title}
                               src={posterUrl}
-                              className="object-cover w-full h-full object-center "
+                              className="object-cover w-full h-full object-center rounded-md"
                             />
                           </div>
                           <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
                             {item.title || item.name}
                           </span>
                           <div className="flex justify-between items-center">
-                            <span className="text-xs text-slate-200 group-hover:text-pahelo">
+                            <span className="text-xs text-slate-200/70 group-hover:text-pahelo">
                               {dateFormat(
                                 item.release_date || item.first_air_date
                               )}
                             </span>
-                            <span className="flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo">
+                            <span className="flex gap-1 items-center text-xs text-slate-200/80 group-hover:text-pahelo">
                               {item.vote_average?.toFixed(1)}
                               <AiFillStar />
                             </span>

@@ -7,6 +7,7 @@ import { fetchData } from "../utils/api";
 import { useQuery } from "@tanstack/react-query";
 import MovieAnimation from "../assets/movieAnimation.json";
 import Lottie from "lottie-react";
+import ContinueWatching from "@/components/ContinueWatching";
 
 function Root() {
   const [popularOpt, setPopularOpt] = useState("movie");
@@ -53,11 +54,11 @@ function Root() {
   return (
     <div className="flex flex-row-reverse md:flex-row max-w-screen-xl mx-auto ">
       <Menu />
-      <div className="w-full lg:pl-9 text-white lg:w-[79%] xl:w-[88%]">
-        <section className="mb-8 md:mb-24 mt-20 md:mt-0  ">
+      <div className="w-full lg:pl-9 text-white lg:w-[79%] xl:w-[88%] flex flex-col gap-14 md:gap-28">
+        <section className="mt-20 md:mt-0">
           <div
             id="landing-section"
-            className="grid grid-cols-1 sm:grid-cols-2 pb-20 sm:py-20 gap-5 sm:gap:0"
+            className="grid grid-cols-1 sm:grid-cols-2 pb-14 sm:pt-20 gap-5 sm:gap:0"
           >
             <div className="flex flex-col h-full items-start justify-end sm:order-last -z-10">
               <Lottie
@@ -70,7 +71,7 @@ function Root() {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold lg:font-bold w-5/6 sm:w-full">
                 Explore, Discover, Enjoy.
               </h1>
-              <h2 className="text-lg">
+              <h2 className="text-lg text-white/70">
                 Our mission is to amplify the joy of cinema exploration,
                 offering a user-friendly interface that makes browsing
                 effortless and enjoyable. Watch your favorite movies and series
@@ -81,6 +82,11 @@ function Root() {
               </h2>
             </div>
           </div>
+        </section>
+
+        <ContinueWatching />
+
+        <section>
           <div>
             <span className="text-pahelo font-black text-3xl">Trending</span>
             <OnOff opt={trOpt} stateChanger={setTrendingOpt} />
@@ -90,8 +96,7 @@ function Root() {
             loading={trending?.isLoading}
           />
         </section>
-
-        <section className="mb-8 md:mb-24">
+        <section>
           <span className="text-pahelo font-black text-3xl">Now Playing</span>
           <Carousel
             data={playing?.data?.results}
@@ -100,7 +105,7 @@ function Root() {
           />
         </section>
 
-        <section className="mb-8 md:mb-24">
+        <section>
           <div>
             <span className="text-pahelo font-black text-3xl">Popular</span>
             <OnOff opt={pOpt} stateChanger={setPopularOpt} />
@@ -112,7 +117,7 @@ function Root() {
           />
         </section>
 
-        <section className="mb-8 md:mb-24">
+        <section className="pb-14 md:pb-28">
           <div>
             <span className="text-pahelo font-black text-3xl">Top rated</span>
             <OnOff opt={tOpt} stateChanger={setTopOpt} />

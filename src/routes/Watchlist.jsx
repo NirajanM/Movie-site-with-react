@@ -43,11 +43,11 @@ export default function Watchlist() {
                       className="flex flex-col gap-2 group w-full cursor-pointer z-30"
                       onClick={() => navigate(`/${item.media_type}/${item.id}`)}
                     >
-                      <div className="relative aspect-poster min-w-[128px] md:min-w-[144px] lg:min-w-[160px]">
+                      <div className="relative aspect-poster min-w-[128px] md:min-w-[144px] lg:min-w-[160px] rounded-md">
                         <LazyLoadImage
                           alt={item.title}
                           src={posterUrl}
-                          className="object-cover w-full h-full object-center "
+                          className="object-cover w-full h-full object-center rounded-md"
                         />
                       </div>
                       <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
