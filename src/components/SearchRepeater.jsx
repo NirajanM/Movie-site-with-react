@@ -91,11 +91,11 @@ export default function SearchRepeater({ keyword, type }) {
                             window.scrollTo(0, 0);
                           }}
                         >
-                          <div className="relative aspect-poster">
+                          <div className="relative aspect-poster rounded-md">
                             <LazyLoadImage
                               alt={item.title}
                               src={posterUrl}
-                              className="object-cover w-full h-full object-center "
+                              className="object-cover w-full h-full object-center rounded-md"
                             />
                           </div>
                           <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">

@@ -54,11 +54,11 @@ function Root() {
   return (
     <div className="flex flex-row-reverse md:flex-row max-w-screen-xl mx-auto ">
       <Menu />
-      <div className="w-full lg:pl-9 text-white lg:w-[79%] xl:w-[88%]">
-        <section className="mb-8 md:mb-24 mt-20 md:mt-0  ">
+      <div className="w-full lg:pl-9 text-white lg:w-[79%] xl:w-[88%] flex flex-col gap-14 md:gap-28">
+        <section className="mt-20 md:mt-0">
           <div
             id="landing-section"
-            className="grid grid-cols-1 sm:grid-cols-2 pb-20 sm:py-20 gap-5 sm:gap:0"
+            className="grid grid-cols-1 sm:grid-cols-2 pb-20 sm:pt-20 gap-5 sm:gap:0"
           >
             <div className="flex flex-col h-full items-start justify-end sm:order-last -z-10">
               <Lottie
@@ -82,7 +82,11 @@ function Root() {
               </h2>
             </div>
           </div>
-          <ContinueWatching />
+        </section>
+
+        <ContinueWatching />
+
+        <section>
           <div>
             <span className="text-pahelo font-black text-3xl">Trending</span>
             <OnOff opt={trOpt} stateChanger={setTrendingOpt} />
@@ -92,8 +96,7 @@ function Root() {
             loading={trending?.isLoading}
           />
         </section>
-
-        <section className="mb-8 md:mb-24">
+        <section>
           <span className="text-pahelo font-black text-3xl">Now Playing</span>
           <Carousel
             data={playing?.data?.results}
@@ -102,7 +105,7 @@ function Root() {
           />
         </section>
 
-        <section className="mb-8 md:mb-24">
+        <section>
           <div>
             <span className="text-pahelo font-black text-3xl">Popular</span>
             <OnOff opt={pOpt} stateChanger={setPopularOpt} />
@@ -114,7 +117,7 @@ function Root() {
           />
         </section>
 
-        <section className="mb-8 md:mb-24">
+        <section>
           <div>
             <span className="text-pahelo font-black text-3xl">Top rated</span>
             <OnOff opt={tOpt} stateChanger={setTopOpt} />

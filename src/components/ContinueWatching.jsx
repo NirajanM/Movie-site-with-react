@@ -27,10 +27,10 @@ export default function ContinueWatching() {
   if (watchingList.length > 0) {
     console.log(watchingList);
     return (
-      <div className="mb-20 flex flex-col items-start gap-3">
+      <div className="flex flex-col items-start gap-3">
         <h2 className="text-pahelo font-black text-3xl">Continue Watching</h2>
-        <div className="max-w-[1024px] mx-auto overflow-x-auto cw-scrollbar">
-          <div className="flex my-4 gap-2 justify-start">
+        <div className="max-w-[1024px] w-full">
+          <div className="flex  my-4 gap-2 justify-start items-start overflow-x-auto cw-scrollbar pb-10 md:pb-20">
             {watchingList.map((data) => {
               const item = data.details;
               const posterUrl = item.poster_path
@@ -39,7 +39,7 @@ export default function ContinueWatching() {
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 cursor-pointer z-30"
+                  className="flex flex-col gap-2 min-w-[128px] md:min-w-[144px] lg:min-w-[160px] cursor-pointer z-30"
                 >
                   <div
                     className="flex flex-col gap-2 group w-full cursor-pointer z-30"

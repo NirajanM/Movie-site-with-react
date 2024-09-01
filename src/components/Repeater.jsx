@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import posterNotFound from "../assets/posterNotFound.png";
@@ -8,7 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import dateFormat from "./dateFormat";
 import { fetchData } from "../utils/api";
 import { AiFillStar } from "react-icons/ai";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const skeletonItem = () => {
   return (
@@ -134,11 +134,11 @@ export default function Repeater({ genre, endpoint }) {
                         window.scrollTo(0, 0);
                       }}
                     >
-                      <div className="relative aspect-poster">
+                      <div className="relative aspect-poster rounded-md">
                         <LazyLoadImage
                           alt={item.title}
                           src={posterUrl}
-                          className="object-cover w-full h-full object-center "
+                          className="object-cover w-full h-full object-center rounded-md"
                         />
                       </div>
                       <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
