@@ -30,7 +30,7 @@ export default function ContinueWatching() {
       <div className="flex flex-col items-start gap-7 md:gap-14">
         <h2 className="text-pahelo font-black text-3xl">Continue Watching</h2>
         <div className="max-w-[1024px] w-full">
-          <div className="flex  my-4 gap-4 md:gap-5 justify-start items-start overflow-x-auto cw-scrollbar pb-10 md:pb-20">
+          <div className="flex  my-4 gap-4 md:gap-5 justify-start items-start overflow-x-scroll cw-scrollbar pb-10 md:pb-20">
             {watchingList.map((data) => {
               const item = data.details;
               const posterUrl = item.poster_path
