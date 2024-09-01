@@ -7,6 +7,7 @@ import { fetchData } from "../utils/api";
 import { useQuery } from "@tanstack/react-query";
 import MovieAnimation from "../assets/movieAnimation.json";
 import Lottie from "lottie-react";
+import ContinueWatching from "@/components/ContinueWatching";
 
 function Root() {
   const [popularOpt, setPopularOpt] = useState("movie");
@@ -81,6 +82,7 @@ function Root() {
               </h2>
             </div>
           </div>
+          <ContinueWatching />
           <div>
             <span className="text-pahelo font-black text-3xl">Trending</span>
             <OnOff opt={trOpt} stateChanger={setTrendingOpt} />

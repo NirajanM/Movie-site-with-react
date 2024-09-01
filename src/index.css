@@ -234,3 +234,16 @@ select {
   src: "";
   display: none !important;
 }
+
+.cw-scrollbar::-webkit-scrollbar {
+  height: 12px; /* Adjust the height of the scrollbar */
+}
+
+.cw-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 0px; /* Rounded corners */
+}
+
+.cw-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color when hovered */
+}
