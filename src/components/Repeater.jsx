@@ -145,10 +145,10 @@ export default function Repeater({ genre, endpoint }) {
                         {item.title || item.name}
                       </span>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-slate-200 group-hover:text-pahelo">
+                        <span className="text-xs text-slate-200/70 group-hover:text-pahelo">
                           {dateFormat(item.release_date || item.first_air_date)}
                         </span>
-                        <span className="flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo">
+                        <span className="flex gap-1 items-center text-xs text-slate-200/80 group-hover:text-pahelo">
                           {item.vote_average.toFixed(1)}
                           <AiFillStar />
                         </span>

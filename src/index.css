@@ -139,6 +139,13 @@ select {
   cursor: pointer;
 }
 
+.list svg {
+  fill: rgba(255, 255, 255, 0.5);
+}
+.list:hover svg {
+  fill: #ffdf2b83;
+}
+
 .list:hover {
   color: #ffdf2b;
 }
@@ -240,10 +247,10 @@ select {
 }
 
 .cw-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color of the scrollbar thumb */
+  background-color: #555; /* Color of the scrollbar thumb */
   border-radius: 0px; /* Rounded corners */
 }
 
 .cw-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Color when hovered */
+  background-color: #777; /* Color when hovered */
 }

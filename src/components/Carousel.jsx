@@ -49,7 +49,7 @@ export default function Carousel({ data, loading, endpoint }) {
     });
   };
   return (
-    <div className="relative mt-9 md:mb-10 max-w-[1024px] ">
+    <div className="relative pt-7 md:pt-14  max-w-[1024px] ">
       {!loading ? (
         <>
           <span
@@ -65,7 +65,7 @@ export default function Carousel({ data, loading, endpoint }) {
             <FaChevronRight />
           </span>
           <div
-            className="flex pb-8 md:pb-0 md:mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar"
+            className="flex pb-8 md:pb-0 md:mb-8 gap-4 md:gap-5 overflow-x-scroll my-4 no-scrollbar"
             ref={carouselBox}
           >
             {data?.map((item) => {
@@ -93,10 +93,10 @@ export default function Carousel({ data, loading, endpoint }) {
                     {item.title || item.name}
                   </span>
                   <div className="flex justify-between items-center">
-                    <span className="text-[0.633rem] md:text-xs text-slate-200 group-hover:text-pahelo">
+                    <span className="text-[0.633rem] md:text-xs text-slate-200/70 group-hover:text-pahelo">
                       {dateFormat(item.release_date || item.first_air_date)}
                     </span>
-                    <span className="flex gap-1 items-center text-[0.633rem] md:text-xs text-slate-200 group-hover:text-pahelo pr-4">
+                    <span className="flex gap-1 items-center text-[0.633rem] md:text-xs text-slate-200/80 group-hover:text-pahelo ">
                       {item.vote_average.toFixed(1)}
                       <AiFillStar />
                     </span>

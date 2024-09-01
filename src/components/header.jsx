@@ -33,7 +33,7 @@ export default function Header() {
             <li>
               <NavLink
                 to="/"
-                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
+                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-white/90 dark:text-white/70 dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
               >
                 Home
               </NavLink>
@@ -41,7 +41,7 @@ export default function Header() {
             <li>
               <NavLink
                 to="/tvshow"
-                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
+                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-white/90 dark:text-white/70 dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
               >
                 Tv Shows
               </NavLink>
@@ -49,7 +49,7 @@ export default function Header() {
             <li>
               <NavLink
                 to="/movies"
-                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-pahelo dark:text-white dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
+                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-white/90 dark:text-white/70 dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
               >
                 Movies
               </NavLink>

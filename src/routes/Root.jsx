@@ -58,7 +58,7 @@ function Root() {
         <section className="mt-20 md:mt-0">
           <div
             id="landing-section"
-            className="grid grid-cols-1 sm:grid-cols-2 pb-20 sm:pt-20 gap-5 sm:gap:0"
+            className="grid grid-cols-1 sm:grid-cols-2 pb-14 sm:pt-20 gap-5 sm:gap:0"
           >
             <div className="flex flex-col h-full items-start justify-end sm:order-last -z-10">
               <Lottie
@@ -71,7 +71,7 @@ function Root() {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold lg:font-bold w-5/6 sm:w-full">
                 Explore, Discover, Enjoy.
               </h1>
-              <h2 className="text-lg">
+              <h2 className="text-lg text-white/70">
                 Our mission is to amplify the joy of cinema exploration,
                 offering a user-friendly interface that makes browsing
                 effortless and enjoyable. Watch your favorite movies and series
@@ -117,7 +117,7 @@ function Root() {
           />
         </section>
 
-        <section>
+        <section className="pb-14 md:pb-28">
           <div>
             <span className="text-pahelo font-black text-3xl">Top rated</span>
             <OnOff opt={tOpt} stateChanger={setTopOpt} />

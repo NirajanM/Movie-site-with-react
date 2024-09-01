@@ -27,10 +27,10 @@ export default function ContinueWatching() {
   if (watchingList.length > 0) {
     console.log(watchingList);
     return (
-      <div className="flex flex-col items-start gap-3">
+      <div className="flex flex-col items-start gap-7 md:gap-14">
         <h2 className="text-pahelo font-black text-3xl">Continue Watching</h2>
         <div className="max-w-[1024px] w-full">
-          <div className="flex  my-4 gap-2 justify-start items-start overflow-x-auto cw-scrollbar pb-10 md:pb-20">
+          <div className="flex  my-4 gap-4 md:gap-5 justify-start items-start overflow-x-auto cw-scrollbar pb-10 md:pb-20">
             {watchingList.map((data) => {
               const item = data.details;
               const posterUrl = item.poster_path
@@ -56,32 +56,33 @@ export default function ContinueWatching() {
                       {item.title || item.name}
                     </span>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-slate-200 group-hover:text-pahelo">
+                      <span className="text-xs text-slate-200/70 group-hover:text-pahelo">
                         {dateFormat(item.release_date || item.first_air_date)}
                       </span>
-                      <span className="flex gap-1 items-center text-xs text-slate-200 group-hover:text-pahelo">
+                      <span className="flex gap-1 items-center text-xs text-slate-200/80 group-hover:text-pahelo">
                         {item.vote_average.toFixed(1)}
                         <AiFillStar />
                       </span>
                     </div>
                   </div>
                   <div
-                    className="z-40 hover:scale-115 flex text-xs items-center justify-left hover:text-red-400"
+                    className="z-40 flex text-xs items-center justify-start hover:text-red-400 text-white/90 mt-1"
                     onClick={() => {
                       handleRemove(data.id);
                     }}
                   >
-                    <CiTrash size={20} /> Remove
-                    <ToastContainer
-                      position="top-center"
-                      autoClose={200}
-                      hideProgressBar={true}
-                      newestOnTop={true}
-                      rtl={false}
-                      pauseOnFocusLoss
-                      theme="dark"
-                    />
+                    <CiTrash size={20} />
+                    <span>Remove </span>
                   </div>
+                  <ToastContainer
+                    position="top-center"
+                    autoClose={200}
+                    hideProgressBar={true}
+                    newestOnTop={true}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    theme="dark"
+                  />
                 </div>
               );
             })}
