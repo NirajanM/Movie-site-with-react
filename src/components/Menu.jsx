@@ -1,7 +1,5 @@
-import { RiMovie2Line } from "react-icons/ri";
 import GenreDropdown from "./GenreDropdown";
 import { NavLink } from "react-router-dom";
-import { RiMovieLine } from "react-icons/ri";
 import { CiBoxList } from "react-icons/ci";
 import { MdOutlineBlurOn } from "react-icons/md";
 import { RiHeart2Line } from "react-icons/ri";
@@ -13,32 +11,28 @@ export default function Menu() {
     >
       <ul className="flex-col justify-start items-center space-y-14 text-lg text-slate-300 font-medium w-[50vw] md:w-[12rem]">
         <li className="relative">
-          <div className="list">
-            <RiMovieLine size={24} />
-            <div className="flex flex-col items-start justify-start">
-              <GenreDropdown mediaType={"tv"} />
-            </div>
-          </div>
+          <GenreDropdown mediaType={"tv"} />
         </li>
         <li className="relative">
-          <div className="list">
-            <RiMovie2Line size={23} />
-            <div className="flex flex-col ">
-              <GenreDropdown mediaType={"movie"} />
-            </div>
-          </div>
+          <GenreDropdown mediaType={"movie"} />
         </li>
-        <li className="list">
-          <RiHeart2Line size={24} />
-          <NavLink to={"/watchlist"}>Watchlist</NavLink>
+        <li>
+          <NavLink className="list" to={"/watchlist"}>
+            <RiHeart2Line size={24} />
+            <span>Watchlist</span>
+          </NavLink>
         </li>
-        <li className="list">
-          <MdOutlineBlurOn size={27} />
-          <NavLink to={"/about"}>About</NavLink>
+        <li>
+          <NavLink className="list" to={"/about"}>
+            <MdOutlineBlurOn size={27} />
+            <span>About</span>
+          </NavLink>
         </li>
-        <li className="list">
-          <CiBoxList size={23} />
-          <NavLink to={"/faq"}>FAQs</NavLink>
+        <li>
+          <NavLink className="list" to={"/faq"}>
+            <CiBoxList size={23} />
+            <span>FAQs</span>
+          </NavLink>
         </li>
       </ul>
     </div>

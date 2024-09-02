@@ -1,7 +1,5 @@
-import { RiMovie2Line } from "react-icons/ri";
 import GenreDropdown from "./GenreDropdown";
 import { NavLink } from "react-router-dom";
-import { RiMovieLine } from "react-icons/ri";
 import { CiBoxList } from "react-icons/ci";
 import { MdOutlineBlurOn } from "react-icons/md";
 import { RiHeart2Line } from "react-icons/ri";
@@ -15,52 +13,45 @@ export default function MobileMenu({ expanded, setExpanded }) {
     >
       <ul className="flex-col justify-start items-center space-y-14 text-lg text-slate-300 font-medium w-[70vw] sm:[50vw] md:w-[30vw]">
         <li className="relative">
-          <div className="list">
-            <RiMovieLine size={24} />
-            <div className="flex flex-col ">
-              <GenreDropdown mediaType={"tv"} setExpanded={setExpanded} />
-            </div>
-          </div>
+          <GenreDropdown mediaType={"tv"} setExpanded={setExpanded} />
         </li>
         <li className="relative">
-          <div className="list">
-            <RiMovie2Line size={23} />
-            <div className="flex flex-col ">
-              <GenreDropdown mediaType={"movie"} setExpanded={setExpanded} />
-            </div>
-          </div>
+          <GenreDropdown mediaType={"movie"} setExpanded={setExpanded} />
         </li>
-        <li className="list">
-          <RiHeart2Line size={24} />
+        <li>
           <NavLink
+            className="list"
             to={"/watchlist"}
             onClick={() => {
               setExpanded(false);
             }}
           >
-            Watchlist
+            <RiHeart2Line size={24} />
+            <span>Watchlist</span>
           </NavLink>
         </li>
-        <li className="list">
-          <MdOutlineBlurOn size={27} />
+        <li>
           <NavLink
+            className="list"
             to={"/about"}
             onClick={() => {
               setExpanded(false);
             }}
           >
-            About
+            <MdOutlineBlurOn size={27} />
+            <span>About</span>
           </NavLink>
         </li>
-        <li className="list">
-          <CiBoxList size={23} />
+        <li>
           <NavLink
+            className="list"
             to={"/faq"}
             onClick={() => {
               setExpanded(false);
             }}
           >
-            FAQs
+            <CiBoxList size={23} />
+            <span>FAQs</span>
           </NavLink>
         </li>
       </ul>
