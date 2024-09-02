@@ -54,7 +54,7 @@ function Root() {
   return (
     <div className="flex flex-row-reverse md:flex-row max-w-screen-xl mx-auto ">
       <Menu />
-      <div className="w-full lg:pl-9 text-white lg:w-[79%] xl:w-[88%] flex flex-col gap-14 md:gap-28">
+      <div className="w-full overflow-x-hidden lg:pl-9 lg:pr-4 text-white flex flex-col gap-14 md:gap-28">
         <section className="mt-20 md:mt-0">
           <div
             id="landing-section"

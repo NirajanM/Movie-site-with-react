@@ -24,7 +24,7 @@ export default function Header() {
   return (
     <>
       <nav id="nav-bar" className="bg-transparent mb-6 md:mb-3">
-        <div className=" sm:px-4 px-2 max-w-screen-xl mx-auto flex gap-2 items-center justify-between py-4 sm:p-4 relative">
+        <div className=" px-4 max-w-screen-xl mx-auto flex gap-2 items-center justify-between py-4 relative">
           <NavLink to="/" className="flex items-center">
             <img src={Logo} className="w-16 h-16 md:h-20 md:w-20" />
           </NavLink>
