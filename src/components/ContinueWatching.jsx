@@ -10,9 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 
 export default function ContinueWatching() {
-  const [watchingList, setWatchingList] = useState(
-    getContinuePlaying().reverse()
-  );
+  const [watchingList, setWatchingList] = useState(getContinuePlaying());
   const notify = (content) => toast(content);
   const navigate = useNavigate();
   let { url } = useSelector((state) => state.home);
@@ -20,7 +18,7 @@ export default function ContinueWatching() {
   const handleRemove = (itemId) => {
     const updatedItems = watchingList.filter((item) => item.id !== itemId);
     localStorage.setItem("continuePlaying", JSON.stringify(updatedItems));
-    setWatchingList(updatedItems.reverse()); // Reverse the updated list as well
+    setWatchingList(updatedItems); // Reverse the updated list as well
     notify("Removed successfully");
   };
 
