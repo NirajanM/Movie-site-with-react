@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { RiMovie2Line, RiMovieLine } from "react-icons/ri";
 
 export default function GenreDropdown({ mediaType, setExpanded }) {
   const dispatch = useDispatch();
@@ -39,20 +40,30 @@ export default function GenreDropdown({ mediaType, setExpanded }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="flex flex-col" onClick={() => setIsOpen(true)}>
-          <span className="flex gap-[10px] items-center cursor-pointer">
-            {mediaType === "tv" ? "Tv. Genre" : "M. Genre"}
-          </span>
-          <span className="text-sm text-slate-300/90 pl-1 font-light">
-            -{" "}
-            {mediaType === "tv"
-              ? genreTv
-                ? genreTv.name
-                : "All"
-              : genreMovie
-              ? genreMovie.name
-              : "All"}
-          </span>
+        <div className="list" onClick={() => setIsOpen(true)}>
+          {mediaType === "tv" ? (
+            <RiMovieLine size={24} />
+          ) : (
+            <RiMovie2Line size={23} />
+          )}
+
+          <div className="flex flex-col ">
+            <div className="flex flex-col">
+              <span className="flex gap-[10px] items-center cursor-pointer">
+                {mediaType === "tv" ? "Tv. Genre" : "M. Genre"}
+              </span>
+              <span className="text-sm text-slate-300/90 pl-1 font-light">
+                -{" "}
+                {mediaType === "tv"
+                  ? genreTv
+                    ? genreTv.name
+                    : "All"
+                  : genreMovie
+                  ? genreMovie.name
+                  : "All"}
+              </span>
+            </div>
+          </div>
         </div>
       </DialogTrigger>
       <DialogContent className="w-full max-w-md bg-black dialog-content text-white p-5 rounded-lg">

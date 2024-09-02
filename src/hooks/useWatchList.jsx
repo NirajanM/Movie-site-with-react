@@ -28,10 +28,15 @@ export function setContinuePlaying(cinema, s, e) {
   // If movie with the same ID exists, remove it
   if (existingMovieIndex !== -1) {
     list.splice(existingMovieIndex, 1);
+  } else {
+    // Check if the list contains 15 items, if so, remove the last item
+    if (list.length >= 15) {
+      list.pop();
+    }
   }
 
-  // Add the movie to the end of the list with new s and e values
-  list.push({ id: cinema.id, details: cinema, s: s, e: e });
+  // Add the movie to the beginning of the list with new s and e values
+  list.unshift({ id: cinema.id, details: cinema, s: s, e: e });
 
   // Save updated watchlist to localStorage
   localStorage.setItem("continuePlaying", JSON.stringify(list));
@@ -52,7 +57,7 @@ export function updateContinuePlaying(id, s, e) {
   }
 
   // Add the movie to the end of the list with new s and e values
-  list.push({ id: searchId, details: existingCinemaDetails, s: s, e: e });
+  list.unshift({ id: searchId, details: existingCinemaDetails, s: s, e: e });
 
   // Save updated watchlist to localStorage
   localStorage.setItem("continuePlaying", JSON.stringify(list));
