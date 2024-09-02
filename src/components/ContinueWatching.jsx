@@ -37,17 +37,17 @@ export default function ContinueWatching() {
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col gap-2 w-32 md:w-36 lg:w-40 xl:w-44 cursor-pointer z-30"
+                  className="flex flex-col gap-2 cursor-pointer z-30"
                 >
                   <div
-                    className="flex flex-col gap-2 group w-full cursor-pointer z-30"
+                    className="flex flex-col gap-2 group w-32 md:w-36 lg:w-40 xl:w-44 cursor-pointer z-30"
                     onClick={() => navigate(`/${item.media_type}/${item.id}`)}
                   >
                     <div className="relative aspect-poster w-32 md:w-36 lg:w-40 xl:w-44 rounded-md">
                       <LazyLoadImage
                         alt={item.title}
                         src={posterUrl}
-                        className="object-cover w-full h-full object-center rounded-md"
+                        className="object-cover w-full h-full object-center rounded-md aspect-poster"
                       />
                     </div>
                     <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
