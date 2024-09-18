@@ -84,20 +84,20 @@ export default function Carousel({ data, loading, endpoint }) {
                 >
                   <div className="relative w-32 md:w-36 lg:w-40 xl:w-44 aspect-poster rounded-md">
                     <LazyLoadImage
-                      alt={item.title || item.name}
+                      alt={item?.title || item?.name}
                       src={posterUrl}
                       className="object-cover w-full h-full object-center rounded-md"
                     />
                   </div>
                   <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo text-xs md:text-base lg:font-normal">
-                    {item.title || item.name}
+                    {item?.title || item?.name}
                   </span>
                   <div className="flex justify-between items-center">
                     <span className="text-[0.633rem] md:text-xs text-slate-200/70 group-hover:text-pahelo">
-                      {dateFormat(item.release_date || item.first_air_date)}
+                      {dateFormat(item?.release_date || item?.first_air_date)}
                     </span>
                     <span className="flex gap-1 items-center text-[0.633rem] md:text-xs text-slate-200/80 group-hover:text-pahelo ">
-                      {item.vote_average.toFixed(1)}
+                      {item?.vote_average?.toFixed(1)}
                       <AiFillStar />
                     </span>
                   </div>
