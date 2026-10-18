@@ -25,10 +25,6 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchConfiguration();
-  });
-
-  const fetchConfiguration = () => {
     fetchData("/configuration").then((res) => {
       //extracting necessary url from config response
       const url = {
@@ -40,7 +36,7 @@ export default function App() {
       //setting it for global use
       dispatch(getApiConfigurations(url));
     });
-  };
+  }, [dispatch]);
 
   const router = createBrowserRouter(
     createRoutesFromElements(

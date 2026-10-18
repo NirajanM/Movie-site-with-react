@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import posterNotFound from "../assets/posterNotFound.png";
@@ -35,10 +35,10 @@ export default function SearchRepeater({ keyword, type }) {
   const { url } = useSelector((state) => state.home);
 
   const fetchPage = async ({ pageParam = 1 }) => {
-    console.log(pageParam);
-    const res = await fetchData(
-      `search/${type}?query=${keyword}&page=${pageParam}`
-    );
+    const res = await fetchData(`search/${type}`, {
+      query: keyword,
+      page: pageParam,
+    });
     return res;
   };
 
@@ -49,16 +49,11 @@ export default function SearchRepeater({ keyword, type }) {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-    refetch,
   } = useInfiniteQuery({
-    queryKey: ["search", keyword],
+    queryKey: ["search", type, keyword],
     queryFn: fetchPage,
     getNextPageParam: (lastPage) => lastPage.page + 1,
   });
-
-  useEffect(() => {
-    refetch();
-  }, [type]);
 
   return (
     <div className="relative">

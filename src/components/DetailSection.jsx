@@ -24,6 +24,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
   const [trailer, setTrailer] = useState(false);
   const [trailerLoading, setTrailerLoading] = useState(true);
   useEffect(() => {
+    setTrailerLoading(true);
     fetchData(`${mediaType}/${id}/videos`)
       .then((res) => {
         const Urls = res.results.map((item) => {
@@ -36,7 +37,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [mediaType, id]);
   const navigate = useNavigate();
 
   const {

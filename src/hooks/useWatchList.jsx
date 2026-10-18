@@ -1,5 +1,23 @@
+function readList(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key));
+    return Array.isArray(value) ? value : [];
+  } catch (error) {
+    console.error(`Failed to read ${key} from localStorage`, error);
+    return [];
+  }
+}
+
+function writeList(key, list) {
+  try {
+    localStorage.setItem(key, JSON.stringify(list));
+  } catch (error) {
+    console.error(`Failed to write ${key} to localStorage`, error);
+  }
+}
+
 export function addMovieToWatchlist(movie) {
-  let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+  let watchlist = readList("watchlist");
 
   const existingMovieIndex = watchlist.findIndex(
     (item) => item.id === movie.id
@@ -13,15 +31,15 @@ export function addMovieToWatchlist(movie) {
   watchlist.push(movie);
 
   // Save updated watchlist to localStorage
-  localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  writeList("watchlist", watchlist);
 }
 
 export function getWatchListCinemas() {
-  return JSON.parse(localStorage.getItem("watchlist")) || [];
+  return readList("watchlist");
 }
 
 export function setContinuePlaying(cinema, s, e) {
-  let list = JSON.parse(localStorage.getItem("continuePlaying")) || [];
+  let list = readList("continuePlaying");
 
   const existingMovieIndex = list.findIndex((item) => item.id === cinema.id);
 
@@ -39,30 +57,28 @@ export function setContinuePlaying(cinema, s, e) {
   list.unshift({ id: cinema.id, details: cinema, s: s, e: e });
 
   // Save updated watchlist to localStorage
-  localStorage.setItem("continuePlaying", JSON.stringify(list));
+  writeList("continuePlaying", list);
 }
 
 export function updateContinuePlaying(id, s, e) {
-  let list = JSON.parse(localStorage.getItem("continuePlaying")) || [];
+  let list = readList("continuePlaying");
   let searchId = parseInt(id);
 
   const existingCinemaIndex = list.findIndex((item) => item.id === searchId);
-  let existingCinemaDetails = null;
   // If movie with the same ID exists, remove it
-  if (existingCinemaIndex !== -1) {
-    existingCinemaDetails = list[existingCinemaIndex].details;
-    list.splice(existingCinemaIndex, 1);
-  } else {
+  if (existingCinemaIndex === -1) {
     return;
   }
+  const existingCinemaDetails = list[existingCinemaIndex].details;
+  list.splice(existingCinemaIndex, 1);
 
   // Add the movie to the end of the list with new s and e values
   list.unshift({ id: searchId, details: existingCinemaDetails, s: s, e: e });
 
   // Save updated watchlist to localStorage
-  localStorage.setItem("continuePlaying", JSON.stringify(list));
+  writeList("continuePlaying", list);
 }
 
 export function getContinuePlaying() {
-  return JSON.parse(localStorage.getItem("continuePlaying")) || [];
+  return readList("continuePlaying");
 }
