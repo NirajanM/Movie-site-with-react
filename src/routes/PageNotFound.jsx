@@ -1,11 +1,20 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import useSeo from "@/hooks/useSeo";
+import { primaryButton } from "@/components/ui/buttonStyles";
 
 export default function PageNotFound() {
-    return (
-        <div className=' h-96 w-full flex justify-center items-center gap-2 lg:gap-4 text-lg font-black text-white flex-col'>
-            <span className='text-3xl lg:text-6xl'>404</span>
-            <span className='text-white font-normal lg:text-2xl'>Page not found!</span>
-            <Link to={"/"} className='border-b-2 px-2 py-1 font-normal text-sm text-slate-200 hover:text-white'> Go back to home page</Link>
-        </div>
-    )
+  useSeo({ title: "Page not found", noindex: true });
+  return (
+    <div className="mx-auto flex min-h-[60vh] max-w-screen-xl flex-col items-center justify-center gap-3 px-4 text-center">
+      <p className="text-eyebrow uppercase text-fg-low">Error 404</p>
+      <h1 className="font-display text-5xl text-fg-hi">Page not found</h1>
+      <p className="max-w-[46ch] text-body text-fg-mid [text-wrap:pretty]">
+        That link does not lead anywhere. It may have moved, or it never
+        existed.
+      </p>
+      <Link to="/" className={`mt-2 ${primaryButton}`}>
+        Back to home
+      </Link>
+    </div>
+  );
 }

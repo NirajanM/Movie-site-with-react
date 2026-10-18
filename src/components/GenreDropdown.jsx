@@ -1,9 +1,7 @@
-import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { getTvGenre, getMovieGenre } from "../store/rootSlice";
-import useFetch from "../hooks/useFetch";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -12,78 +10,70 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { RiMovie2Line, RiMovieLine } from "react-icons/ri";
+import { getTvGenre, getMovieGenre } from "../store/rootSlice";
+import useFetch from "../hooks/useFetch";
 
-export default function GenreDropdown({ mediaType, setExpanded }) {
+const genreOption =
+  "block w-full rounded-md px-3 py-2 text-left text-small text-fg-mid transition-colors duration-fast ease-state hover:bg-ink-800 hover:text-fg-hi";
+
+export default function GenreDropdown({ mediaType }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { tvGenre, movieGenre } = useSelector((state) => state.home);
-  const [genreTv, setGenreTv] = useState(tvGenre || null);
-  const [genreMovie, setGenreMovie] = useState(movieGenre || null);
-  const { data } = useFetch(`genre/${mediaType}/list`);
   const [isOpen, setIsOpen] = useState(false);
+  const { data } = useFetch(`genre/${mediaType}/list`);
+  const current = mediaType === "tv" ? tvGenre : movieGenre;
 
-  const handleSelect = (opt, type) => {
+  const handleSelect = (opt) => {
     setIsOpen(false);
-    if (type === "tv") {
-      setGenreTv(opt);
+    if (mediaType === "tv") {
       dispatch(getTvGenre(opt));
-      navigate(`/tvshow`);
+      navigate("/tvshow");
     } else {
-      setGenreMovie(opt);
       dispatch(getMovieGenre(opt));
       navigate("/movies");
     }
-    setExpanded(false);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <div className="list" onClick={() => setIsOpen(true)}>
-          {mediaType === "tv" ? (
-            <RiMovieLine size={24} />
-          ) : (
-            <RiMovie2Line size={23} />
-          )}
-
-          <div className="flex flex-col ">
-            <div className="flex flex-col">
-              <span className="flex gap-[10px] items-center cursor-pointer">
-                {mediaType === "tv" ? "Tv. Genre" : "M. Genre"}
-              </span>
-              <span className="text-sm text-slate-300/90 pl-1 font-light">
-                -{" "}
-                {mediaType === "tv"
-                  ? genreTv
-                    ? genreTv.name
-                    : "All"
-                  : genreMovie
-                  ? genreMovie.name
-                  : "All"}
-              </span>
-            </div>
-          </div>
-        </div>
+        <button
+          type="button"
+          aria-expanded={isOpen}
+          className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-ink-850 px-3 py-1.5 text-small text-fg-hi transition duration-fast ease-state hover:border-white/25"
+        >
+          <span className="text-fg-low">Genre</span>
+          {current ? current.name : "All"}
+          <ChevronDown size={14} />
+        </button>
       </DialogTrigger>
-      <DialogContent className="w-full max-w-md bg-black dialog-content text-white p-5 rounded-lg">
+      <DialogContent className="w-full max-w-md gap-3 border-white/10 bg-ink-900 p-5 text-fg-hi">
         <DialogHeader>
-          <DialogTitle className="text-pahelo">
-            Select {mediaType === "tv" ? "Tv" : "Movie"} Genre
+          <DialogTitle className="font-display text-lg text-fg-hi">
+            Select {mediaType === "tv" ? "TV" : "movie"} genre
           </DialogTitle>
-          <DialogDescription className="border-b border-white/10 pb-4 w-full text-sm md:text-md">
-            Choose a genre from the list below:
+          <DialogDescription className="border-b border-white/10 pb-3 text-small text-fg-mid">
+            Choose a genre from the list below.
           </DialogDescription>
         </DialogHeader>
-        <div className="overflow-y-scroll max-h-[40vh] custom-scrollbar">
-          {data?.genres.map((opt) => (
-            <div
+        <div className="custom-scrollbar max-h-[45vh] overflow-y-auto">
+          <button
+            type="button"
+            onClick={() => handleSelect(null)}
+            className={genreOption}
+          >
+            All genres
+          </button>
+          {data?.genres?.map((opt) => (
+            <button
               key={opt.id}
-              className="hover:bg-slate-800 px-3 py-2 w-full text-sm md:text-md cursor-pointer"
-              onClick={() => handleSelect(opt, mediaType)}
+              type="button"
+              onClick={() => handleSelect(opt)}
+              className={genreOption}
             >
               {opt.name}
-            </div>
+            </button>
           ))}
         </div>
       </DialogContent>

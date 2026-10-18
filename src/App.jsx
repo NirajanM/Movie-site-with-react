@@ -1,46 +1,29 @@
+import { lazy } from "react";
 import Root from "./routes/Root";
-import Anotherpage from "./routes/Anotherpage";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import SelectedCinema from "./routes/SelectedCinema";
-import PageNotFound from "./routes/PageNotFound";
-import SearchResult from "./routes/SearchResult";
-import Play from "./routes/Play";
-import Tvshow from "./routes/Tvshow";
-import Movies from "./routes/Movies";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchData } from "./utils/api";
-import { getApiConfigurations } from "./store/rootSlice";
-import About from "./routes/About";
-import FaqPage from "./routes/Faq";
-import Watchlist from "./routes/Watchlist";
 import RootLayout from "./layouts/RootLayout";
+import ErrorPage from "./routes/ErrorPage";
+
+const Anotherpage = lazy(() => import("./routes/Anotherpage"));
+const SelectedCinema = lazy(() => import("./routes/SelectedCinema"));
+const PageNotFound = lazy(() => import("./routes/PageNotFound"));
+const SearchResult = lazy(() => import("./routes/SearchResult"));
+const Play = lazy(() => import("./routes/Play"));
+const Tvshow = lazy(() => import("./routes/Tvshow"));
+const Movies = lazy(() => import("./routes/Movies"));
+const About = lazy(() => import("./routes/About"));
+const FaqPage = lazy(() => import("./routes/Faq"));
+const Watchlist = lazy(() => import("./routes/Watchlist"));
 
 export default function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    fetchData("/configuration").then((res) => {
-      //extracting necessary url from config response
-      const url = {
-        backdrop: res.images.secure_base_url + "original",
-        poster: res.images.secure_base_url + "original",
-        profile: res.images.secure_base_url + "original",
-      };
-
-      //setting it for global use
-      dispatch(getApiConfigurations(url));
-    });
-  }, [dispatch]);
-
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<RootLayout />}>
+      <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
         <Route index element={<Root />} />
         <Route path=":mediaType/:id" element={<SelectedCinema />} />
         <Route path=":mediaType/:id/play/:season/:episode" element={<Play />} />

@@ -1,102 +1,73 @@
-import Skeleton from "react-loading-skeleton";
-import { useRef } from "react";
-import { useSelector } from "react-redux";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { memo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import avatar from "../assets/avatar.svg";
-const skeletonItem = () => {
-  return (
-    <div className="flex flex-col gap-2 w-32 md:w-36 lg:w-40 group">
-      <div className="relative w-32 md:w-36 lg:w-40 aspect-poster h-52 md:h-56  lg:h-60">
-        <Skeleton
-          count={1}
-          className="object-cover w-full h-full object-center rounded-sm md:rounded-md"
-        />
-      </div>
-      <Skeleton count={1} className="h-4" />
-      <Skeleton count={1} className="h-4" />
-    </div>
-  );
-};
+import RailButton from "./RailButton";
+import { profileSources } from "../utils/image";
+import useRailScroll from "../hooks/useRailScroll";
 
-export default function CastSection({ data, loading }) {
-  // const { data, loading } = useFetch(`${mediaType}/${id}/credits`);
-  const carouselBox = useRef();
-  const { url } = useSelector((state) => state.home);
+const SIZES = "(max-width: 640px) 45vw, 200px";
 
-  const navigation = (dir) => {
-    const container = carouselBox.current;
+const skeletonItem = (i) => (
+  <li key={i} className="w-32 shrink-0 md:w-36 lg:w-40">
+    <Skeleton className="aspect-poster rounded-lg" />
+    <Skeleton className="mt-2 h-3" />
+    <Skeleton className="mt-1 h-3 w-1/2" />
+  </li>
+);
 
-    const scrollAmount =
-      dir === "left"
-        ? container.scrollLeft - container.offsetWidth / 1.234
-        : container.scrollLeft + container.offsetWidth / 1.234;
-
-    container.scrollTo({
-      left: scrollAmount,
-      behavior: "smooth",
-    });
-  };
+const CastSection = memo(function CastSection({ data, loading }) {
+  const { trackRef, scrollStep } = useRailScroll({
+    trigger: loading ? 0 : data?.cast?.length ?? 0,
+  });
 
   return (
-    <div className="relative mt-8 md:mb-10">
-      {!loading ? (
-        <>
-          <span
-            onClick={() => navigation("left")}
-            className="hidden md:inline absolute left-0 -bottom-10 z-50 cursor-pointer text-slate-300/70 hover:text-white"
-          >
-            <FaChevronLeft />
-          </span>
-          <span
-            onClick={() => navigation("right")}
-            className="hidden md:inline absolute right-0 -bottom-10 z-50 cursor-pointer text-slate-300/70 hover:text-white"
-          >
-            <FaChevronRight />
-          </span>
-          <div
-            className="flex pb-8 md:pb-0 md:mb-8 gap-2 md:gap-6 overflow-x-scroll my-4 no-scrollbar"
-            ref={carouselBox}
-          >
-            {data?.cast?.map((item) => {
-              const profileUrl = item.profile_path
-                ? url.backdrop + item.profile_path
-                : avatar;
+    <div className="group/rail relative">
+      <ul
+        ref={trackRef}
+        className="no-scrollbar rail-mask mt-4 flex gap-4 overflow-x-auto pb-2 md:gap-6"
+      >
+        {loading
+          ? Array.from({ length: 6 }, (_, i) => skeletonItem(i))
+          : data?.cast?.map((item) => {
+              const sources = item.profile_path
+                ? profileSources(item.profile_path)
+                : { src: avatar };
               return (
-                <div
+                <li
                   key={item.id}
-                  className="flex flex-col gap-2 w-32 md:w-36 lg:w-40 group"
+                  data-card
+                  data-reveal
+                  className="w-32 shrink-0 md:w-36 lg:w-40"
                 >
-                  <div className="relative w-32 md:w-36 lg:w-40 aspect-poster h-52 md:h-56  lg:h-60">
+                  <div className="relative aspect-poster overflow-hidden rounded-lg bg-ink-850">
                     <LazyLoadImage
-                      alt={item.name}
-                      src={profileUrl}
-                      className="object-cover w-full h-full object-center rounded-sm md:rounded-md"
+                      alt={item.name || item.original_name || "Cast member"}
+                      src={sources.src}
+                      srcSet={sources.srcSet}
+                      sizes={SIZES}
+                      className="h-full w-full object-cover object-center"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
-                  <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
-                    {item.name || item.original_name}
-                  </span>
-                  <span className=" group-hover:text-pahelo text-sm">
+                  <p className="mt-2 truncate text-h3 text-fg-hi">{item.name}</p>
+                  <p className="truncate text-meta text-fg-mid">
                     {item.character}
-                  </span>
-                </div>
+                  </p>
+                </li>
               );
             })}
-          </div>
+      </ul>
+      {!loading && (
+        <>
+          <RailButton dir="left" onClick={() => scrollStep("left")} />
+          <RailButton dir="right" onClick={() => scrollStep("right")} />
         </>
-      ) : (
-        <div className="flex mb-8 gap-2 overflow-x-scroll my-4 no-scrollbar">
-          {skeletonItem()}
-          {skeletonItem()}
-          {skeletonItem()}
-          {skeletonItem()}
-          {skeletonItem()}
-          {skeletonItem()}
-          {skeletonItem()}
-          {skeletonItem()}
-        </div>
       )}
     </div>
   );
-}
+});
+
+export default CastSection;

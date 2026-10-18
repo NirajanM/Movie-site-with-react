@@ -1,11 +1,13 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { fetchData } from "@/utils/api";
-import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import posterNotFound from "../../assets/posterNotFound.png";
-import { useSelector } from "react-redux";
 import PlayContext from "@/context/PlayContext";
+import { fetchData } from "@/utils/api";
 import { updateContinuePlaying } from "@/hooks/useWatchList";
+import { backdropSources } from "@/utils/image";
 
 export default function EpisodesHolder() {
   const {
@@ -17,74 +19,92 @@ export default function EpisodesHolder() {
     handleEpisodeClick,
   } = useContext(PlayContext);
 
-  const { url: urlTemp } = useSelector((state) => state.home);
-
   const episodesDetail = useQuery({
     queryKey: ["episodes", id, seasonNumber],
     queryFn: () => fetchData(`tv/${id}/season/${seasonNumber}`),
   });
 
-  // Use a flag to ensure the title is set only once
   useEffect(() => {
-    if (episodesDetail.data && episodesDetail.data.episodes && !nowPlaying.T) {
-      const episodeName =
-        episodesDetail.data.episodes[parseInt(episodeNumber) - 1]?.name;
-      setNowPlaying((prev) => ({
-        ...prev,
-        T: episodeName,
-      }));
+    if (episodesDetail.data?.episodes && !nowPlaying.T) {
+      const name =
+        episodesDetail.data.episodes[parseInt(episodeNumber, 10) - 1]?.name;
+      setNowPlaying((prev) => ({ ...prev, T: name }));
     }
   }, [episodesDetail.data, episodeNumber, setNowPlaying, nowPlaying.T]);
 
+  const currentSeason = Number(nowPlaying.S);
+  const currentEpisode = Number(nowPlaying.E);
+
   return (
-    <div
-      id="episodes-holder"
-      className="mt-5 md:mt-7 lg:mt-9 flex flex-col gap-2 md:gap-3 lg:gap-4"
-    >
-      <p className="text-sm md:text-base lg:text-lg mb-5 md:mb-7 lg:mb-9">
-        {episodesDetail?.data?.overview}
-      </p>
-
-      {episodesDetail?.data?.episodes?.map((item, index) => {
-        const posterUrl = item.still_path
-          ? urlTemp.backdrop + item.still_path
-          : posterNotFound;
-        return (
-          <div
-            key={item.id}
-            className="flex flex-col gap-1 md:gap-2 lg:gap-4 py-6 cursor-pointer hover:bg-white/5"
-            onClick={() => {
-              const episodeName =
-                episodesDetail.data.episodes[index]?.name | null;
-              handleEpisodeClick(index, episodeName, false);
-              updateContinuePlaying(id, seasonNumber, parseInt(index) + 1);
-            }}
-          >
-            <div className="flex gap-3 md:gap-4">
-              <div className="rounded-sm h-20 md:h-24 lg:h-28 w-36 md:w-44 lg:w-52">
-                <LazyLoadImage
-                  alt={item?.name || "poster image"}
-                  src={posterUrl}
-                  className="h-full w-full object-cover object-center rounded-sm"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="flex flex-col items-start justify-center w-full text-sm md:text-base lg:text-lg font-semibold">
-                <h3>
-                  {item.episode_number}. {item.name}
-                </h3>
-                <h4 className="text-white/60 font-normal">
-                  Rated: {item?.vote_average || 0}
-                </h4>
-              </div>
-            </div>
-            <p className="text-sm text-white/60 md:text-base lg:text-lg">
-              {item.overview}
-            </p>
-          </div>
-        );
-      })}
+    <div className="flex flex-col gap-4">
+      {episodesDetail?.data?.overview && (
+        <p className="max-w-[65ch] text-body text-fg-mid [text-wrap:pretty]">
+          {episodesDetail.data.overview}
+        </p>
+      )}
+      <ul className="flex flex-col gap-2">
+        {episodesDetail.isLoading &&
+          Array.from({ length: 4 }, (_, i) => (
+            <li key={i}>
+              <Skeleton className="h-24 rounded-lg" />
+            </li>
+          ))}
+        {episodesDetail?.data?.episodes?.map((item, index) => {
+          const still = item.still_path
+            ? backdropSources(item.still_path)
+            : { src: posterNotFound };
+          const isCurrent =
+            Number(seasonNumber) === currentSeason &&
+            index + 1 === currentEpisode;
+          return (
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => {
+                  const name =
+                    episodesDetail.data.episodes[index]?.name ?? null;
+                  handleEpisodeClick(index, name, false);
+                  updateContinuePlaying(id, seasonNumber, index + 1);
+                }}
+                aria-current={isCurrent ? "true" : undefined}
+                className={`flex w-full gap-3 rounded-lg border p-2 text-left transition-colors duration-base ease-state ${
+                  isCurrent
+                    ? "border-pahelo/60 bg-white/5"
+                    : "border-transparent hover:border-white/10 hover:bg-white/5"
+                }`}
+              >
+                <div className="h-20 w-36 shrink-0 overflow-hidden rounded-sm bg-ink-850 md:h-24 md:w-44">
+                  <LazyLoadImage
+                    alt={item?.name || `Episode ${item.episode_number}`}
+                    src={still.src}
+                    srcSet={still.srcSet}
+                    sizes="176px"
+                    className="h-full w-full object-cover object-center"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="flex min-w-0 flex-col justify-center gap-1 pr-2">
+                  <h3 className="truncate text-h3 text-fg-hi">
+                    {item.episode_number}. {item.name}
+                  </h3>
+                  <p className="text-meta tabular-nums text-fg-mid">
+                    Rating {item?.vote_average ? item.vote_average.toFixed(1) : "0.0"}
+                    {isCurrent && (
+                      <span className="ml-2 text-pahelo">Watching now</span>
+                    )}
+                  </p>
+                  {item.overview && (
+                    <p className="line-clamp-2 text-small text-fg-mid">
+                      {item.overview}
+                    </p>
+                  )}
+                </div>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

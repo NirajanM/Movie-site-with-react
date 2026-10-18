@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PlayContext from "./PlayContext";
+import { playerUrl } from "../utils/player";
 
 const PlayContextProvider = ({
   children,
@@ -18,19 +19,20 @@ const PlayContextProvider = ({
     E: episode,
     T: null,
   });
+
+  // Called when an episode is chosen in the list or with the "next episode"
+  // shortcut. `index` is zero-based; the URL uses one-based numbering.
   const handleEpisodeClick = (index, episodeName, isNext) => {
-    const choosenEpisode = parseInt(index) + 1;
-    const choosenSeason = isNext ? nowPlaying.S : seasonNumber;
-    navigate(`/tv/${id}/play/${choosenSeason}/${choosenEpisode}`);
-    setEpisodeNumber(choosenEpisode);
+    const chosenEpisode = parseInt(index, 10) + 1;
+    const chosenSeason = isNext ? nowPlaying.S : seasonNumber;
+    navigate(`/tv/${id}/play/${chosenSeason}/${chosenEpisode}`);
+    setEpisodeNumber(chosenEpisode);
     setNowPlaying({
-      S: choosenSeason,
-      E: choosenEpisode,
+      S: chosenSeason,
+      E: chosenEpisode,
       T: episodeName,
     });
-    setUrl(
-      `https://vidsrc.sh/embed/tv?tmdb=${id}&season=${choosenSeason}&episode=${choosenEpisode}`
-    );
+    setUrl(playerUrl("tv", id, chosenSeason, chosenEpisode));
     window.scrollTo(0, 0);
   };
   return (

@@ -1,45 +1,27 @@
-import { useState } from "react";
-
-export default function OnOff({ opt, stateChanger }) {
-  const [active, setActive] = useState(true);
+export default function OnOff({ opt, value, onChange }) {
   return (
-    <div className="flex mt-5 sm:mt-0 sm:inline-flex gap-2 items-baseline align-text-bottom sm:ml-5 md:ml-8">
-      <span
-        className={
-          active
-            ? "border px-3 py-1 rounded-md"
-            : "hover:bg-gray-800 cursor-pointer px-3 py-1 rounded-md"
-        }
-        onClick={() => {
-          if (active) {
-            setActive(false);
-            stateChanger(opt[1].value);
-          } else {
-            setActive(true);
-            stateChanger(opt[0].value);
-          }
-        }}
-      >
-        {opt[0].name}
-      </span>
-      <span
-        className={
-          !active
-            ? "border px-3 py-1 rounded-md"
-            : "hover:bg-gray-800 cursor-pointer px-3 py-1 rounded-md"
-        }
-        onClick={() => {
-          if (active) {
-            setActive(false);
-            stateChanger(opt[1].value);
-          } else {
-            setActive(true);
-            stateChanger(opt[0].value);
-          }
-        }}
-      >
-        {opt[1].name}
-      </span>
+    <div
+      role="group"
+      className="inline-flex rounded-md border border-white/10 bg-ink-850 p-0.5"
+    >
+      {opt.map((o) => {
+        const active = o.value === value;
+        return (
+          <button
+            key={o.value}
+            type="button"
+            aria-pressed={active}
+            onClick={() => onChange(o.value)}
+            className={`rounded-sm px-3 py-1 text-small transition-colors duration-fast ease-state ${
+              active
+                ? "bg-ink-700 text-fg-hi"
+                : "text-fg-mid hover:text-fg-hi"
+            }`}
+          >
+            {o.name}
+          </button>
+        );
+      })}
     </div>
   );
 }
