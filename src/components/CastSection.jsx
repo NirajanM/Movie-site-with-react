@@ -26,7 +26,7 @@ const CastSection = memo(function CastSection({ data, loading }) {
     <div className="group/rail relative">
       <ul
         ref={trackRef}
-        className="no-scrollbar rail-mask mt-4 flex gap-4 overflow-x-auto pb-2 md:gap-6"
+        className="no-scrollbar mt-4 flex gap-4 overflow-x-auto pb-2 md:gap-6"
       >
         {loading
           ? Array.from({ length: 6 }, (_, i) => skeletonItem(i))

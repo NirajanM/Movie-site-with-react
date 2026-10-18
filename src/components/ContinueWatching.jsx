@@ -32,7 +32,7 @@ const ContinueWatching = memo(function ContinueWatching() {
         eyebrow="Pick up where you left off"
         title="Continue watching"
       />
-      <ul className="no-scrollbar rail-mask mt-4 flex gap-4 overflow-x-auto pb-2 md:gap-5">
+      <ul className="no-scrollbar mt-4 flex gap-4 overflow-x-auto pb-2 md:gap-5">
         {list.map((entry) => {
           const item = entry.details;
           const sources = item.poster_path
