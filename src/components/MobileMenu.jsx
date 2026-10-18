@@ -62,11 +62,11 @@ export default function MobileMenu({ open, onClose }) {
         type="button"
         aria-label="Close menu"
         onClick={onClose}
-        className="absolute inset-0 h-full w-full cursor-default bg-ink-950/70 backdrop-blur-sm"
+        className="absolute inset-0 h-full w-full cursor-default bg-scrim/80"
       />
       <div
         ref={panelRef}
-        className="absolute right-0 top-0 h-full w-[80vw] max-w-xs border-l border-white/10 bg-ink-900 p-5"
+        className="absolute right-0 top-0 h-full w-[80vw] max-w-xs border-l border-line/10 bg-ink-900 p-5"
       >
         <div className="mb-6 flex items-center justify-between">
           <span className="font-display text-lg text-fg-hi">Menu</span>
@@ -90,7 +90,7 @@ export default function MobileMenu({ open, onClose }) {
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-md px-3 py-2.5 text-small transition-colors duration-fast ease-state ${
                       isActive
-                        ? "bg-white/5 text-fg-hi"
+                        ? "bg-line/5 text-fg-hi"
                         : "text-fg-mid hover:text-fg-hi"
                     }`
                   }

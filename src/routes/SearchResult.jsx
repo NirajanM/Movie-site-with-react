@@ -19,9 +19,9 @@ export default function SearchResult() {
   return (
     <div className="mx-auto flex max-w-screen-xl px-4 lg:px-6">
       <Menu />
-      <div className="w-full min-w-0 text-white lg:pl-8">
+      <div className="w-full min-w-0 text-fg-hi lg:pl-8">
         <Tabs defaultValue="multi">
-          <div className="sticky top-16 z-40 mb-2 flex flex-wrap items-center gap-3 border-b border-white/10 bg-ink-950/80 px-1 py-3 backdrop-blur-[14px]">
+          <div className="sticky top-16 z-40 mb-2 flex flex-wrap items-center gap-3 border-b border-line/10 bg-ink-950 px-1 py-3">
             <h1 className="font-display text-xl text-fg-hi">
               Results for <span className="text-pahelo">{query}</span>
             </h1>

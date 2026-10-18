@@ -17,7 +17,7 @@ export default function ErrorState({
         <button
           type="button"
           onClick={onRetry}
-          className="mt-1 rounded-md border border-white/20 px-4 py-2 text-small text-fg-hi transition duration-fast ease-state hover:border-white/40 hover:bg-white/5 active:translate-y-px"
+          className="mt-1 rounded-md border border-line/20 px-4 py-2 text-small text-fg-hi transition duration-fast ease-state hover:border-line/40 hover:bg-line/5 active:translate-y-px"
         >
           Try again
         </button>

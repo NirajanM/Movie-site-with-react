@@ -13,7 +13,7 @@ export default function BottomTabBar() {
   return (
     <nav
       aria-label="Primary mobile"
-      className="fixed inset-x-0 bottom-0 z-nav border-t border-white/10 bg-ink-900/[0.9] backdrop-blur-[14px] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-nav border-t border-line/10 bg-ink-900 md:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <ul className="mx-auto grid max-w-md grid-cols-5">

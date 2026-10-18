@@ -69,8 +69,8 @@ export default function EpisodesHolder() {
                 aria-current={isCurrent ? "true" : undefined}
                 className={`flex w-full gap-3 rounded-lg border p-2 text-left transition-colors duration-base ease-state ${
                   isCurrent
-                    ? "border-pahelo/60 bg-white/5"
-                    : "border-transparent hover:border-white/10 hover:bg-white/5"
+                    ? "border-pahelo/60 bg-line/5"
+                    : "border-transparent hover:border-line/10 hover:bg-line/5"
                 }`}
               >
                 <div className="h-20 w-36 shrink-0 overflow-hidden rounded-sm bg-ink-850 md:h-24 md:w-44">

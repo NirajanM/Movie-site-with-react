@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookmarkPlus, Clapperboard, Play, Star } from "lucide-react";
+import { BookmarkPlus, Clapperboard, Play } from "lucide-react";
 import ReactPlayer from "react-player";
 import Skeleton from "react-loading-skeleton";
 import { useQuery } from "@tanstack/react-query";
+import Rating from "./Rating";
 import { fetchData } from "../utils/api";
 import { toast } from "react-toastify";
 import {
@@ -94,7 +95,7 @@ export default function DetailSection({ mediaType, id, data, loading }) {
     <>
       {trailerOpen && (
         <div
-          className="fixed inset-0 z-toast flex items-center justify-center bg-ink-950/80 backdrop-blur-sm"
+          className="fixed inset-0 z-toast flex items-center justify-center bg-scrim/90"
           onClick={() => setTrailerOpen(false)}
         >
           {!trailerQuery.isLoading && trailerUrls.length > 0 && (
@@ -108,16 +109,11 @@ export default function DetailSection({ mediaType, id, data, loading }) {
           {year && <span className="tabular-nums">{year}</span>}
           {runtime && <span className="tabular-nums">{runtime}</span>}
           {seasons && <span>{seasons}</span>}
-          {rating && (
-            <span className="flex items-center gap-1 tabular-nums text-pahelo">
-              <Star size={12} fill="currentColor" />
-              {rating}
-            </span>
-          )}
+          <Rating value={rating} withStar className="text-mato" />
           {genres.map((g) => (
             <span
               key={g.id}
-              className="rounded-sm border border-white/10 px-1.5 py-0.5"
+              className="rounded-sm border border-line/10 px-1.5 py-0.5"
             >
               {g.name}
             </span>

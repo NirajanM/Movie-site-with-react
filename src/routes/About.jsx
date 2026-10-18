@@ -11,7 +11,7 @@ export default function About() {
   return (
     <div className="mx-auto flex max-w-screen-xl px-4 lg:px-6">
       <Menu />
-      <div className="mt-10 flex w-full min-w-0 flex-col items-start justify-center gap-4 py-4 text-white md:mt-0 md:gap-8 lg:gap-12 lg:pl-8">
+      <div className="mt-10 flex w-full min-w-0 flex-col items-start justify-center gap-4 py-4 text-fg-hi md:mt-0 md:gap-8 lg:gap-12 lg:pl-8">
         <div className="aspect-auto sm:w-11/12 md:w-4/5 lg:w-2/3">
           <img
             alt="lets watch movie flyer"

@@ -2,9 +2,9 @@ import { memo, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { flushSync } from "react-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Star } from "lucide-react";
 import posterNotFound from "../assets/posterNotFound.png";
 import dateFormat from "./dateFormat";
+import Rating from "./Rating";
 import { posterSources } from "../utils/image";
 import { getRating, getReleaseDate, getTitle } from "../utils/media";
 
@@ -92,10 +92,10 @@ const PosterCard = memo(function PosterCard({
             loading="lazy"
           />
         </div>
-        <span className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-base ease-state group-hover:ring-white/20 group-focus-visible:ring-pahelo" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink-950/90 to-transparent opacity-0 transition-opacity duration-base ease-state group-hover:opacity-100" />
+        <span className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-base ease-state group-hover:ring-line/20 group-focus-visible:ring-pahelo" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-scrim/90 to-transparent opacity-0 transition-opacity duration-base ease-state group-hover:opacity-100" />
         {isNew(date) && (
-          <span className="absolute left-2 top-2 rounded-sm bg-pahelo px-1.5 py-0.5 text-[0.625rem] font-bold uppercase tracking-wide text-ink-950">
+          <span className="absolute left-2 top-2 rounded-sm bg-pahelo px-1.5 py-0.5 text-[0.625rem] font-bold uppercase tracking-wide text-onaccent">
             New
           </span>
         )}
@@ -110,12 +110,7 @@ const PosterCard = memo(function PosterCard({
         </TitleTag>
         <div className="mt-1 flex items-center justify-between gap-2 text-meta text-fg-mid">
           <span className="tabular-nums">{dateFormat(date)}</span>
-          {rating && (
-            <span className="flex items-center gap-1 tabular-nums">
-              <Star size={12} fill="currentColor" className="text-pahelo" />
-              {rating}
-            </span>
-          )}
+          <Rating value={rating} className="text-mato" />
         </div>
       </div>
     </Link>
