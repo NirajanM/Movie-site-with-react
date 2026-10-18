@@ -42,7 +42,7 @@ const Carousel = memo(function Carousel({
         tabIndex={0}
         onKeyDown={onKeyDown}
         aria-label={endpoint ? `${endpoint} titles` : "titles"}
-        className="no-scrollbar rail-mask mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:gap-5"
+        className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:gap-5"
       >
         {loading
           ? Array.from({ length: 6 }, (_, i) => skeletonItem(i))

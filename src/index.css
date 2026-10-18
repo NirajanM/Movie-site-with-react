@@ -207,23 +207,6 @@ svg[class*=" lucide-"] {
   contain: layout paint;
 }
 
-.rail-mask {
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    #000 12px,
-    #000 calc(100% - 12px),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    #000 12px,
-    #000 calc(100% - 12px),
-    transparent 100%
-  );
-}
-
 /* fixed film-grain overlay, see DESIGN.md section 4 */
 .grain::before {
   content: "";
