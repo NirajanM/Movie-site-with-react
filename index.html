@@ -3,17 +3,79 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LetsWatchMovie: movies and TV shows, one place</title>
+
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
-  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#030302">
   <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A webapp to browse your favourite cinema with the slick UI.">
-  <title>LetsWatchMovie - Slick UI For Cinemas</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="canonical" href="https://letswatchmovie.pages.dev/">
+
+  <meta name="description" content="Browse movies and TV shows, build a watchlist and press play. Powered by TMDB.">
+  <meta name="author" content="Nirajan Malla">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#030302">
+
+  <meta property="og:site_name" content="LetsWatchMovie">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en">
+  <meta property="og:title" content="LetsWatchMovie: movies and TV shows, one place">
+  <meta property="og:description" content="Browse movies and TV shows, build a watchlist and press play. Powered by TMDB.">
+  <meta property="og:url" content="https://letswatchmovie.pages.dev/">
+  <meta property="og:image" content="https://letswatchmovie.pages.dev/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="LetsWatchMovie, find something worth staying up for.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LetsWatchMovie: movies and TV shows, one place">
+  <meta name="twitter:description" content="Browse movies and TV shows, build a watchlist and press play. Powered by TMDB.">
+  <meta name="twitter:image" content="https://letswatchmovie.pages.dev/og-image.png">
+  <meta name="twitter:image:alt" content="LetsWatchMovie, find something worth staying up for.">
+
+  <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
+  <link rel="preload" href="/fonts/Satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ClashDisplay-700.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "LetsWatchMovie",
+      "alternateName": "LWM",
+      "url": "https://letswatchmovie.pages.dev/",
+      "description": "Browse movies and TV shows, build a watchlist and press play.",
+      "inLanguage": "en",
+      "publisher": { "@type": "Person", "name": "Nirajan Malla" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://letswatchmovie.pages.dev/search/{search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
 </head>
 
-<body class="dark">
+<body class="dark grain">
   <div id="root"></div>
+  <noscript>
+    <div style="max-width:40rem;margin:4rem auto;padding:0 1.25rem;color:#f5f4f0;background:#030302;font-family:system-ui,sans-serif;line-height:1.6">
+      <h1 style="font-size:2rem;margin-bottom:.75rem">LetsWatchMovie</h1>
+      <p>Browse movies and TV shows, build a watchlist and press play. Powered by TMDB.</p>
+      <p style="margin-top:1rem">
+        <a href="/movies" style="color:#FFDF2B">Movies</a> &nbsp;
+        <a href="/tvshow" style="color:#FFDF2B">TV shows</a> &nbsp;
+        <a href="/about" style="color:#FFDF2B">About</a> &nbsp;
+        <a href="/faq" style="color:#FFDF2B">FAQ</a>
+      </p>
+      <p style="margin-top:1rem;color:rgba(245,244,240,.72)">This app needs JavaScript to run.</p>
+    </div>
+  </noscript>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

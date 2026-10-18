@@ -1,20 +1,31 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { Play } from "lucide-react";
 import Carousel from "../components/Carousel";
 import OnOff from "../components/OnOff";
 import Menu from "../components/Menu";
+import SectionHeader from "../components/SectionHeader";
 import { fetchData } from "../utils/api";
 import { useQuery } from "@tanstack/react-query";
-import MovieAnimation from "../assets/movieAnimation.json";
-import Lottie from "lottie-react";
+import { backdropSources } from "../utils/image";
 import ContinueWatching from "@/components/ContinueWatching";
+import useSeo from "@/hooks/useSeo";
+import { primaryButton, secondaryButton } from "@/components/ui/buttonStyles";
 
 function Root() {
+  useSeo();
   const [popularOpt, setPopularOpt] = useState("movie");
+  const [topOpt, setTopOpt] = useState("movie");
+  const [trendingOpt, setTrendingOpt] = useState("day");
 
   const pOpt = [
-    { name: "Movie", value: "movie" },
-    { name: "Tv Shows", value: "tv" },
+    { name: "Movies", value: "movie" },
+    { name: "TV", value: "tv" },
+  ];
+  const tOpt = [...pOpt];
+  const trOpt = [
+    { name: "Today", value: "day" },
+    { name: "This week", value: "week" },
   ];
 
   const popular = useQuery({
@@ -27,59 +38,91 @@ function Root() {
     queryFn: () => fetchData("movie/now_playing"),
   });
 
-  const [topOpt, setTopOpt] = useState("movie");
-
-  const tOpt = [
-    { name: "Movie", value: "movie" },
-    { name: "Tv Shows", value: "tv" },
-  ];
-
   const toprated = useQuery({
     queryKey: [topOpt, "toprated"],
     queryFn: () => fetchData(`${topOpt}/top_rated`),
   });
-
-  const [trendingOpt, setTrendingOpt] = useState("day");
-
-  const trOpt = [
-    { name: "Today", value: "day" },
-    { name: "This Week", value: "week" },
-  ];
 
   const trending = useQuery({
     queryKey: [trendingOpt, "trending"],
     queryFn: () => fetchData(`trending/all/${trendingOpt}`),
   });
 
+  const nowPlaying = playing?.data?.results || [];
+  const hero = nowPlaying.find((m) => m.backdrop_path) || nowPlaying[0] || null;
+  const heroBackdrop = hero?.backdrop_path
+    ? backdropSources(hero.backdrop_path)
+    : { src: undefined, srcSet: undefined };
+  const altTitles = nowPlaying.filter((m) => m.id !== hero?.id).slice(0, 3);
+
   return (
-    <div className="flex flex-row-reverse md:flex-row max-w-screen-xl mx-auto ">
+    <div className="mx-auto flex max-w-screen-xl flex-row-reverse px-4 md:flex-row lg:px-6">
       <Menu />
-      <div className="w-full overflow-x-hidden lg:pl-9 lg:pr-4 text-white flex flex-col gap-14 md:gap-28">
-        <section className="mt-20 md:mt-0">
-          <div
-            id="landing-section"
-            className="grid grid-cols-1 sm:grid-cols-2 pb-14 sm:pt-20 gap-5 sm:gap:0"
-          >
-            <div className="flex flex-col h-full items-start justify-end sm:order-last -z-10">
-              <Lottie
-                animationData={MovieAnimation}
-                loop={true}
-                className="h-60 sm:h-72 md:h-80 lg:h-96"
+      <div className="flex w-full min-w-0 flex-col gap-14 overflow-x-hidden text-fg-hi md:gap-20 lg:pl-8">
+        <section aria-label="Featured">
+          <div className="relative overflow-hidden rounded-none lg:rounded-xl">
+            {heroBackdrop.src && (
+              <img
+                src={heroBackdrop.src}
+                srcSet={heroBackdrop.srcSet}
+                sizes="100vw"
+                fetchpriority="high"
+                loading="eager"
+                decoding="async"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover"
               />
-            </div>
-            <div className="flex flex-col h-full items-start justify-center gap-8 sm:gap-5">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold lg:font-bold w-5/6 sm:w-full">
-                Explore, Discover, Enjoy.
+            )}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/30"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[radial-gradient(60%_50%_at_20%_0%,rgba(255,223,43,0.06),transparent)]"
+            />
+            <div className="relative flex min-h-[24rem] flex-col justify-end gap-4 px-5 py-8 sm:min-h-[28rem] lg:px-10 lg:py-12">
+              <p className="text-eyebrow uppercase text-pahelo">Now playing</p>
+              <h1 className="max-w-2xl font-display text-display-xl text-fg-hi [text-wrap:balance]">
+                {hero
+                  ? hero.title || hero.name
+                  : "Something worth watching tonight."}
               </h1>
-              <h2 className="text-lg text-white/70">
-                Our mission is to amplify the joy of cinema exploration,
-                offering a user-friendly interface that makes browsing
-                effortless and enjoyable. Watch your favorite movies and series
-                with ease.{" "}
-                <NavLink to="/about" className="text-pahelo">
-                  Know more.
-                </NavLink>
-              </h2>
+              {hero?.overview && (
+                <p className="line-clamp-2 max-w-[52ch] text-body text-fg-mid [text-wrap:pretty]">
+                  {hero.overview}
+                </p>
+              )}
+              <div className="flex flex-wrap gap-3 pt-1">
+                {hero && (
+                  <>
+                    <Link
+                      to={`/movie/${hero.id}/play/1/1`}
+                      className={primaryButton}
+                    >
+                      <Play size={16} fill="currentColor" />
+                      Play
+                    </Link>
+                    <Link to={`/movie/${hero.id}`} className={secondaryButton}>
+                      Details
+                    </Link>
+                  </>
+                )}
+              </div>
+              {altTitles.length > 0 && (
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-small text-fg-mid">
+                  <span className="text-fg-low">Also playing</span>
+                  {altTitles.map((m) => (
+                    <Link
+                      key={m.id}
+                      to={`/movie/${m.id}`}
+                      className="rounded transition-colors duration-fast ease-state hover:text-pahelo"
+                    >
+                      {m.title || m.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -87,29 +130,51 @@ function Root() {
         <ContinueWatching />
 
         <section>
-          <div>
-            <span className="text-pahelo font-black text-3xl">Trending</span>
-            <OnOff opt={trOpt} stateChanger={setTrendingOpt} />
-          </div>
+          <SectionHeader
+            eyebrow="This moment"
+            title="Trending"
+            action={
+              <OnOff
+                opt={trOpt}
+                value={trendingOpt}
+                onChange={setTrendingOpt}
+              />
+            }
+          />
           <Carousel
             data={trending?.data?.results}
             loading={trending?.isLoading}
           />
         </section>
+
         <section>
-          <span className="text-pahelo font-black text-3xl">Now Playing</span>
+          <SectionHeader
+            eyebrow="In cinemas"
+            title="Now playing"
+            action={
+              <Link
+                to="/movies"
+                className="text-small text-fg-mid transition-colors duration-fast ease-state hover:text-pahelo"
+              >
+                See all
+              </Link>
+            }
+          />
           <Carousel
             data={playing?.data?.results}
             loading={playing?.isLoading}
-            endpoint={"movie"}
+            endpoint="movie"
           />
         </section>
 
         <section>
-          <div>
-            <span className="text-pahelo font-black text-3xl">Popular</span>
-            <OnOff opt={pOpt} stateChanger={setPopularOpt} />
-          </div>
+          <SectionHeader
+            eyebrow="Most watched"
+            title="Popular"
+            action={
+              <OnOff opt={pOpt} value={popularOpt} onChange={setPopularOpt} />
+            }
+          />
           <Carousel
             data={popular?.data?.results}
             loading={popular?.isLoading}
@@ -117,17 +182,19 @@ function Root() {
           />
         </section>
 
-        <section className="pb-14 md:pb-28">
-          <div>
-            <span className="text-pahelo font-black text-3xl">Top rated</span>
-            <OnOff opt={tOpt} stateChanger={setTopOpt} />
-          </div>
+        <section className="pb-14 md:pb-24">
+          <SectionHeader
+            eyebrow="All time"
+            title="Top rated"
+            action={<OnOff opt={tOpt} value={topOpt} onChange={setTopOpt} />}
+          />
           <Carousel
             data={toprated?.data?.results}
             loading={toprated?.isLoading}
             endpoint={topOpt}
           />
         </section>
+
         <Outlet />
       </div>
     </div>

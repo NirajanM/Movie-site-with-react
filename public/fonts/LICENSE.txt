@@ -1,0 +1,17 @@
+Fonts: Clash Display, Satoshi
+Copyright (c) Indian Type Foundry. All rights reserved.
+
+These font files are distributed under the ITF Free Font License (FFL) and are
+free for personal and commercial use. Full, canonical license terms:
+https://www.fontshare.com/licenses/itf-ffl
+
+Notice to User
+Indian Type Foundry designs, produces and distributes font software as digital
+fonts to end users worldwide. Fonts identified on Fontshare as being licensed
+under the ITF Free Font License are subject to this legally binding EULA between
+Indian Type Foundry ("Indian Type Foundry", "ITF" or "Licensor") and you
+("Licensee"). Font Software includes all font formats and bitmap or vector
+representations distributed by Indian Type Foundry under this License.
+
+Retrieved 2026-10-18. The URL above is the authoritative text; it is rendered
+client-side so it is linked here rather than reproduced in full.

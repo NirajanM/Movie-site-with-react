@@ -1,9 +1,11 @@
+import { useCallback, useContext, useEffect } from "react";
+import { ChevronRight } from "lucide-react";
 import PlayContext from "@/context/PlayContext";
 import { updateContinuePlaying } from "@/hooks/useWatchList";
 import { fetchData } from "@/utils/api";
+import { isTypingTarget } from "@/utils/keyboard";
+import { secondaryButtonSm } from "@/components/ui/buttonStyles";
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
-import { FaChevronRight } from "react-icons/fa";
 
 export default function NowPlaying() {
   const { nowPlaying, id, handleEpisodeClick } = useContext(PlayContext);
@@ -12,26 +14,48 @@ export default function NowPlaying() {
     queryKey: ["episodes", id, nowPlaying.S],
     queryFn: () => fetchData(`tv/${id}/season/${nowPlaying.S}`),
   });
+
+  const playNext = useCallback(() => {
+    const list = episodesDetail?.data?.episodes;
+    if (!list) return;
+    const nextIndex = Number(nowPlaying.E);
+    const episodeName = list[nextIndex]?.name ?? null;
+    handleEpisodeClick(nextIndex, episodeName, true);
+    updateContinuePlaying(id, nowPlaying.S, nextIndex + 1);
+  }, [episodesDetail?.data?.episodes, id, nowPlaying.S, nowPlaying.E, handleEpisodeClick]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (isTypingTarget()) return;
+      if (e.key.toLowerCase() === "n") {
+        e.preventDefault();
+        playNext();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [playNext]);
+
   return (
-    <section className="flex flex-col gap-3 pb-5 text-sm md:text-base">
-      <div id="episode-details" className="flex gap-2 text-white/90">
-        <span>Now Playing:</span>
-        <span>
-          S{nowPlaying.S}E{nowPlaying.E}.{nowPlaying.T}
+    <section className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-baseline gap-2 text-fg-hi">
+        <span className="text-fg-low">Now playing</span>
+        <span className="font-medium">
+          S{nowPlaying.S} E{nowPlaying.E}
         </span>
+        {nowPlaying.T && (
+          <span className="truncate text-fg-mid">{nowPlaying.T}</span>
+        )}
       </div>
-      <div
-        className="inline-flex w-fit gap-1 py-3 rounded-md items-center hover:bg-slate-800/50 hover:text-white cursor-pointer text-white/80"
-        onClick={() => {
-          const episodeName =
-            episodesDetail.data.episodes[nowPlaying.E]?.name | null;
-          handleEpisodeClick(nowPlaying.E, episodeName, true);
-          updateContinuePlaying(id, nowPlaying.S, parseInt(nowPlaying.E) + 1);
-        }}
+      <button
+        type="button"
+        onClick={playNext}
+        className={`w-fit ${secondaryButtonSm}`}
       >
-        <span>Play Next Episode</span>
-        <FaChevronRight />
-      </div>
+        Next episode
+        <ChevronRight size={16} />
+        <span className="text-fg-low">(N)</span>
+      </button>
     </section>
   );
 }

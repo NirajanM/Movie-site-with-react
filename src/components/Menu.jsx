@@ -1,40 +1,69 @@
-import GenreDropdown from "./GenreDropdown";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { CiBoxList } from "react-icons/ci";
-import { MdOutlineBlurOn } from "react-icons/md";
-import { RiHeart2Line } from "react-icons/ri";
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { FULL_NAV } from "../config/nav";
 
 export default function Menu() {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div
-      className={` border-r border-gray-800/20 text-white hidden lg:inline pt-16 pr-5 h-screen w-fit md:bg-transparent z-50`}
+    <aside
+      className={`sticky top-16 hidden shrink-0 border-r border-white/10 pr-4 pt-4 lg:block ${
+        collapsed ? "w-16" : "w-48"
+      }`}
+      style={{ height: "calc(100dvh - 4rem)" }}
     >
-      <ul className="flex-col justify-start items-center space-y-14 text-lg text-slate-300 font-medium w-[50vw] md:w-[12rem]">
-        <li className="relative">
-          <GenreDropdown mediaType={"tv"} />
-        </li>
-        <li className="relative">
-          <GenreDropdown mediaType={"movie"} />
-        </li>
-        <li>
-          <NavLink className="list" to={"/watchlist"}>
-            <RiHeart2Line size={24} />
-            <span>Watchlist</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="list" to={"/about"}>
-            <MdOutlineBlurOn size={27} />
-            <span>About</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="list" to={"/faq"}>
-            <CiBoxList size={23} />
-            <span>FAQs</span>
-          </NavLink>
-        </li>
-      </ul>
-    </div>
+      <div className="mb-3 flex items-center justify-between px-1">
+        {!collapsed && (
+          <span className="text-eyebrow uppercase text-fg-low">Browse</span>
+        )}
+        <button
+          type="button"
+          onClick={() => setCollapsed((c) => !c)}
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? "Expand menu" : "Collapse menu"}
+          className="rounded-md p-1.5 text-fg-mid transition-colors duration-fast ease-state hover:text-fg-hi"
+        >
+          {collapsed ? (
+            <PanelLeftOpen size={18} />
+          ) : (
+            <PanelLeftClose size={18} />
+          )}
+        </button>
+      </div>
+      <nav aria-label="Sections">
+        <ul className="flex flex-col gap-1">
+          {FULL_NAV.map((item) => (
+            <li key={item.to}>
+              <NavLink
+                to={item.to}
+                end={item.end}
+                title={item.label}
+                className={({ isActive }) =>
+                  `group relative flex items-center gap-3 rounded-md px-3 py-2 text-small transition-colors duration-fast ease-state ${
+                    isActive
+                      ? "bg-white/5 text-fg-hi"
+                      : "text-fg-mid hover:text-fg-hi"
+                  } ${collapsed ? "justify-center" : ""}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className={`absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-pahelo transition-opacity duration-base ease-state ${
+                        isActive ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                    <item.icon size={18} />
+                    {!collapsed && <span>{item.label}</span>}
+                  </>
+                )}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
   );
 }

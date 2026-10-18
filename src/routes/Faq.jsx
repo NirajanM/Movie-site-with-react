@@ -1,5 +1,6 @@
 import Menu from "../components/Menu";
 import Faq from "react-faq-component";
+import useSeo from "@/hooks/useSeo";
 
 const data = {
   rows: [
@@ -49,11 +50,15 @@ const styles = {
 };
 
 export default function FaqPage() {
+  useSeo({
+    title: "FAQ",
+    description: "Answers about privacy, ads, where media is hosted and how to contribute.",
+  });
   return (
     <>
-      <div className="flex max-w-screen-xl mx-auto">
+      <div className="mx-auto flex max-w-screen-xl px-4 lg:px-6">
         <Menu />
-        <div className="w-full text-white mt-10 py-4 md:mt-0 flex justify-start items-start flex-col gap-4 md:gap-8 lg:gap-12">
+        <div className="mt-10 flex w-full min-w-0 flex-col items-start justify-start gap-4 py-4 text-white md:mt-0 md:gap-8 lg:gap-12 lg:pl-8">
           <h2 className="text-xl lg:text-4xl text-pahelo">
             Some general FAQs :
           </h2>

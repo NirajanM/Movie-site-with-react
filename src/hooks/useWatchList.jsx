@@ -1,3 +1,16 @@
+/**
+ * Everything that reads or writes the two lists we keep in localStorage.
+ * Components never touch localStorage directly; they call these functions so
+ * the storage keys and the JSON handling stay in one place.
+ *
+ *   watchlist       -> titles the user saved
+ *   continuePlaying -> recently watched titles, newest first, with season/episode
+ */
+
+const WATCHLIST_KEY = "watchlist";
+const CONTINUE_KEY = "continuePlaying";
+const CONTINUE_LIMIT = 15;
+
 function readList(key) {
   try {
     const value = JSON.parse(localStorage.getItem(key));
@@ -16,69 +29,73 @@ function writeList(key, list) {
   }
 }
 
-export function addMovieToWatchlist(movie) {
-  let watchlist = readList("watchlist");
-
-  const existingMovieIndex = watchlist.findIndex(
-    (item) => item.id === movie.id
-  );
-
-  // If movie with the same ID exists, you may choose to update or ignore it
-  if (existingMovieIndex !== -1) {
-    console.log(`Movie with ID ${movie.id} already exists in the watchlist.`);
-    return;
-  }
-  watchlist.push(movie);
-
-  // Save updated watchlist to localStorage
-  writeList("watchlist", watchlist);
-}
+// --- Watchlist ---------------------------------------------------------
 
 export function getWatchListCinemas() {
-  return readList("watchlist");
+  return readList(WATCHLIST_KEY);
 }
 
-export function setContinuePlaying(cinema, s, e) {
-  let list = readList("continuePlaying");
+export function addMovieToWatchlist(movie) {
+  const watchlist = readList(WATCHLIST_KEY);
+  const alreadySaved = watchlist.some((item) => item.id === movie.id);
+  if (alreadySaved) return watchlist;
 
-  const existingMovieIndex = list.findIndex((item) => item.id === cinema.id);
-
-  // If movie with the same ID exists, remove it
-  if (existingMovieIndex !== -1) {
-    list.splice(existingMovieIndex, 1);
-  } else {
-    // Check if the list contains 15 items, if so, remove the last item
-    if (list.length >= 15) {
-      list.pop();
-    }
-  }
-
-  // Add the movie to the beginning of the list with new s and e values
-  list.unshift({ id: cinema.id, details: cinema, s: s, e: e });
-
-  // Save updated watchlist to localStorage
-  writeList("continuePlaying", list);
+  const updated = [...watchlist, movie];
+  writeList(WATCHLIST_KEY, updated);
+  return updated;
 }
 
-export function updateContinuePlaying(id, s, e) {
-  let list = readList("continuePlaying");
-  let searchId = parseInt(id);
-
-  const existingCinemaIndex = list.findIndex((item) => item.id === searchId);
-  // If movie with the same ID exists, remove it
-  if (existingCinemaIndex === -1) {
-    return;
-  }
-  const existingCinemaDetails = list[existingCinemaIndex].details;
-  list.splice(existingCinemaIndex, 1);
-
-  // Add the movie to the end of the list with new s and e values
-  list.unshift({ id: searchId, details: existingCinemaDetails, s: s, e: e });
-
-  // Save updated watchlist to localStorage
-  writeList("continuePlaying", list);
+/** Removes a title and returns the new list. */
+export function removeFromWatchlist(id) {
+  const updated = readList(WATCHLIST_KEY).filter((item) => item.id !== id);
+  writeList(WATCHLIST_KEY, updated);
+  return updated;
 }
+
+// --- Continue watching ------------------------------------------------
 
 export function getContinuePlaying() {
-  return readList("continuePlaying");
+  return readList(CONTINUE_KEY);
+}
+
+/**
+ * Records progress for a title. The list is newest first, capped at
+ * CONTINUE_LIMIT entries, and a title that is already in it moves back to the
+ * top with the new season/episode.
+ */
+export function setContinuePlaying(cinema, s, e) {
+  const list = readList(CONTINUE_KEY);
+  const existingIndex = list.findIndex((item) => item.id === cinema.id);
+
+  if (existingIndex !== -1) {
+    list.splice(existingIndex, 1);
+  } else if (list.length >= CONTINUE_LIMIT) {
+    list.pop();
+  }
+
+  list.unshift({ id: cinema.id, details: cinema, s, e });
+  writeList(CONTINUE_KEY, list);
+}
+
+/**
+ * Moves an already-tracked title back to the top with a new season/episode.
+ * Does nothing if the title is not in the list yet.
+ */
+export function updateContinuePlaying(id, s, e) {
+  const list = readList(CONTINUE_KEY);
+  const searchId = parseInt(id, 10);
+  const index = list.findIndex((item) => item.id === searchId);
+  if (index === -1) return;
+
+  const { details } = list[index];
+  list.splice(index, 1);
+  list.unshift({ id: searchId, details, s, e });
+  writeList(CONTINUE_KEY, list);
+}
+
+/** Removes a title and returns the new list. */
+export function removeContinuePlaying(id) {
+  const updated = readList(CONTINUE_KEY).filter((item) => item.id !== id);
+  writeList(CONTINUE_KEY, updated);
+  return updated;
 }

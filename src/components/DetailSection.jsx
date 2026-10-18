@@ -1,47 +1,34 @@
-import ReactStars from "react-rating-stars-component";
-import { BiCameraMovie } from "react-icons/bi";
-import { FaPlay } from "react-icons/fa";
-import ReactPlayer from "react-player";
-import { useEffect, useState } from "react";
-import Skeleton from "react-loading-skeleton";
-import { fetchData } from "../utils/api";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AiFillFileAdd } from "react-icons/ai";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { BookmarkPlus, Clapperboard, Play, Star } from "lucide-react";
+import ReactPlayer from "react-player";
+import Skeleton from "react-loading-skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "../utils/api";
+import { toast } from "react-toastify";
 import {
   addMovieToWatchlist,
   getContinuePlaying,
   setContinuePlaying,
 } from "../hooks/useWatchList";
+import { primaryButton, secondaryButton } from "./ui/buttonStyles";
 
 export default function DetailSection({ mediaType, id, data, loading }) {
-  const notify = (content) => toast(content);
-  const ytUrl = "https://www.youtube.com/watch?v=";
-  const [allUrls, setAllUrls] = useState(null);
-
-  const [trailer, setTrailer] = useState(false);
-  const [trailerLoading, setTrailerLoading] = useState(true);
-  useEffect(() => {
-    setTrailerLoading(true);
-    fetchData(`${mediaType}/${id}/videos`)
-      .then((res) => {
-        const Urls = res.results.map((item) => {
-          return ytUrl + item.key;
-        });
-        const newUrls = Urls.reverse();
-        setAllUrls(newUrls);
-        setTrailerLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [mediaType, id]);
   const navigate = useNavigate();
+  const [trailerOpen, setTrailerOpen] = useState(false);
+
+  // Trailers are YouTube keys from the videos endpoint. We reverse the list so
+  // the newest trailer is the one that plays first.
+  const trailerQuery = useQuery({
+    queryKey: [mediaType, id, "videos"],
+    queryFn: () => fetchData(`${mediaType}/${id}/videos`),
+    enabled: Boolean(mediaType && id),
+  });
+  const trailerUrls = (trailerQuery.data?.results ?? [])
+    .map((video) => `https://www.youtube.com/watch?v=${video.key}`)
+    .reverse();
 
   const {
-    id: newid,
     original_title,
     popularity,
     title,
@@ -50,150 +37,145 @@ export default function DetailSection({ mediaType, id, data, loading }) {
     release_date,
     first_air_date,
     vote_average,
-  } = data;
+  } = data ?? {};
 
-  const movieTitle = title || name;
+  const movieTitle = title || name || "";
   const dateReleased = release_date || first_air_date;
-  const media_type = title ? "movie" : "tv";
+  const year = (dateReleased || "").slice(0, 4);
+  const runtime = data?.runtime
+    ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m`
+    : null;
+  const seasons =
+    mediaType === "tv" && data?.number_of_seasons
+      ? `${data.number_of_seasons} season${data.number_of_seasons > 1 ? "s" : ""}`
+      : null;
+  const rating =
+    typeof vote_average === "number" ? vote_average.toFixed(1) : null;
+  const genres = data?.genres ?? [];
 
+  // Shape stored in the watchlist / continue-watching lists. Keep it flat:
+  // PosterCard and the list pages read these same field names.
   const newObj = {
-    id: newid,
+    id,
     original_title,
     popularity,
     title: movieTitle,
     poster_path,
     release_date: dateReleased,
-    media_type: mediaType || media_type,
+    media_type: mediaType,
     vote_average,
   };
 
   const handlePlay = () => {
     const list = getContinuePlaying();
-    const alreadyExist = list.find((item) => item.id == id);
-    console.log(alreadyExist);
-    if (alreadyExist) {
-      console.log(alreadyExist);
-      setContinuePlaying(newObj, alreadyExist.s, alreadyExist.e);
-      const navigateLink = "play/" + alreadyExist.s + "/" + alreadyExist.e;
-      navigate(navigateLink.toString());
+    // Ids can be strings (from the URL) or numbers (after updateContinuePlaying),
+    // so compare them as strings.
+    const already = list.find((item) => String(item.id) === String(id));
+    if (already) {
+      setContinuePlaying(newObj, already.s, already.e);
+      navigate(`play/${already.s}/${already.e}`);
     } else {
       setContinuePlaying(newObj, 1, 1);
-      navigate(`play/1/1`);
+      navigate("play/1/1");
     }
   };
 
   const handleAddToWatchlist = () => {
     try {
       addMovieToWatchlist(newObj);
-      notify("Added to watch list");
+      toast("Added to watchlist");
     } catch (error) {
       console.error("Error adding movie to watchlist:", error.message);
-      notify("Failed to add to watch list");
-      // Handle the error, e.g., show an error message to the user
+      toast("Could not add to watchlist");
     }
   };
 
   return (
     <>
-      {trailer ? (
+      {trailerOpen && (
         <div
-          className="flex fixed h-screen bg-slate-950/70 w-screen top-0 left-0 justify-center items-center z-50"
-          onClick={() => {
-            setTrailer(false);
-          }}
+          className="fixed inset-0 z-toast flex items-center justify-center bg-ink-950/80 backdrop-blur-sm"
+          onClick={() => setTrailerOpen(false)}
         >
-          {!trailerLoading && (
-            <ReactPlayer url={allUrls} controls={true} playing={true} />
+          {!trailerQuery.isLoading && trailerUrls.length > 0 && (
+            <ReactPlayer url={trailerUrls} controls playing />
           )}
         </div>
-      ) : null}
-      <div className="md:basis-3/4 flex flex-col gap-2">
-        {loading ? (
-          <Skeleton width={100} />
-        ) : (
-          data && (
-            <div className="flex items-center gap-2">
-              <ReactStars
-                count={5}
-                size={24}
-                value={data?.vote_average / 2}
-                isHalf={true}
-                edit={false}
-                activeColor="#ffd700"
-              />
-              <span>{Math.round(data?.vote_average * 10) / 10}/10</span>
-            </div>
-          )
-        )}
-        {loading ? (
-          <>
-            <Skeleton width={400} height={80} />
-            <Skeleton width={200} height={23} />
-          </>
-        ) : (
-          <>
-            <span className="text-2xl md:text-4xl lg:text-6xl font-bold md:font-black text-pahelo">
-              {data?.title?.toUpperCase()}
-            </span>
+      )}
 
-            <span className="text-2xl md:text-4xl lg:text-6xl font-bold md:font-black text-pahelo">
-              {data?.original_name?.toUpperCase()}
+      <div className="flex flex-col gap-4 md:basis-3/4">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-meta text-fg-mid">
+          {year && <span className="tabular-nums">{year}</span>}
+          {runtime && <span className="tabular-nums">{runtime}</span>}
+          {seasons && <span>{seasons}</span>}
+          {rating && (
+            <span className="flex items-center gap-1 tabular-nums text-pahelo">
+              <Star size={12} fill="currentColor" />
+              {rating}
             </span>
-            <span className="text-slate-300/70 italic font-normal lg:text-xl">
-              {data?.tagline}
-            </span>
-          </>
-        )}
-
-        <div>
-          <span></span>
-          {!trailerLoading ? (
+          )}
+          {genres.map((g) => (
             <span
-              className="inline-flex items-center px-2 bg-red-700 gap-1 cursor-pointer hover:bg-red-800 hover:scale-105"
-              onClick={() => {
-                setTrailer(true);
-              }}
+              key={g.id}
+              className="rounded-sm border border-white/10 px-1.5 py-0.5"
             >
-              <BiCameraMovie /> TRAILER
+              {g.name}
             </span>
-          ) : (
-            <Skeleton width={90} height={23} />
-          )}
+          ))}
         </div>
 
         {loading ? (
-          <>
-            <Skeleton width="100%" height={18} />
-            <Skeleton width="100%" height={18} />
-            <Skeleton width="50%" height={18} />
-          </>
+          <Skeleton width={400} height={56} />
         ) : (
-          <p className="lg:text-md">{data?.overview}</p>
+          <h1 className="font-display text-4xl text-fg-hi [text-wrap:balance] lg:text-5xl">
+            {movieTitle}
+          </h1>
         )}
-        <div className="flex gap-4 flex-col md:flex-row">
-          <div
-            className="mt-5 text-xl md:text-3xl xl:text-4xl text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-1 font-black border-l-8 border-slate-600/70 px-3 w-fit"
+
+        {data?.tagline && (
+          <p className="text-body italic text-fg-mid">{data.tagline}</p>
+        )}
+
+        <div className="flex flex-wrap gap-3 pt-1">
+          <button
+            type="button"
             onClick={handlePlay}
+            disabled={loading}
+            className={`${primaryButton} disabled:cursor-not-allowed disabled:opacity-50`}
           >
-            <FaPlay />
-            PLAY
-          </div>
-          <div
-            className="mt-5 text-lg md:border-l-8 border-slate-600/70 md:px-3 text-slate-400 hover:text-white cursor-pointer inline-flex items-center gap-2 w-fit"
+            <Play size={16} fill="currentColor" />
+            Play
+          </button>
+          <button
+            type="button"
+            onClick={() => setTrailerOpen(true)}
+            disabled={trailerQuery.isLoading || trailerUrls.length === 0}
+            className={`${secondaryButton} disabled:cursor-not-allowed disabled:opacity-50`}
+          >
+            <Clapperboard size={16} />
+            Trailer
+          </button>
+          <button
+            type="button"
             onClick={handleAddToWatchlist}
+            className={secondaryButton}
           >
-            <AiFillFileAdd size={25} />
-            Add to watchlist
-            <ToastContainer
-              position="top-center"
-              autoClose={500}
-              hideProgressBar={false}
-              newestOnTop={false}
-              rtl={false}
-              theme="dark"
-            />
-          </div>
+            <BookmarkPlus size={16} />
+            Watchlist
+          </button>
         </div>
+
+        {loading ? (
+          <div className="flex flex-col gap-2">
+            <Skeleton width="100%" height={16} />
+            <Skeleton width="100%" height={16} />
+            <Skeleton width="60%" height={16} />
+          </div>
+        ) : (
+          <p className="max-w-[65ch] text-body text-fg-mid [text-wrap:pretty]">
+            {data?.overview}
+          </p>
+        )}
       </div>
     </>
   );

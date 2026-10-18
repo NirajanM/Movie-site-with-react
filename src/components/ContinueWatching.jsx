@@ -1,94 +1,98 @@
-import { getContinuePlaying } from "@/hooks/useWatchList";
-import { AiFillStar } from "react-icons/ai";
-import { CiTrash } from "react-icons/ci";
+import { memo, useState } from "react";
+import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Star, Trash2 } from "lucide-react";
 import posterNotFound from "../assets/posterNotFound.png";
-import dateFormat from "../components/dateFormat";
-import { toast, ToastContainer } from "react-toastify";
-import { useState } from "react";
+import { posterSources } from "../utils/image";
+import { getRating, getTitle } from "../utils/media";
+import {
+  getContinuePlaying,
+  removeContinuePlaying,
+} from "@/hooks/useWatchList";
+import { toast } from "react-toastify";
+import SectionHeader from "./SectionHeader";
+import { ghostButton } from "./ui/buttonStyles";
 
-export default function ContinueWatching() {
-  const [watchingList, setWatchingList] = useState(getContinuePlaying());
-  const notify = (content) => toast(content);
-  const navigate = useNavigate();
-  let { url } = useSelector((state) => state.home);
+const SIZES = "(max-width: 640px) 45vw, 200px";
 
-  const handleRemove = (itemId) => {
-    const updatedItems = watchingList.filter((item) => item.id !== itemId);
-    localStorage.setItem("continuePlaying", JSON.stringify(updatedItems));
-    setWatchingList(updatedItems); // Reverse the updated list as well
-    notify("Removed successfully");
+const ContinueWatching = memo(function ContinueWatching() {
+  const [list, setList] = useState(getContinuePlaying());
+
+  if (list.length === 0) return null;
+
+  const handleRemove = (id) => {
+    setList(removeContinuePlaying(id));
+    toast("Removed from Continue watching");
   };
 
-  if (watchingList.length > 0) {
-    console.log(watchingList);
-    return (
-      <div className="flex flex-col items-start gap-7 md:gap-14">
-        <h2 className="text-pahelo font-black text-3xl">Continue Watching</h2>
-        <div className="max-w-[1024px] w-full">
-          <div className="flex  my-4 gap-4 md:gap-5 justify-start items-start overflow-x-scroll cw-scrollbar pb-10 md:pb-20">
-            {watchingList.map((data) => {
-              const item = data.details;
-              const posterUrl = item.poster_path
-                ? url.backdrop + item.poster_path
-                : posterNotFound;
-              return (
-                <div
-                  key={item.id}
-                  className="flex flex-col gap-2 cursor-pointer z-30"
-                >
-                  <div
-                    className="flex flex-col gap-2 group w-32 md:w-36 lg:w-40 xl:w-44 cursor-pointer z-30"
-                    onClick={() => navigate(`/${item.media_type}/${item.id}`)}
-                  >
-                    <div className="relative aspect-poster w-32 md:w-36 lg:w-40 xl:w-44 rounded-md">
-                      <LazyLoadImage
-                        alt={item.title}
-                        src={posterUrl}
-                        className="object-cover w-full h-full object-center rounded-md aspect-poster"
-                      />
-                    </div>
-                    <span className="text-ellipsis overflow-x-hidden whitespace-nowrap group-hover:text-pahelo">
-                      {item.title || item.name}
-                    </span>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-slate-200/70 group-hover:text-pahelo">
-                        {dateFormat(item.release_date || item.first_air_date)}
-                      </span>
-                      <span className="flex gap-1 items-center text-xs text-slate-200/80 group-hover:text-pahelo">
-                        {item.vote_average.toFixed(1)}
-                        <AiFillStar />
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className="z-40 flex text-xs items-center justify-start hover:text-red-400 text-white/90 mt-1"
-                    onClick={() => {
-                      handleRemove(data.id);
-                    }}
-                  >
-                    <CiTrash size={20} />
-                    <span>Remove </span>
-                  </div>
-                  <ToastContainer
-                    position="top-center"
-                    autoClose={200}
-                    hideProgressBar={true}
-                    newestOnTop={true}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    theme="dark"
+  return (
+    <section>
+      <SectionHeader
+        eyebrow="Pick up where you left off"
+        title="Continue watching"
+      />
+      <ul className="no-scrollbar rail-mask mt-4 flex gap-4 overflow-x-auto pb-2 md:gap-5">
+        {list.map((entry) => {
+          const item = entry.details;
+          const sources = item.poster_path
+            ? posterSources(item.poster_path)
+            : { src: posterNotFound };
+          const title = getTitle(item);
+          const rating = getRating(item);
+          return (
+            <li
+              key={item.id}
+              className="w-32 shrink-0 md:w-36 lg:w-40 xl:w-44"
+            >
+              <Link
+                to={`/${item.media_type || "movie"}/${item.id}`}
+                className="group block"
+              >
+                <div className="relative aspect-poster overflow-hidden rounded-lg bg-ink-850 shadow-card">
+                  <LazyLoadImage
+                    alt={title}
+                    src={sources.src}
+                    srcSet={sources.srcSet}
+                    sizes={SIZES}
+                    className="h-full w-full object-cover object-center transition-transform duration-slow ease-enter group-hover:scale-[1.03]"
+                    loading="lazy"
+                    decoding="async"
                   />
+                  <span className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-base ease-state group-hover:ring-white/20 group-focus-visible:ring-pahelo" />
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    );
-  }
+                <h3 className="mt-2 truncate text-h3 text-fg-hi transition-colors duration-fast ease-state group-hover:text-pahelo">
+                  {title}
+                </h3>
+                <div className="mt-1 flex items-center justify-between text-meta text-fg-mid">
+                  <span className="tabular-nums">
+                    S{entry.s} E{entry.e}
+                  </span>
+                  {rating && (
+                    <span className="flex items-center gap-1 tabular-nums">
+                      <Star
+                        size={12}
+                        fill="currentColor"
+                        className="text-pahelo"
+                      />
+                      {rating}
+                    </span>
+                  )}
+                </div>
+              </Link>
+              <button
+                type="button"
+                onClick={() => handleRemove(item.id)}
+                className={ghostButton}
+              >
+                <Trash2 size={14} />
+                Remove
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+});
 
-  return null;
-}
+export default ContinueWatching;

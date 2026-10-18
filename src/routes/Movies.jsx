@@ -1,15 +1,18 @@
-import { useSelector } from "react-redux";
-import Menu from "../components/Menu";
-import Repeater from "../components/Repeater";
+import MediaBrowse from "@/components/MediaBrowse";
+import useSeo from "@/hooks/useSeo";
 
 export default function Movies() {
-  const { movieGenre } = useSelector((state) => state.home);
+  useSeo({
+    title: "Movies",
+    description:
+      "Discover popular, top rated and newly released movies. Filter by genre and sort by rating or release date.",
+  });
+
   return (
-    <div className="flex max-w-screen-xl mx-auto">
-      <Menu />
-      <div className="w-full lg:w-5/6 md:px-4 text-white">
-        <Repeater genre={movieGenre.id} endpoint={"movie"} />
-      </div>
-    </div>
+    <MediaBrowse
+      mediaType="movie"
+      title="Movies"
+      newestSortValue="primary_release_date.desc"
+    />
   );
 }

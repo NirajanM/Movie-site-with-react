@@ -1,33 +1,37 @@
+import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
 import PlayContext from "@/context/PlayContext";
 import { fetchData } from "@/utils/api";
-import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
 
 export default function SeasonsHolder({ refetchEpisodes }) {
   const { seasonNumber, setSeasonNumber, id } = useContext(PlayContext);
+
   const seriesDetails = useQuery({
     queryKey: ["series", id],
     queryFn: () => fetchData(`tv/${id}`),
   });
+
   return (
-    <div
-      id="seasons-holder"
-      className="flex flex-wrap gap-2 mt-5 md:mt-7 lg:mt-8 max-w-screen-xl"
-    >
+    <div className="flex flex-wrap gap-2">
       {seriesDetails?.data?.seasons?.map((item) => {
+        const active = item.season_number == seasonNumber;
         return (
-          <span
+          <button
             key={item.id}
-            className={`border rounded-sm px-4 py-1 text-base lg:text-lg cursor-pointer hover:bg-gray-50/20 ${
-              item.season_number == seasonNumber && "bg-gray-50/20"
-            }`}
+            type="button"
+            aria-pressed={active}
             onClick={() => {
               setSeasonNumber(item.season_number);
               refetchEpisodes();
             }}
+            className={`rounded-md border px-3 py-1.5 text-small transition-colors duration-fast ease-state ${
+              active
+                ? "border-pahelo/60 bg-white/5 text-fg-hi"
+                : "border-white/15 text-fg-mid hover:border-white/30 hover:text-fg-hi"
+            }`}
           >
-            {item.season_number}
-          </span>
+            Season {item.season_number}
+          </button>
         );
       })}
     </div>

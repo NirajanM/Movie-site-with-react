@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Personal or thin pages: nothing to index
+Disallow: /watchlist
+Disallow: /search/
+Disallow: /anotherpage
+
+# Player pages are third-party embeds with no crawlable content
+Disallow: /*/play/
+
+Sitemap: https://letswatchmovie.pages.dev/sitemap.xml

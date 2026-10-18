@@ -1,114 +1,135 @@
-import { useState } from "react";
-import Logo from "../assets/LetsWatchMovie.png";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { CiMenuBurger } from "react-icons/ci";
-import { RxCross1 } from "react-icons/rx";
+import { Menu as MenuIcon, Search } from "lucide-react";
+import Logo from "../assets/LetsWatchMovie.png";
 import MobileMenu from "./MobileMenu";
+import { FOCUS_SEARCH_EVENT, MAIN_NAV } from "../config/nav";
+import { isTypingTarget } from "../utils/keyboard";
 
 export default function Header() {
-  const [search, setSearch] = useState("");
-  const [expanded, setExpanded] = useState(false);
+  const [query, setQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const inputRef = useRef(null);
   const navigate = useNavigate();
-  const searchHandler = (event) => {
-    if (event.key === "Enter" && search.length > 0) {
-      navigate(`/search/${search}`);
-    }
-  };
-  const handleSearch = () => {
-    navigate(`/search/${search}`);
-  };
-  const handleMenuToggle = () => {
-    setExpanded((expanded) => !expanded);
+
+  // Open the search box and put the cursor in it. Stable so it can be reused
+  // by the click handler, the "/" shortcut and the bottom tab bar event.
+  const openSearch = useCallback(() => {
+    setSearchOpen(true);
+    requestAnimationFrame(() => inputRef.current?.focus());
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "/" && !isTypingTarget() && !menuOpen) {
+        e.preventDefault();
+        openSearch();
+      }
+      if (e.key === "Escape") setSearchOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener(FOCUS_SEARCH_EVENT, openSearch);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener(FOCUS_SEARCH_EVENT, openSearch);
+    };
+  }, [menuOpen, openSearch]);
+
+  const submit = (e) => {
+    e.preventDefault();
+    const q = query.trim();
+    if (!q) return;
+    navigate(`/search/${encodeURIComponent(q)}`);
+    setSearchOpen(false);
+    setQuery("");
   };
 
   return (
     <>
-      <nav id="nav-bar" className="bg-transparent mb-6 md:mb-3">
-        <div className=" px-4 max-w-screen-xl mx-auto flex gap-2 items-center justify-between py-4 relative">
-          <NavLink to="/" className="flex items-center">
-            <img src={Logo} className="w-16 h-16 md:h-20 md:w-20" />
+      <header className="sticky top-0 z-nav border-b border-white/10 bg-ink-900/[0.72] backdrop-blur-[14px]">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
+        <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-3 px-4 lg:px-6">
+          <NavLink
+            to="/"
+            className="flex items-center gap-2"
+            aria-label="LetsWatchMovie home"
+          >
+            <img src={Logo} alt="" className="h-9 w-9" />
+            <span className="hidden font-display text-lg font-semibold tracking-tight text-fg-hi sm:block">
+              LetsWatchMovie
+            </span>
           </NavLink>
 
-          <ul className="absolute border-b md:border-0 pb-7 left-0 top-24 w-full flex justify-around font-medium border-yellow-200/10 bg-gray-50 mt-2 md:mt-0 dark:bg-transparent md:relative md:w-fit md:top-0 md:p-0 md:space-x-8 text-base md:text-lg">
-            <li>
+          <nav aria-label="Primary" className="ml-2 hidden items-center md:flex">
+            {MAIN_NAV.map((link) => (
               <NavLink
-                to="/"
-                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-white/90 dark:text-white/70 dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
+                key={link.to}
+                to={link.to}
+                end={link.end}
+                className={({ isActive }) =>
+                  `group relative rounded-md px-3 py-2 text-small transition-colors duration-fast ease-state ${
+                    isActive ? "text-fg-hi" : "text-fg-mid hover:text-fg-hi"
+                  }`
+                }
               >
-                Home
+                {({ isActive }) => (
+                  <>
+                    {link.label}
+                    <span
+                      aria-hidden="true"
+                      className={`absolute inset-x-3 -bottom-0.5 h-0.5 origin-left rounded-full bg-pahelo transition-transform duration-base ease-state ${
+                        isActive
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
+                      }`}
+                    />
+                  </>
+                )}
               </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/tvshow"
-                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-white/90 dark:text-white/70 dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Tv Shows
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/movies"
-                className="block text-gray-900 rounded hover:text-pahelo p-0 dark:hover:text-white/90 dark:text-white/70 dark:hover:bg-gray-70 dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Movies
-              </NavLink>
-            </li>
-          </ul>
+            ))}
+          </nav>
 
-          <div className="flex gap-8 ">
-            <div className="relative">
-              <input
-                type="text"
-                className="block w-full p-2 pl-10 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-pahelo focus:border-pahelo dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pahelo dark:focus:border-pahelo"
-                placeholder="Search..."
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                }}
-                onKeyUp={searchHandler}
-              />
-              <div
-                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer group border-l border-gray-600 pl-3"
-                onClick={handleSearch}
+          <form onSubmit={submit} className="ml-auto flex items-center">
+            <div
+              className={`flex items-center overflow-hidden rounded-md border border-white/10 bg-ink-850 transition-[width] duration-base ease-state ${
+                searchOpen ? "w-52 sm:w-64" : "w-10"
+              }`}
+            >
+              <button
+                type="button"
+                aria-label="Search"
+                aria-expanded={searchOpen}
+                onClick={() => (searchOpen ? setSearchOpen(false) : openSearch())}
+                className="grid h-10 w-10 shrink-0 place-items-center text-fg-mid transition-colors duration-fast ease-state hover:text-fg-hi"
               >
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-                <span className="sr-only">Search icon</span>
-              </div>
+                <Search size={18} />
+              </button>
+              <input
+                ref={inputRef}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search movies and TV"
+                aria-label="Search movies and TV shows"
+                className={`h-10 w-full bg-transparent pr-3 text-small text-fg-hi placeholder:text-fg-low focus:outline-none ${
+                  searchOpen ? "block" : "hidden"
+                }`}
+              />
             </div>
-            <MobileMenu expanded={expanded} setExpanded={setExpanded} />
-            <div className="fixed flex justify-center items-center bottom-4 right-4 z-50 lg:hidden">
-              {expanded ? (
-                <div
-                  onClick={handleMenuToggle}
-                  className="bg-transparent rounded-full p-2"
-                >
-                  <RxCross1 className="lg:hidden text-white z-50" size={30} />
-                </div>
-              ) : (
-                <div
-                  onClick={handleMenuToggle}
-                  className="rounded-full p-2 bg-slate-800 border border-yellow-500"
-                >
-                  <CiMenuBurger
-                    className="lg:hidden text-white z-50"
-                    size={30}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
+          </form>
+
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(true)}
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-md text-fg-mid transition-colors duration-fast ease-state hover:text-fg-hi lg:hidden"
+          >
+            <MenuIcon size={20} />
+          </button>
         </div>
-      </nav>
+      </header>
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
   );
 }
