@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PlayContextProvider from "@/context/PlayContextProvider";
 import NowPlaying from "@/components/play/NowPlaying";
@@ -10,42 +10,9 @@ export default function Play() {
 
   const [url, setUrl] = useState(
     mediaType === "movie"
-      ? `https://vidsrc.me/embed/movie?tmdb=${id}`
-      : `https://vidsrc.me/embed/tv?tmdb=${id}&season=${season}&episode=${episode}`
+      ? `https://vidsrc.sh/embed/movie?tmdb=${id}`
+      : `https://vidsrc.sh/embed/tv?tmdb=${id}&season=${season}&episode=${episode}`
   );
-
-  // Function to handle the load event
-  const handleLoad = (event) => {
-    const iframe = event.target;
-    iframe.sandbox = "allow-same-origin ";
-    // Prevent the button click from propagating
-    document.getElementById("pl_but").onclick = function (e) {
-      e.stopPropagation();
-    };
-    document.getElementById("pl_but_background").onclick = function (e) {
-      e.stopPropagation();
-    };
-    document.getElementById("ng-popup").remove();
-    document.getElementsByClassName("form-button-click").remove();
-    document.getElementsByClassName("ng-popup-content").remove();
-  };
-
-  useEffect(() => {
-    // Select all iframes in the document
-    const iframes = document.querySelectorAll("iframe");
-
-    // Add load event listener to each iframe
-    iframes.forEach((iframe) => {
-      iframe.addEventListener("load", handleLoad);
-    });
-
-    // Clean up the event listeners when the component unmounts
-    return () => {
-      iframes.forEach((iframe) => {
-        iframe.removeEventListener("load", handleLoad);
-      });
-    };
-  }, []);
 
   return (
     <PlayContextProvider
@@ -65,6 +32,8 @@ export default function Play() {
           width="100%"
           height="100%"
           className="aspect-video"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          referrerPolicy="origin"
           allowFullScreen
         />
         {mediaType == "tv" && (

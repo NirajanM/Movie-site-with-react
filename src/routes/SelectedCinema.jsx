@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSelector } from "react-redux";
 import CastSection from "../components/CastSection";

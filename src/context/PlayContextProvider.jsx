@@ -19,8 +19,6 @@ const PlayContextProvider = ({
     T: null,
   });
   const handleEpisodeClick = (index, episodeName, isNext) => {
-    const iframe = document.getElementById("framez");
-    iframe.removeAttribute("sandbox");
     const choosenEpisode = parseInt(index) + 1;
     const choosenSeason = isNext ? nowPlaying.S : seasonNumber;
     navigate(`/tv/${id}/play/${choosenSeason}/${choosenEpisode}`);
@@ -31,7 +29,7 @@ const PlayContextProvider = ({
       T: episodeName,
     });
     setUrl(
-      `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${choosenSeason}&episode=${choosenEpisode}`
+      `https://vidsrc.sh/embed/tv?tmdb=${id}&season=${choosenSeason}&episode=${choosenEpisode}`
     );
     window.scrollTo(0, 0);
   };
