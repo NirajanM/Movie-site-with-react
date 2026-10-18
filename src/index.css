@@ -2,6 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Theme tokens.
+  Light (paper) is the default; dark is turned on by adding `.dark` to <html>,
+  which ThemeToggle does and an inline script in index.html does before paint.
+
+  Values are bare RGB channels so Tailwind can compose opacity modifiers like
+  `bg-ink-900/70`. Names here must match the colours in tailwind.config.js.
+
+  - ink-*    surfaces, from page background (950) up to active states (700)
+  - fg-*     text, high / mid / low emphasis
+  - line     hairlines, borders, subtle hovers (white in dark, ink in light)
+  - scrim    fixed dark backdrop for overlays and image gradients
+  - onscrim  fixed light text that sits on a scrim
+  - onaccent text that sits on a pahelo-filled control
+*/
+:root {
+  color-scheme: light;
+  --ink-950: 250 247 240;
+  --ink-900: 243 239 230;
+  --ink-850: 235 230 219;
+  --ink-800: 226 220 206;
+  --ink-700: 212 204 188;
+  --fg-hi: 26 24 21;
+  --fg-mid: 74 70 63;
+  --fg-low: 108 102 92;
+  --line: 26 24 21;
+  --scrim: 3 3 2;
+  --onscrim: 245 244 240;
+  --onaccent: 17 17 16;
+  --pahelo: 176 132 0;
+  --pahelo-deep: 150 112 0;
+  --mato: 168 88 54;
+  --mato-deep: 140 70 40;
+}
+
+.dark {
+  color-scheme: dark;
+  --ink-950: 3 3 2;
+  --ink-900: 10 10 9;
+  --ink-850: 17 17 16;
+  --ink-800: 26 26 24;
+  --ink-700: 42 42 39;
+  --fg-hi: 245 244 240;
+  --fg-mid: 177 176 173;
+  --fg-low: 143 142 140;
+  --line: 255 255 255;
+  --scrim: 3 3 2;
+  --onscrim: 245 244 240;
+  --onaccent: 17 17 16;
+  --pahelo: 255 223 43;
+  --pahelo-deep: 232 197 31;
+  --mato: 201 123 90;
+  --mato-deep: 176 101 63;
+}
+
 @layer base {
   *,
   *::before,
@@ -30,8 +85,8 @@
   body {
     min-height: 100dvh;
     line-height: 1.5;
-    background-color: theme("colors.ink.950");
-    color: theme("colors.fg.hi");
+    background-color: rgb(var(--ink-950));
+    color: rgb(var(--fg-hi));
   }
 
   a:not([class]) {
@@ -52,13 +107,13 @@
   }
 
   :focus-visible {
-    outline: 2px solid theme("colors.pahelo");
+    outline: 2px solid rgb(var(--pahelo));
     outline-offset: 2px;
   }
 
   ::selection {
-    background-color: theme("colors.pahelo");
-    color: theme("colors.ink.950");
+    background-color: rgb(var(--pahelo));
+    color: rgb(var(--onaccent));
   }
 
   ::-webkit-scrollbar {
@@ -67,11 +122,11 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: theme("colors.ink.900");
+    background: rgb(var(--ink-900));
   }
 
   ::-webkit-scrollbar-thumb {
-    background: theme("colors.ink.700");
+    background: rgb(var(--ink-700));
     border-radius: 9999px;
   }
 }
@@ -98,15 +153,12 @@ svg[class*=" lucide-"] {
 }
 
 .list svg {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgb(var(--fg-low));
 }
 
-.list:hover svg {
-  color: theme("colors.pahelo");
-}
-
+.list:hover svg,
 .list:hover {
-  color: theme("colors.pahelo");
+  color: rgb(var(--pahelo));
 }
 
 .faq-row-wrapper {
@@ -114,7 +166,7 @@ svg[class*=" lucide-"] {
 }
 
 #nav-bar a.active {
-  color: theme("colors.pahelo");
+  color: rgb(var(--pahelo));
 }
 
 .cw-scrollbar::-webkit-scrollbar {
@@ -122,12 +174,12 @@ svg[class*=" lucide-"] {
 }
 
 .cw-scrollbar::-webkit-scrollbar-thumb {
-  background-color: theme("colors.ink.700");
+  background-color: rgb(var(--ink-700));
   border-radius: 9999px;
 }
 
 .cw-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: theme("colors.ink.800");
+  background-color: rgb(var(--ink-800));
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -139,7 +191,7 @@ svg[class*=" lucide-"] {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: theme("colors.ink.700");
+  background-color: rgb(var(--ink-700));
 }
 
 .no-scrollbar::-webkit-scrollbar {

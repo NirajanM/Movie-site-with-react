@@ -39,6 +39,19 @@
   <link rel="preload" href="/fonts/Satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/ClashDisplay-700.woff2" as="font" type="font/woff2" crossorigin>
 
+  <script>
+    // Set the theme before first paint: saved choice, else system preference.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var dark = saved
+          ? saved === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle("dark", dark);
+      } catch (e) {}
+    })();
+  </script>
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -61,7 +74,7 @@
   </script>
 </head>
 
-<body class="dark grain">
+<body class="grain">
   <div id="root"></div>
   <noscript>
     <div style="max-width:40rem;margin:4rem auto;padding:0 1.25rem;color:#f5f4f0;background:#030302;font-family:system-ui,sans-serif;line-height:1.6">

@@ -54,7 +54,7 @@ export default function Play() {
           <div
             ref={playerRef}
             className={`overflow-hidden bg-black ${
-              fullscreen ? "h-[100dvh] w-screen" : "rounded-xl border border-white/10"
+              fullscreen ? "h-[100dvh] w-screen" : "rounded-xl border border-line/10"
             }`}
           >
             <iframe
@@ -72,7 +72,7 @@ export default function Play() {
             <button
               type="button"
               onClick={() => document.exitFullscreen()}
-              className="absolute right-4 top-4 rounded-md border border-white/20 bg-ink-950/70 px-3 py-1.5 text-small text-fg-hi"
+              className="absolute right-4 top-4 rounded-md border border-onscrim/20 bg-scrim/70 px-3 py-1.5 text-small text-onscrim"
             >
               Exit fullscreen
             </button>

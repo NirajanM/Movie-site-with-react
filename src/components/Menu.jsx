@@ -8,7 +8,7 @@ export default function Menu() {
 
   return (
     <aside
-      className={`sticky top-16 hidden shrink-0 border-r border-white/10 pr-4 pt-4 lg:block ${
+      className={`sticky top-16 hidden shrink-0 border-r border-line/10 pr-4 pt-4 lg:block ${
         collapsed ? "w-16" : "w-48"
       }`}
       style={{ height: "calc(100dvh - 4rem)" }}
@@ -42,7 +42,7 @@ export default function Menu() {
                 className={({ isActive }) =>
                   `group relative flex items-center gap-3 rounded-md px-3 py-2 text-small transition-colors duration-fast ease-state ${
                     isActive
-                      ? "bg-white/5 text-fg-hi"
+                      ? "bg-line/5 text-fg-hi"
                       : "text-fg-mid hover:text-fg-hi"
                   } ${collapsed ? "justify-center" : ""}`
                 }
@@ -55,8 +55,13 @@ export default function Menu() {
                         isActive ? "opacity-100" : "opacity-0"
                       }`}
                     />
-                    <item.icon size={18} />
-                    {!collapsed && <span>{item.label}</span>}
+                    {/* Text when open; the icon only stands in when collapsed
+                        to a rail, where there is no room for the label. */}
+                    {collapsed ? (
+                      <item.icon size={18} />
+                    ) : (
+                      <span>{item.label}</span>
+                    )}
                   </>
                 )}
               </NavLink>

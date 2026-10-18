@@ -2,7 +2,7 @@ export default function OnOff({ opt, value, onChange }) {
   return (
     <div
       role="group"
-      className="inline-flex rounded-md border border-white/10 bg-ink-850 p-0.5"
+      className="inline-flex rounded-md border border-line/10 bg-ink-850 p-0.5"
     >
       {opt.map((o) => {
         const active = o.value === value;

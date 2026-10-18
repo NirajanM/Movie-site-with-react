@@ -79,22 +79,30 @@ module.exports = {
           { lineHeight: "1.3", letterSpacing: "0.01em", fontWeight: "500" },
         ],
       },
-      // Colour tokens from DESIGN.md section 3
+      // Colour tokens. The values themselves live as CSS variables in
+      // src/index.css so the light and dark themes share one set of class
+      // names; only the variable values change per theme.
       colors: {
         ink: {
-          950: "#030302",
-          900: "#0a0a09",
-          850: "#111110",
-          800: "#1a1a18",
-          700: "#2a2a27",
+          950: "rgb(var(--ink-950) / <alpha-value>)",
+          900: "rgb(var(--ink-900) / <alpha-value>)",
+          850: "rgb(var(--ink-850) / <alpha-value>)",
+          800: "rgb(var(--ink-800) / <alpha-value>)",
+          700: "rgb(var(--ink-700) / <alpha-value>)",
         },
         fg: {
-          hi: "#f5f4f0",
-          mid: "rgba(245,244,240,0.72)",
-          low: "rgba(245,244,240,0.58)",
+          hi: "rgb(var(--fg-hi) / <alpha-value>)",
+          mid: "rgb(var(--fg-mid) / <alpha-value>)",
+          low: "rgb(var(--fg-low) / <alpha-value>)",
         },
-        pahelo: "#FFDF2B",
-        "pahelo-deep": "#E8C51F",
+        line: "rgb(var(--line) / <alpha-value>)",
+        scrim: "rgb(var(--scrim) / <alpha-value>)",
+        onscrim: "rgb(var(--onscrim) / <alpha-value>)",
+        onaccent: "rgb(var(--onaccent) / <alpha-value>)",
+        pahelo: "rgb(var(--pahelo) / <alpha-value>)",
+        "pahelo-deep": "rgb(var(--pahelo-deep) / <alpha-value>)",
+        mato: "rgb(var(--mato) / <alpha-value>)",
+        "mato-deep": "rgb(var(--mato-deep) / <alpha-value>)",
         danger: "#F2555A",
         success: "#5FD08A",
       },

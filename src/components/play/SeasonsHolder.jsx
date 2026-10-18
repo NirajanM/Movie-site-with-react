@@ -26,8 +26,8 @@ export default function SeasonsHolder({ refetchEpisodes }) {
             }}
             className={`rounded-md border px-3 py-1.5 text-small transition-colors duration-fast ease-state ${
               active
-                ? "border-pahelo/60 bg-white/5 text-fg-hi"
-                : "border-white/15 text-fg-mid hover:border-white/30 hover:text-fg-hi"
+                ? "border-pahelo/60 bg-line/5 text-fg-hi"
+                : "border-line/15 text-fg-mid hover:border-line/30 hover:text-fg-hi"
             }`}
           >
             Season {item.season_number}

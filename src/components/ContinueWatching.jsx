@@ -1,8 +1,9 @@
 import { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Star, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import posterNotFound from "../assets/posterNotFound.png";
+import Rating from "./Rating";
 import { posterSources } from "../utils/image";
 import { getRating, getTitle } from "../utils/media";
 import {
@@ -58,7 +59,7 @@ const ContinueWatching = memo(function ContinueWatching() {
                     loading="lazy"
                     decoding="async"
                   />
-                  <span className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-base ease-state group-hover:ring-white/20 group-focus-visible:ring-pahelo" />
+                  <span className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-base ease-state group-hover:ring-line/20 group-focus-visible:ring-pahelo" />
                 </div>
                 <h3 className="mt-2 truncate text-h3 text-fg-hi transition-colors duration-fast ease-state group-hover:text-pahelo">
                   {title}
@@ -67,16 +68,7 @@ const ContinueWatching = memo(function ContinueWatching() {
                   <span className="tabular-nums">
                     S{entry.s} E{entry.e}
                   </span>
-                  {rating && (
-                    <span className="flex items-center gap-1 tabular-nums">
-                      <Star
-                        size={12}
-                        fill="currentColor"
-                        className="text-pahelo"
-                      />
-                      {rating}
-                    </span>
-                  )}
+                  <Rating value={rating} className="text-mato" />
                 </div>
               </Link>
               <button

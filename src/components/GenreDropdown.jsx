@@ -41,19 +41,19 @@ export default function GenreDropdown({ mediaType }) {
         <button
           type="button"
           aria-expanded={isOpen}
-          className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-ink-850 px-3 py-1.5 text-small text-fg-hi transition duration-fast ease-state hover:border-white/25"
+          className="inline-flex items-center gap-2 rounded-md border border-line/10 bg-ink-850 px-3 py-1.5 text-small text-fg-hi transition duration-fast ease-state hover:border-line/25"
         >
           <span className="text-fg-low">Genre</span>
           {current ? current.name : "All"}
           <ChevronDown size={14} />
         </button>
       </DialogTrigger>
-      <DialogContent className="w-full max-w-md gap-3 border-white/10 bg-ink-900 p-5 text-fg-hi">
+      <DialogContent className="w-full max-w-md gap-3 border-line/10 bg-ink-900 p-5 text-fg-hi">
         <DialogHeader>
           <DialogTitle className="font-display text-lg text-fg-hi">
             Select {mediaType === "tv" ? "TV" : "movie"} genre
           </DialogTitle>
-          <DialogDescription className="border-b border-white/10 pb-3 text-small text-fg-mid">
+          <DialogDescription className="border-b border-line/10 pb-3 text-small text-fg-mid">
             Choose a genre from the list below.
           </DialogDescription>
         </DialogHeader>

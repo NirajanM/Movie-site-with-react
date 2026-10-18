@@ -44,9 +44,9 @@ const data = {
 
 const styles = {
   bgColor: "transparent",
-  rowTitleColor: "white",
-  rowContentColor: "#AAAAAA",
-  arrowColor: "#FFDC00",
+  rowTitleColor: "rgb(var(--fg-hi))",
+  rowContentColor: "rgb(var(--fg-mid))",
+  arrowColor: "rgb(var(--pahelo))",
 };
 
 export default function FaqPage() {
@@ -58,7 +58,7 @@ export default function FaqPage() {
     <>
       <div className="mx-auto flex max-w-screen-xl px-4 lg:px-6">
         <Menu />
-        <div className="mt-10 flex w-full min-w-0 flex-col items-start justify-start gap-4 py-4 text-white md:mt-0 md:gap-8 lg:gap-12 lg:pl-8">
+        <div className="mt-10 flex w-full min-w-0 flex-col items-start justify-start gap-4 py-4 text-fg-hi md:mt-0 md:gap-8 lg:gap-12 lg:pl-8">
           <h2 className="text-xl lg:text-4xl text-pahelo">
             Some general FAQs :
           </h2>

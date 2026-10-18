@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Menu as MenuIcon, Search } from "lucide-react";
 import Logo from "../assets/LetsWatchMovie.png";
 import MobileMenu from "./MobileMenu";
+import ThemeToggle from "./ThemeToggle";
 import { FOCUS_SEARCH_EVENT, MAIN_NAV } from "../config/nav";
 import { isTypingTarget } from "../utils/keyboard";
 
@@ -47,8 +48,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-nav border-b border-white/10 bg-ink-900/[0.72] backdrop-blur-[14px]">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
+      <header className="sticky top-0 z-nav border-b border-line/10 bg-ink-900">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-line/[0.06]" />
         <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-3 px-4 lg:px-6">
           <NavLink
             to="/"
@@ -92,7 +93,7 @@ export default function Header() {
 
           <form onSubmit={submit} className="ml-auto flex items-center">
             <div
-              className={`flex items-center overflow-hidden rounded-md border border-white/10 bg-ink-850 transition-[width] duration-base ease-state ${
+              className={`flex items-center overflow-hidden rounded-md border border-line/10 bg-ink-850 transition-[width] duration-base ease-state ${
                 searchOpen ? "w-52 sm:w-64" : "w-10"
               }`}
             >
@@ -117,6 +118,8 @@ export default function Header() {
               />
             </div>
           </form>
+
+          <ThemeToggle />
 
           <button
             type="button"

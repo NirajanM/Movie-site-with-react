@@ -116,7 +116,7 @@ function Root() {
                     <Link
                       key={m.id}
                       to={`/movie/${m.id}`}
-                      className="rounded transition-colors duration-fast ease-state hover:text-pahelo"
+                      className="rounded transition-colors duration-fast ease-state hover:text-mato"
                     >
                       {m.title || m.name}
                     </Link>
@@ -154,7 +154,7 @@ function Root() {
             action={
               <Link
                 to="/movies"
-                className="text-small text-fg-mid transition-colors duration-fast ease-state hover:text-pahelo"
+                className="text-small text-fg-mid transition-colors duration-fast ease-state hover:text-mato"
               >
                 See all
               </Link>

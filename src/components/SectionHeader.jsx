@@ -9,7 +9,7 @@ export default function SectionHeader({ eyebrow, title, action }) {
           {title}
         </h2>
       </div>
-      <div className="mb-2 hidden h-px flex-1 bg-white/10 sm:block" />
+      <div className="mb-2 hidden h-px flex-1 bg-line/10 sm:block" />
       {action && <div className="mb-1 shrink-0">{action}</div>}
     </div>
   );

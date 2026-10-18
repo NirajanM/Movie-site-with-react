@@ -1,9 +1,10 @@
 import { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Star, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Menu from "../components/Menu";
 import EmptyState from "../components/EmptyState";
+import Rating from "../components/Rating";
 import posterNotFound from "../assets/posterNotFound.png";
 import dateFormat from "../components/dateFormat";
 import { posterSources } from "../utils/image";
@@ -34,7 +35,7 @@ const Watchlist = memo(function Watchlist() {
   return (
     <div className="mx-auto flex max-w-screen-xl px-4 lg:px-6">
       <Menu />
-      <div className="w-full min-w-0 py-4 text-white lg:pl-8">
+      <div className="w-full min-w-0 py-4 text-fg-hi lg:pl-8">
         <h1 className="mb-6 font-display text-2xl text-fg-hi">Watchlist</h1>
         {items.length === 0 ? (
           <EmptyState
@@ -67,7 +68,7 @@ const Watchlist = memo(function Watchlist() {
                         loading="lazy"
                         decoding="async"
                       />
-                      <span className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-base ease-state group-hover:ring-white/20" />
+                      <span className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition duration-base ease-state group-hover:ring-line/20" />
                     </div>
                     <h2 className="mt-2 truncate text-h3 text-fg-hi transition-colors duration-fast ease-state group-hover:text-pahelo">
                       {title}
@@ -76,16 +77,7 @@ const Watchlist = memo(function Watchlist() {
                       <span className="tabular-nums">
                         {dateFormat(getReleaseDate(item))}
                       </span>
-                      {rating && (
-                        <span className="flex items-center gap-1 tabular-nums">
-                          <Star
-                            size={12}
-                            fill="currentColor"
-                            className="text-pahelo"
-                          />
-                          {rating}
-                        </span>
-                      )}
+                      <Rating value={rating} className="text-mato" />
                     </div>
                   </Link>
                   <button

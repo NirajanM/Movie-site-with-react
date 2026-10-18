@@ -25,8 +25,8 @@ export default function MediaBrowse({ mediaType, title, newestSortValue }) {
   return (
     <div className="mx-auto flex max-w-screen-xl px-4 lg:px-6">
       <Menu />
-      <div className="w-full min-w-0 text-white lg:pl-8">
-        <div className="sticky top-16 z-40 mb-2 border-b border-white/10 bg-ink-950/80 px-1 py-3 backdrop-blur-[14px]">
+      <div className="w-full min-w-0 text-fg-hi lg:pl-8">
+        <div className="sticky top-16 z-40 mb-2 border-b border-line/10 bg-ink-950 px-1 py-3">
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="font-display text-xl text-fg-hi">{title}</h1>
             <GenreDropdown mediaType={mediaType} />
@@ -35,7 +35,7 @@ export default function MediaBrowse({ mediaType, title, newestSortValue }) {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="rounded-md border border-white/10 bg-ink-850 px-2 py-1.5 text-small text-fg-hi"
+                className="rounded-md border border-line/10 bg-ink-850 px-2 py-1.5 text-small text-fg-hi"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>

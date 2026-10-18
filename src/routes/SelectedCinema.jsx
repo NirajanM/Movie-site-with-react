@@ -70,7 +70,7 @@ export default function SelectedCinema() {
   return (
     <div className="text-fg-hi">
       {showMini && (
-        <div className="fixed inset-x-0 top-16 z-40 border-b border-white/10 bg-ink-900/[0.85] backdrop-blur-[14px]">
+        <div className="fixed inset-x-0 top-16 z-40 border-b border-line/10 bg-ink-900">
           <div className="mx-auto flex max-w-screen-xl items-center gap-3 px-4 py-2 lg:px-6">
             {poster?.src && (
               <img
@@ -87,7 +87,7 @@ export default function SelectedCinema() {
             )}
             <Link
               to={`/${mediaType}/${id}/play/1/1`}
-              className="ml-auto inline-flex items-center gap-2 rounded-md bg-pahelo px-4 py-1.5 text-small font-semibold text-ink-950 transition duration-fast ease-state hover:bg-pahelo-deep"
+              className="ml-auto inline-flex items-center gap-2 rounded-md bg-pahelo px-4 py-1.5 text-small font-semibold text-onaccent transition duration-fast ease-state hover:bg-pahelo-deep"
             >
               <Play size={14} fill="currentColor" />
               Play
